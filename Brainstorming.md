@@ -5,7 +5,7 @@
 - There are two levels of endorsement policy that acts on a chaincode, channel(namespace) level, and key(collection) level.
 - When there get too many channels and collection it gets hard to manage all the data entities and knowing who has access to what.
 
-# The project can have two aspects.
+## The project can have two aspects.
 
 * One is simplifying and providing a table, doc where the developer/operator can take a look at to get to know who has access to which data. This can be implemented at both the levels, probably by the following approach
 
