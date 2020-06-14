@@ -1,3 +1,12 @@
+14.06.2020
+* Project plan submitted - 12.06.2020
+* Agreed to create issues and mark them.
+* Mailing lists and search
+* Did architecture diagram
+* My vacations: Full july
+
+
+
 07.06.2020
 * Project plan
   - Deadline: on/before 15.06
