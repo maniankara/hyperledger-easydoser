@@ -3,4 +3,5 @@
 | Week | Date     | Activity | Comments/links  |
 | -----|----------|----------|-----------------|
 | 1    | June 1 - | Introduction and kickstart project plan |  |
-| 2    | June 8 - |  |  |
+| 2    | June 8 - | Finalized project architecture and features |  |
+| 3    | June 14 - | Building basic structure of project |  |
