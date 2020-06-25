@@ -1,0 +1,29 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+/easydoser-frontend/node_modules
+
+# testing
+/easydoser-frontend/coverage
+
+# production
+/easydoser-frontend/build
+
+# npmjs
+/easydoser-frontend/dist
+
+# misc
+/easydoser-frontend/.DS_Store
+/easydoser-frontend/.env.local
+/easydoser-frontend/.env.development.local
+/easydoser-frontend/.env.test.local
+/easydoser-frontend/.env.production.local
+
+/easydoser-frontend/npm-debug.log*
+/easydoser-frontend/yarn-debug.log*
+/easydoser-frontend/yarn-error.log*
+
+/easydoser-frontend/package-lock.json
+
+# server
+/easydoser-server/easydoser-server
