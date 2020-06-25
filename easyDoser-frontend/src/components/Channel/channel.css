@@ -1,0 +1,17 @@
+.policy-card {
+    padding: 5%;
+}
+.card {
+    margin-top: 5%;
+}
+.header{
+    display: inline-block;
+}
+.header-toggle{
+    display: inline-block;
+
+}
+.header-name{
+    display: inline-block;
+
+}   
