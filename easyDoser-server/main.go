@@ -27,8 +27,7 @@ func getChannelInfo(w http.ResponseWriter, r *http.Request) {
 	}
 	var result map[string]interface{}
 	s := fmt.Sprintf("%s", out)
-	key := extractValue(s, "values")
-	fmt.Printf("%s", key)
+	s = removeCerts(s)
 	json.Unmarshal([]byte(s), &result)
 	// working on orderer data
 	jsP, _ := json.Marshal(result["data"].(map[string]interface{})["data"].([]interface{})[0].(map[string]interface{})["payload"].(map[string]interface{})["data"].(map[string]interface{})["config"].(map[string]interface{}))
