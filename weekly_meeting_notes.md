@@ -1,3 +1,11 @@
+28.06.2020
+ * Demoed the UI (R/O) - looks good
+ * Next weeks tasks
+   - Anoop to test and report on a different netwotk
+   - Study about Implementing UI for R/O private data collections
+   - Add small hands-on instructions on how to deploy easy-doser on an existing hyperledger network.
+
+
 21.06.2020
 * demoed basic UI - looks good
 * Next weeks task
