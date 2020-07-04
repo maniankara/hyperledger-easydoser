@@ -17,11 +17,10 @@ func homeLink(w http.ResponseWriter, r *http.Request) {
 
 func getChannelInfo(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-	id := getIdFromRequest(r)
-	block := "\"" + id + ".block\""
-	out, err := exec.Command("sh", "channel_info.sh", block).Output()
+	arr := getIdFromRequest(r)
+	filename := "1.pb"
+	out, err := exec.Command("bash", "./peercli.sh", "--cfg", arr[0], "--orderer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--orderer-certificate", arr[4], "--channel", "\""+arr[5]+"\"", "--filename", filename).Output()
 	if err != nil {
 		fmt.Printf("%s", err)
 	}
@@ -37,15 +36,18 @@ func getChannelInfo(w http.ResponseWriter, r *http.Request) {
 }
 func getChannelList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-	out, err := exec.Command("./channel_list.sh").Output() //stdout, err := cmd.Output()
+	arr := getArgsForChannelList(r)
+	fmt.Printf("%s", arr[1])
+	out, err := exec.Command("bash", "peer_channel_list.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4]).Output()
 	if err != nil {
 		fmt.Printf("%s", err)
 	}
 	s := fmt.Sprintf("%s", out)
-	split := strings.Split(s, "Channels peers has joined:")
-	temp := strings.Split(split[1], "\r\n")
+	fmt.Printf("%s", s)
+	split := strings.Split(s, "joined:")
+	fmt.Printf("%s", split[1])
+	temp := strings.Split(split[1], "\n")
 	//c_list := remove(temp, 0)
 	js, er := json.Marshal(temp[1 : len(temp)-1])
 	if err != nil {
@@ -63,3 +65,26 @@ func main() {
 
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
+
+//Channel List
+////////////////////
+// TO BE DELETED
+//cfg := "/mnt/265C6B275C6AF14B/fabric/config"
+//address := "localhost:7051"
+//mspId := "Org1MSP"
+//mspconfig := "/mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp"
+//tls := "/mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+////////////
+//Channel Info
+// to be removed
+////////////////
+
+// cfg := "\"/mnt/265C6B275C6AF14B/fabric/config\""
+// address := "\"localhost:7050\""
+// mspId := "\"Org1MSP\""
+// mspconfig := "\"/mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp\""
+// oca := "\"/mnt/265C6B275C6AF14B/fabric/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem\""
+//channel := `"mychannel" `
+
+// to be removed
+////////////////
