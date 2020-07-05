@@ -1,3 +1,10 @@
+05.07.2020
+ * cli containers deprecated, Fabric specific dirs are obtained from client(UI)
+ * Big changes - shell scripts etc.
+ * Next weeks tasks:
+   - how to implement the same for private data collections - Need path for chaincode
+   - Anoop to test and report bugs for some-test-network
+
 28.06.2020
  * Demoed the UI (R/O) - looks good
  * Next weeks tasks
