@@ -7,4 +7,4 @@
 | 3    | June 14  | Built basic structure of project (backend) |  |
 | 4    | June 21  | Designed the Ui and integration with backend |  |
 | 5    | June 28  | Frontend and Backend working and channel policy can be viewed  |  |
-| 6   | June 5  | Migrated the project to use peer commands instead of cli commands |  |
+| 6   | July 5  | Migrated the project to use peer commands instead of cli commands |  |
