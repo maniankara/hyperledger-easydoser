@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -38,7 +39,6 @@ func getChannelList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	arr := getArgsForChannelList(r)
-	fmt.Printf("%s", arr[1])
 	out, err := exec.Command("bash", "peer_channel_list.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4]).Output()
 	if err != nil {
 		fmt.Printf("%s", err)
@@ -58,12 +58,21 @@ func getChannelList(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	var port = flag.String("port", "8080", "Port to run the server on")
+
+	var help = flag.Bool("help", false, "help")
+	flag.Parse()
+	if *help {
+		fmt.Printf("%s", "This is a REST server for easyDoser.\nUse --port to set custom port to run the server.\n\nPlease make sure you enter correct port and address for server in REACT app.\n")
+		return
+	}
+	var pt = ":" + string(*port)
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", homeLink)
 	router.HandleFunc("/channel_info/{id}", getChannelInfo).Methods("GET")
 	router.HandleFunc("/channel_list", getChannelList).Methods("GET")
 
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(pt, router))
 }
 
 //Channel List

@@ -6,3 +6,4 @@ export const pa = "pa";
 export const tls = "tls";
 export const oc = "oc";
 export const cookie = "cookie";
+export const server = "server";
