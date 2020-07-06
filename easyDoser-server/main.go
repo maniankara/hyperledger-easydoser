@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -58,12 +59,22 @@ func getChannelList(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	var port = flag.String("port", "8080", "Port to run the server on")
+
+	var help = flag.Bool("help", false, "help")
+	flag.Parse()
+	if *help {
+		fmt.Printf("%s", "This is a REST server for easyDoser.\nUse --port to set custom port to run the server.\n\nPlease make sure you enter correct port and address for server in REACT app.\n")
+		return
+	}
+	var pt = ":" + string(*port)
+	fmt.Printf("%s", pt)
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", homeLink)
 	router.HandleFunc("/channel_info/{id}", getChannelInfo).Methods("GET")
 	router.HandleFunc("/channel_list", getChannelList).Methods("GET")
 
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(pt, router))
 }
 
 //Channel List
