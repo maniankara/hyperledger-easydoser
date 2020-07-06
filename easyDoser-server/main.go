@@ -39,7 +39,6 @@ func getChannelList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	arr := getArgsForChannelList(r)
-	fmt.Printf("%s", arr[1])
 	out, err := exec.Command("bash", "peer_channel_list.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4]).Output()
 	if err != nil {
 		fmt.Printf("%s", err)
@@ -68,7 +67,6 @@ func main() {
 		return
 	}
 	var pt = ":" + string(*port)
-	fmt.Printf("%s", pt)
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", homeLink)
 	router.HandleFunc("/channel_info/{id}", getChannelInfo).Methods("GET")

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { cfg, mspid, mspconf, oa, pa, tls, oc, cookie} from "constants.js";
+import { server, cfg, mspid, mspconf, oa, pa, tls, oc, cookie} from "constants.js";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -49,6 +49,7 @@ export default function Paths(props) {
   const [ttls, setTLS] = useState("");
   const [toa, setOA] = useState("");
   const [toc, setOC] = useState("");
+  const [tserver, setServer] = useState("");
   const[showAlert, setAlert]= useState(false)
   var empty= false
   
@@ -62,6 +63,8 @@ export default function Paths(props) {
     toa==""?cookies.get(oa)===undefined?empty=true:yolo=1:cookies.set(oa, toa, { path: "/" });
     toc==""?cookies.get(oc)===undefined?empty=true:yolo=1:cookies.set(oc, toc, { path: "/" });
     ttls==""?cookies.get(tls)===undefined?empty=true:yolo=1:cookies.set(tls, ttls, { path: "/" });
+    tserver==""?cookies.get(server)===undefined?cookies.set(server, "localhost:8080", { path: "/" } ):yolo=1:cookies.set(server, tserver, { path: "/" });
+
     if(empty){
       setAlert(true)
     }else{
@@ -85,6 +88,24 @@ export default function Paths(props) {
               </p>
             </CardHeader>
             <CardBody>
+            <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+              
+                      <label className="Lable" htmlFor="#parametername">
+                        EasyDoser Server
+                      </label>
+                      <br/>
+                      <FormTextarea
+                        className="address"
+                        id="#description"
+                        placeholder={cookies.get(cfg)===undefined?"default: localhost:8080":cookies.get(cfg)}
+                        onChange={(e) => {
+                          setCFG(e.target.value)
+                    }}
+                  />
+                      
+                </GridItem>
+              </GridContainer>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
