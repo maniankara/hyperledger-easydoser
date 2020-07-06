@@ -1,5 +1,5 @@
 import Cookies from "universal-cookie";
-import { cfg, mspid, mspconf, oa, pa, tls, oc, cookie} from "constants.js";
+import { cfg, mspid, mspconf, oa, pa, tls, oc, server} from "constants.js";
 export const channel_list = async () => {
   const cookies = new Cookies();
 
@@ -8,9 +8,10 @@ export const channel_list = async () => {
   const tpa = cookies.get(pa)
   const tmspconf = cookies.get(mspconf)
   const ttls = cookies.get(tls)
+  const tserver = cookies.get(server)
   console.log(ttls)
   var res = await fetch(
-    "http://localhost:8080/channel_list?cfg="+tcfg+"&peer-address="+tpa+"&msp-id="+tmspid+"&msp-config="+tmspconf+"&tls-cert="+ttls
+    "http://"+tserver+"/channel_list?cfg="+tcfg+"&peer-address="+tpa+"&msp-id="+tmspid+"&msp-config="+tmspconf+"&tls-cert="+ttls
 
   );
   console.log(res);
@@ -24,8 +25,10 @@ export const channel_info = async (name) => {
   const toa = cookies.get(oa)
   const tmspconf = cookies.get(mspconf)
   const toc = cookies.get(oc)
+  const tserver = cookies.get(server)
+
   var res = await fetch(
-    "http://localhost:8080/channel_info/" +
+    "http://"+tserver+"/channel_info/" +
       name +
       "?cfg="+tcfg+"&orderer-address="+toa+"&msp-id="+tmspid+"&msp-config="+tmspconf+"&orderer-certificate="+toc
   );
