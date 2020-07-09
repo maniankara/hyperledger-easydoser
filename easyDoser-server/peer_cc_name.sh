@@ -3,7 +3,7 @@ MSPID=""
 TLS=""
 MSPCONFIG=""
 ADDRESS=""
-CHANNEL
+CHANNEL=""
 while test $# -gt 0; do
            case "$1" in
                 --cfg)
