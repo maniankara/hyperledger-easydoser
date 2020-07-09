@@ -56,6 +56,30 @@ func getChannelList(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, string(js))
 
 }
+func getChaincodeList(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	arr := getArgsForCCList(r)
+	out, err := exec.Command("bash", "peer_cc_name.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4], "--channel", arr[5]).Output()
+	if err != nil {
+		fmt.Printf("%s", err)
+	}
+	s := fmt.Sprintf("%s", out)
+	split := strings.Split(s, "\n")
+	var slice = []string{}
+	for i := 1; i <= len(split)-2; i++ {
+		temp := strings.Split(split[i], ",")
+		final := strings.Split(temp[0], ":")
+		fmt.Printf("%s", final)
+		slice = append(slice, strings.TrimSpace(final[1]))
+	}
+	js, er := json.Marshal(slice)
+	if err != nil {
+		fmt.Printf("%s", er)
+	}
+	fmt.Fprintf(w, string(js))
+
+}
 
 func main() {
 	var port = flag.String("port", "8080", "Port to run the server on")
@@ -71,6 +95,7 @@ func main() {
 	router.HandleFunc("/", homeLink)
 	router.HandleFunc("/channel_info/{id}", getChannelInfo).Methods("GET")
 	router.HandleFunc("/channel_list", getChannelList).Methods("GET")
+	router.HandleFunc("/cc_list", getChaincodeList).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(pt, router))
 }
