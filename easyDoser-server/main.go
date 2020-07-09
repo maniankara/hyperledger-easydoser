@@ -29,7 +29,6 @@ func getChannelInfo(w http.ResponseWriter, r *http.Request) {
 	s := fmt.Sprintf("%s", out)
 	s = removeCerts(s)
 	json.Unmarshal([]byte(s), &result)
-	// working on orderer data
 	jsP, _ := json.Marshal(result["data"].(map[string]interface{})["data"].([]interface{})[0].(map[string]interface{})["payload"].(map[string]interface{})["data"].(map[string]interface{})["config"].(map[string]interface{}))
 
 	fmt.Fprintf(w, string(jsP))
@@ -48,7 +47,6 @@ func getChannelList(w http.ResponseWriter, r *http.Request) {
 	split := strings.Split(s, "joined:")
 	fmt.Printf("%s", split[1])
 	temp := strings.Split(split[1], "\n")
-	//c_list := remove(temp, 0)
 	js, er := json.Marshal(temp[1 : len(temp)-1])
 	if err != nil {
 		fmt.Printf("%s", er)
@@ -80,6 +78,22 @@ func getChaincodeList(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, string(js))
 
 }
+func getChaincodeConfig(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	arr := getArgsForCConfig(r)
+	out, err := exec.Command("bash", "peer_collection_config.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4], "--channel", arr[5], "--chaincode", arr[6]).Output()
+	if err != nil {
+		fmt.Printf("%s", err)
+	}
+	s := fmt.Sprintf("%s", out)
+	var result map[string]interface{}
+	json.Unmarshal([]byte(s), &result)
+	js, _ := json.Marshal(result)
+
+	fmt.Fprintf(w, string(js))
+
+}
 
 func main() {
 	var port = flag.String("port", "8080", "Port to run the server on")
@@ -96,6 +110,7 @@ func main() {
 	router.HandleFunc("/channel_info/{id}", getChannelInfo).Methods("GET")
 	router.HandleFunc("/channel_list", getChannelList).Methods("GET")
 	router.HandleFunc("/cc_list", getChaincodeList).Methods("GET")
+	router.HandleFunc("/cc_config", getChaincodeConfig).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(pt, router))
 }
