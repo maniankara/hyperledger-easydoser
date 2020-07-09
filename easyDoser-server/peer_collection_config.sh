@@ -3,6 +3,8 @@ MSPID=""
 TLS=""
 MSPCONFIG=""
 ADDRESS=""
+CHANNEL=""
+CC=""
 while test $# -gt 0; do
            case "$1" in
                 --cfg)
@@ -30,6 +32,16 @@ while test $# -gt 0; do
                     TLS=${1}
                     shift
                     ;;
+                --channel)
+                    shift
+                    CHANNEL=${1}
+                    shift
+                    ;;
+                --chaincode)
+                    shift
+                    CC=${1}
+                    shift
+                    ;;
                 *)
                    echo "${1} is not a recognized flag!"
                    return 1;
@@ -42,6 +54,5 @@ export CORE_PEER_LOCALMSPID=$MSPID
 export CORE_PEER_TLS_ROOTCERT_FILE=$TLS
 export CORE_PEER_MSPCONFIGPATH=$MSPCONFIG
 export CORE_PEER_ADDRESS=$ADDRESS
-peer channel list
-# ./peer_channel_list.sh --cfg /mnt/265C6B275C6AF14B/fabric/config --peer-address localhost:7051 --msp-id "Org1MSP" --msp-config /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/ --tls-cert /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt 
-
+peer lifecycle chaincode querycommitted --name $CC --channelID $CHANNEL --output json
+# ./peer_collection_config.sh  --cfg /mnt/265C6B275C6AF14B/fabric/config --peer-address localhost:7051 --msp-id "Org1MSP" --msp-config /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/ --tls-cert /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --channel mychannel --chaincode marblesp
