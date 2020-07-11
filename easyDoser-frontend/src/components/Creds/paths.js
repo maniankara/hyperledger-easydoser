@@ -98,9 +98,9 @@ export default function Paths(props) {
                       <FormTextarea
                         className="address"
                         id="#description"
-                        placeholder={cookies.get(cfg)===undefined?"default: localhost:8080":cookies.get(cfg)}
+                        placeholder={cookies.get(server)===undefined?"default: localhost:8080":cookies.get(server)}
                         onChange={(e) => {
-                          setCFG(e.target.value)
+                          setServer(e.target.value)
                     }}
                   />
                       
