@@ -1,3 +1,7 @@
+12.07.2020
+* Discuss about the release 0.1, what needs to be included, timeline etc.
+
+
 05.07.2020
  * cli containers deprecated, Fabric specific dirs are obtained from client(UI)
  * Big changes - shell scripts etc.
