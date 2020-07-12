@@ -9,9 +9,9 @@ import Info from "components/Typography/Info.js";
 import Success from "components/Typography/Success.js";
 import Warning from "components/Typography/Warning.js";
 import Danger from "components/Typography/Danger.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
+import Card from "views/Collection/node_modules/components/Card/Card.js.js";
+import CardHeader from "views/Collection/node_modules/components/Card/CardHeader.js.js";
+import CardBody from "views/Collection/node_modules/components/Card/CardBody.js.js";
 
 const styles = {
   typo: {
