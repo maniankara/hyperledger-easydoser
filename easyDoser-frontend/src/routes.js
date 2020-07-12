@@ -20,7 +20,7 @@ import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
-import TableList from "views/TableList/TableList.js";
+import Collection from "views/Collection/Collections.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 
 const dashboardRoutes = [
@@ -37,7 +37,7 @@ const dashboardRoutes = [
     name: "Collections",
     rtlName: "قائمة الجدول",
     icon: "content_paste",
-    component: TableList,
+    component: Collection,
     layout: "/admin"
   },
   {

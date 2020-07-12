@@ -3,22 +3,21 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
-import Policies from "components/Channel/Policy";
 import { Spinner } from "reactstrap";
-import { channel_info } from "../../api/api.js";
+import { chaincode_list } from "../../api/api.js";
 import PropTypes from "prop-types";
 import materialColor from "utils/ColorRandominator.js";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import IconButton from "@material-ui/core/IconButton";
-export default function ChannelWidget(props) {
+export default function ChaincodeList(props) {
   const [info, setInfo] = useState(false);
   const [data, setData] = useState({ channel_group: null });
   const [expanded, setExpanded] = useState(false);
   const hStyle = { color: "black" };
   var col = materialColor();
   const fetch = async () => {
-    var rs = await channel_info(props.item);
+    var rs = await chaincode_list(props.item);
     console.log(rs);
     setData(rs);
     setInfo(false);
@@ -69,7 +68,7 @@ export default function ChannelWidget(props) {
               <h3>Loading..</h3>
             </div>
           ) : expanded ? (
-            <Policies data={data.channel_group}></Policies>
+          <text>{props.item}</text>
           ) : (
             <p></p>
           )}
@@ -78,7 +77,7 @@ export default function ChannelWidget(props) {
     </div>
   );
 }
-ChannelWidget.ChannelWidget = {
+ChaincodeList.ChannelWidget = {
   data: PropTypes.object,
   item: PropTypes.string,
   className: PropTypes.object,

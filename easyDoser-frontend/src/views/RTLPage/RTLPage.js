@@ -19,17 +19,17 @@ import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
 // core components
 import Button from "components/CustomButtons/Button.js";
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import Table from "components/Table/Table.js";
+import GridItem from "views/Collection/node_modules/components/Grid/GridItem.js.js";
+import GridContainer from "views/Collection/node_modules/components/Grid/GridContainer.js.js";
+import Table from "views/Collection/node_modules/components/Table/Table.js.js";
 import Tasks from "components/Tasks/Tasks.js";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import Danger from "components/Typography/Danger.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
+import Card from "views/Collection/node_modules/components/Card/Card.js.js";
+import CardHeader from "views/Collection/node_modules/components/Card/CardHeader.js.js";
 import CardAvatar from "components/Card/CardAvatar.js";
 import CardIcon from "components/Card/CardIcon.js";
-import CardBody from "components/Card/CardBody.js";
+import CardBody from "views/Collection/node_modules/components/Card/CardBody.js.js";
 import CardFooter from "components/Card/CardFooter.js";
 import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 

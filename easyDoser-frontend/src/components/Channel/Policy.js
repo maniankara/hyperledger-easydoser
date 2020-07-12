@@ -12,6 +12,7 @@ import { Col, Row } from "reactstrap";
 import materialColor from 'utils/ColorRandominator.js';
 import './channel.css';
 
+
 export default function Policies(props){
     const hStyle = { color: 'black', size:20 };
     const [expand, setExpand] = useState({});

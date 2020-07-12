@@ -1,5 +1,5 @@
 // @material-ui/core
-import ChannelWidget from "components/Channel/ChannelWidget.js";
+import ChannelWidget from "components/Collections/ChannelWidget.js";
 import Paths from "components/Creds/paths.js";
 import React, { useState } from "react";
 import { Row } from "reactstrap";
@@ -7,14 +7,9 @@ import { Row } from "reactstrap";
 import { channel_list } from "../../api/api.js";
 import Cookies from "universal-cookie";
 import { cookie } from "constants.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
 import Button from "components/CustomButtons/Button.js";
 
-
-export default function Dashboard() {
+export default function Collection() {
   const cookies = new Cookies();
   const [items, setChannels] = useState([]);
   const [fetch, setFetch] = useState(false);
