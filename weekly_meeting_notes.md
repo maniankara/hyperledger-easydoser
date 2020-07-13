@@ -1,7 +1,16 @@
 12.07.2020
 * Discuss about the release 0.1, what needs to be included, timeline etc.
+  - 0.1 release - W/R of private collections
 * Final submission - blog, white paper etc.
 * Try to deploy our solution on atleast 1 cloud vendor with HF managed service
+  - Try it at the end of phase - 2
+* Last week:
+  - reading pdc
+  - Improved UI
+  - Bug fixes
+* Next week:
+  - PDC update: text box that accepts JSON from user
+  - Update endorsement policies - if possible
 
 
 05.07.2020
