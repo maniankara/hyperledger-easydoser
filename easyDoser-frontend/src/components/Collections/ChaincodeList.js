@@ -3,30 +3,30 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
-import Policies from "components/Channel/Policy";
 import { Spinner } from "reactstrap";
-import { channel_info } from "../../api/api.js";
+import { chaincode_config } from "../../api/api.js";
 import PropTypes from "prop-types";
+import CC_config from "components/Collections/config.js"
 import materialColor from "utils/ColorRandominator.js";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import IconButton from "@material-ui/core/IconButton";
-export default function ChannelWidget(props) {
+
+export default function ChaincodeList(props) {
   const [info, setInfo] = useState(false);
-  const [data, setData] = useState({ channel_group: null });
+  const [data, setData] = useState({});
   const [expanded, setExpanded] = useState(false);
   const hStyle = { color: "black" };
   var col = materialColor();
   const fetch = async () => {
-    var rs = await channel_info(props.item);
-    console.log(rs);
-    setData(rs);
-    setInfo(false);
-    setExpanded(true);
+    var data = await chaincode_config(props.channel, props.item);
+    setData(data);
+    setInfo(false)
+    console.log(JSON.stringify(data))
   };
   return (
     <div onClick={() => {}}>
-      <Card style={{ background: expanded ? "#f1efd4" : "#ffffff" }}>
+      <Card style={{ background: materialColor() }}>
         <CardHeader color="warning" stats icon>
           <CardIcon color="warning">
             <p>
@@ -69,7 +69,7 @@ export default function ChannelWidget(props) {
               <h3>Loading..</h3>
             </div>
           ) : expanded ? (
-            <Policies data={data.channel_group}></Policies>
+            <CC_config config={data}></CC_config>
           ) : (
             <p></p>
           )}
@@ -78,8 +78,8 @@ export default function ChannelWidget(props) {
     </div>
   );
 }
-ChannelWidget.ChannelWidget = {
-  data: PropTypes.object,
+ChaincodeList.ChannelWidget = {
+  channel: PropTypes.channel,
   item: PropTypes.string,
   className: PropTypes.object,
 };
