@@ -8,8 +8,17 @@ import materialColor from 'utils/ColorRandominator.js';
 
 export default function CC_config (props) {
     var items = props.config.collections.config;
+    console.log(props.config)
     console.log(items)
-    return(
+    var empty= false;
+    if(props.config.collections.config=== undefined){
+        empty= true;
+    }
+    return empty?(
+    <text style={{ fontWeight: 'bold' }}>
+        <br/>
+        No private Data Collections in the Chaincode
+    </text>):(
         <div>
            {
                items.map((item)=>
