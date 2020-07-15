@@ -72,11 +72,11 @@ export default function ChannelWidget(props) {
               <ExpandLessIcon fontSize="large" />
             )}
           </IconButton>
-
+              {info?(<h3>Chaincodes: </h3>):(<text></text>)}
           {info ? (
              <Row>
              {items.length != 0 ? (
-               items.map((item) => <text>{item}</text>)
+               items.map((item) => <ChaincodeList channel={props.item} item = {item}></ChaincodeList>)
              ) : (
                <h3>No Channels</h3>
              )}
