@@ -4,28 +4,29 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import { Spinner } from "reactstrap";
-import { chaincode_list } from "../../api/api.js";
+import { chaincode_config } from "../../api/api.js";
 import PropTypes from "prop-types";
+import CC_config from "components/Collections/config.js"
 import materialColor from "utils/ColorRandominator.js";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import IconButton from "@material-ui/core/IconButton";
+
 export default function ChaincodeList(props) {
   const [info, setInfo] = useState(false);
-  const [data, setData] = useState({ channel_group: null });
+  const [data, setData] = useState({});
   const [expanded, setExpanded] = useState(false);
   const hStyle = { color: "black" };
   var col = materialColor();
   const fetch = async () => {
-    var rs = await chaincode_list(props.item);
-    console.log(rs);
-    setData(rs);
-    setInfo(false);
-    setExpanded(true);
+    var data = await chaincode_config(props.channel, props.item);
+    setData(data);
+    setInfo(false)
+    console.log(JSON.stringify(data))
   };
   return (
     <div onClick={() => {}}>
-      <Card style={{ background: expanded ? "#f1efd4" : "#ffffff" }}>
+      <Card style={{ background: materialColor() }}>
         <CardHeader color="warning" stats icon>
           <CardIcon color="warning">
             <p>
@@ -68,7 +69,7 @@ export default function ChaincodeList(props) {
               <h3>Loading..</h3>
             </div>
           ) : expanded ? (
-          <text>{props.item}</text>
+            <CC_config config={data}></CC_config>
           ) : (
             <p></p>
           )}
@@ -78,7 +79,7 @@ export default function ChaincodeList(props) {
   );
 }
 ChaincodeList.ChannelWidget = {
-  data: PropTypes.object,
+  channel: PropTypes.channel,
   item: PropTypes.string,
   className: PropTypes.object,
 };
