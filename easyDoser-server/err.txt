@@ -1,3 +1,3 @@
-[34m2020-07-04 13:51:25.653 IST [channelCmd] InitCmdFactory -> INFO 001[0m Endorser and orderer connections initialized
-Channels peers has joined: 
-mychannel
+[34m2020-07-18 14:22:37.986 IST [channelCmd] InitCmdFactory -> INFO 001[0m Endorser and orderer connections initialized
+[34m2020-07-18 14:22:37.988 IST [cli.common] readBlock -> INFO 002[0m Expect block, but got status: &{NOT_FOUND}
+Error: can't read the block: &{NOT_FOUND}
