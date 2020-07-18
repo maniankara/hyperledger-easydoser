@@ -20,8 +20,8 @@ func getChannelInfo(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	arr := getIdFromRequest(r)
-	filename := "1.pb"
-	out, err := exec.Command("bash", "./peercli.sh", "--cfg", arr[0], "--orderer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--orderer-certificate", arr[4], "--channel", "\""+arr[5]+"\"", "--filename", filename).Output()
+	filename := "conf.pb"
+	out, err := exec.Command("sh", "./bash/peercli.sh", "--cfg", arr[0], "--orderer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--orderer-certificate", arr[4], "--channel", arr[5], "--filename", filename).Output()
 	if err != nil {
 		fmt.Printf("%s", err)
 	}
@@ -38,7 +38,7 @@ func getChannelList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	arr := getArgsForChannelList(r)
-	out, err := exec.Command("bash", "peer_channel_list.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4]).Output()
+	out, err := exec.Command("bash", "./bash/peer_channel_list.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4]).Output()
 	if err != nil {
 		fmt.Printf("%s", err)
 	}
@@ -58,7 +58,7 @@ func getChaincodeList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	arr := getArgsForCCList(r)
-	out, err := exec.Command("bash", "peer_cc_name.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4], "--channel", arr[5]).Output()
+	out, err := exec.Command("bash", "./bash/peer_cc_name.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4], "--channel", arr[5]).Output()
 	if err != nil {
 		fmt.Printf("%s", err)
 	}
@@ -82,7 +82,7 @@ func getChaincodeConfig(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	arr := getArgsForCConfig(r)
-	out, err := exec.Command("bash", "peer_collection_config.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4], "--channel", arr[5], "--chaincode", arr[6]).Output()
+	out, err := exec.Command("bash", "./bash/peer_collection_config.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4], "--channel", arr[5], "--chaincode", arr[6]).Output()
 	if err != nil {
 		fmt.Printf("%s", err)
 	}
@@ -92,6 +92,11 @@ func getChaincodeConfig(w http.ResponseWriter, r *http.Request) {
 	js, _ := json.Marshal(result)
 
 	fmt.Fprintf(w, string(js))
+
+}
+func approveNewPolicy(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 }
 
