@@ -1,3 +1,13 @@
+19.07.2020
+* Demoed PDC - RO (RW scripts ready UI integration pending)
+* Anoop to get back on how approval/commit process work for RW scenarios
+* Last week:
+  - UI PDC RO, RW backend scripts 
+* This week:
+  - Take a look at channel definition
+  - Improving logging/error handling
+  - Clean up Front End code
+
 12.07.2020
 * Discuss about the release 0.1, what needs to be included, timeline etc.
   - 0.1 release - W/R of private collections
