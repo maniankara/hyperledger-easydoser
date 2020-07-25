@@ -22,6 +22,7 @@ import Person from "@material-ui/icons/Person";
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import Collection from "views/Collection/Collections.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
+import EditCollection from "views/EditCollection/Collections.js"
 
 const dashboardRoutes = [
   {
@@ -38,6 +39,14 @@ const dashboardRoutes = [
     rtlName: "قائمة الجدول",
     icon: "content_paste",
     component: Collection,
+    layout: "/admin"
+  },
+  {
+    path: "/updateCollection",
+    name: "Update Collection",
+    rtlName: "قائمة الجدول",
+    icon: "content_paste",
+    component: EditCollection,
     layout: "/admin"
   },
   {
