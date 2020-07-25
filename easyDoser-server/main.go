@@ -1,11 +1,14 @@
 package main
 
 import (
+	"bufio"
+	"bytes"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"os/exec"
 	"strings"
 
@@ -20,13 +23,20 @@ func getChannelInfo(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	arr := getIdFromRequest(r)
-	filename := "1.pb"
-	out, err := exec.Command("bash", "./peercli.sh", "--cfg", arr[0], "--orderer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--orderer-certificate", arr[4], "--channel", "\""+arr[5]+"\"", "--filename", filename).Output()
+	filename := "conf.pb"
+	cmd := exec.Command("sh", "./bash/peercli.sh", "--cfg", arr[0], "--orderer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--orderer-certificate", arr[4], "--channel", arr[5], "--filename", filename)
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err := cmd.Run()
 	if err != nil {
-		fmt.Printf("%s", err)
+		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
+		fmt.Fprintf(w, "error")
+		return
 	}
 	var result map[string]interface{}
-	s := fmt.Sprintf("%s", out)
+	s := fmt.Sprintf("%s", out.String())
 	s = removeCerts(s)
 	json.Unmarshal([]byte(s), &result)
 	jsP, _ := json.Marshal(result["data"].(map[string]interface{})["data"].([]interface{})[0].(map[string]interface{})["payload"].(map[string]interface{})["data"].(map[string]interface{})["config"].(map[string]interface{}))
@@ -38,11 +48,18 @@ func getChannelList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	arr := getArgsForChannelList(r)
-	out, err := exec.Command("bash", "peer_channel_list.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4]).Output()
+	cmd := exec.Command("bash", "./bash/peer_channel_list.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4])
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err := cmd.Run()
 	if err != nil {
-		fmt.Printf("%s", err)
+		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
+		fmt.Fprintf(w, "error")
+		return
 	}
-	s := fmt.Sprintf("%s", out)
+	s := fmt.Sprintf("%s", out.String())
 	fmt.Printf("%s", s)
 	split := strings.Split(s, "joined:")
 	fmt.Printf("%s", split[1])
@@ -58,11 +75,18 @@ func getChaincodeList(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	arr := getArgsForCCList(r)
-	out, err := exec.Command("bash", "peer_cc_name.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4], "--channel", arr[5]).Output()
+	cmd := exec.Command("bash", "./bash/peer_cc_name.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4], "--channel", arr[5])
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err := cmd.Run()
 	if err != nil {
-		fmt.Printf("%s", err)
+		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
+		fmt.Fprintf(w, "error")
+		return
 	}
-	s := fmt.Sprintf("%s", out)
+	s := fmt.Sprintf("%s", out.String())
 	split := strings.Split(s, "\n")
 	var slice = []string{}
 	for i := 1; i <= len(split)-2; i++ {
@@ -82,16 +106,81 @@ func getChaincodeConfig(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	arr := getArgsForCConfig(r)
-	out, err := exec.Command("bash", "peer_collection_config.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4], "--channel", arr[5], "--chaincode", arr[6]).Output()
+	cmd := exec.Command("bash", "./bash/peer_collection_config.sh", "--cfg", arr[0], "--peer-address", arr[1], "--msp-id", arr[2], "--msp-config", arr[3], "--tls-cert", arr[4], "--channel", arr[5], "--chaincode", arr[6])
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+
 	if err != nil {
-		fmt.Printf("%s", err)
+		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
 	}
-	s := fmt.Sprintf("%s", out)
+	s := fmt.Sprintf("%s", out.String())
 	var result map[string]interface{}
 	json.Unmarshal([]byte(s), &result)
 	js, _ := json.Marshal(result)
 
 	fmt.Fprintf(w, string(js))
+
+}
+func getSequence(conf updateConfig) string {
+
+	cmd := exec.Command("bash", "./bash/peer_get_sequence.sh", "--cfg", conf.Cfg, "--orderer-address", conf.Oa, "--msp-id", conf.Mspid, "--msp-config", conf.Mspconf, "--tls-cert", conf.TLS, "--channel", conf.Channel, "--chaincode", conf.Chaincode, "--policy", conf.APolicy, "--sequence", "1", "--version", conf.Version, "--orderer-certificate", conf.Oc, "--filename", "config.json", "--peer-address", conf.Pa)
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
+		seq := strings.Split(stderr.String(), "next available sequence number")
+		//fmt.Fprintf(w, strings.Trim(seq[1], " "))
+		return strings.Trim(seq[1], " ")
+	}
+	fmt.Println("Result: " + out.String())
+	return ("665")
+
+}
+func approvePC(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	fmt.Println("asasdasd")
+	var config updateConfig
+	err := json.NewDecoder(r.Body).Decode(&config)
+	if err != nil {
+		fmt.Println(err.Error())
+		fmt.Printf("%s", err.Error())
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		fmt.Fprintf(w, "ASda")
+		return
+	}
+	file, err := os.Create("./config.json")
+	if err != nil {
+
+	}
+	defer file.Close()
+	fileWriter := bufio.NewWriter(file)
+	fmt.Fprintln(fileWriter, config.Policy)
+	fileWriter.Flush()
+	fmt.Println(string(config.Policy))
+
+	sequence := getSequence(config)
+	fmt.Println(string(sequence))
+	cmd := exec.Command("bash", "./bash/peer_approve_collection.sh", "--cfg", config.Cfg, "--orderer-address", config.Oa, "--msp-id", config.Mspid, "--msp-config", config.Mspconf, "--tls-cert", config.TLS, "--channel", config.Channel, "--chaincode", config.Chaincode, "--policy", config.APolicy, "--sequence", sequence, "--version", config.Version, "--orderer-certificate", config.Oc, "--filename", "config.json", "--peer-address", config.Pa)
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	cmderr := cmd.Run()
+	if cmderr != nil {
+
+		fmt.Println(stderr.String())
+		fmt.Fprintf(w, "{\"status\":\"{\""+stderr.String()+"\"}}")
+		return
+	}
+	fmt.Println("Result: " + out.String())
+	fmt.Fprintf(w, "{\"status\":\"done\"}")
 
 }
 
@@ -111,6 +200,7 @@ func main() {
 	router.HandleFunc("/channel_list", getChannelList).Methods("GET")
 	router.HandleFunc("/cc_list", getChaincodeList).Methods("GET")
 	router.HandleFunc("/cc_config", getChaincodeConfig).Methods("GET")
+	router.HandleFunc("/approve", approvePC).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(pt, router))
 }
@@ -135,5 +225,20 @@ func main() {
 // oca := "\"/mnt/265C6B275C6AF14B/fabric/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem\""
 //channel := `"mychannel" `
 
+// to be removed
+////////////////
+//Channel List
+////////////////////
+// TO BE DELETED
+// cfg := "/mnt/265C6B275C6AF14B/fabric/config"
+// address := "localhost:7051"
+// o_address := "localhost:7050"
+// oca := "/mnt/265C6B275C6AF14B/fabric/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem"
+// mspId := "Org1MSP"
+// mspconfig := "/mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp"
+// tls := "/mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+// policy := `OR('Org1MSP.member','Org2MSP.member')`
+////////////
+//Channel Info
 // to be removed
 ////////////////
