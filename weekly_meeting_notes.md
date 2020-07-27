@@ -1,3 +1,15 @@
+27.07.2020
+ * Demo: update collection def.
+ * Anoop: approval/commit per user (edit paths)
+ * This week:
+   - Improved logging
+   - Approving PDC
+ * This week:
+   - Check peer approval (if possible) + commit definition
+   - update channel definition if there is time.
+   - Take a look at bugs
+
+
 19.07.2020
 * Demoed PDC - RO (RW scripts ready UI integration pending)
 * Anoop to get back on how approval/commit process work for RW scenarios
