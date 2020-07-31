@@ -23,6 +23,7 @@ import DashboardPage from "views/Dashboard/Dashboard.js";
 import Collection from "views/Collection/Collections.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import EditCollection from "views/EditCollection/Collections.js"
+import CommitCollection from "views/CommitCollection/Commit"
 
 const dashboardRoutes = [
   {
@@ -47,6 +48,14 @@ const dashboardRoutes = [
     rtlName: "قائمة الجدول",
     icon: "content_paste",
     component: EditCollection,
+    layout: "/admin"
+  },
+  {
+    path: "/commitchannel",
+    name: "Commit Collection",
+    rtlName: "قائمة الجدول",
+    icon: "content_paste",
+    component: CommitCollection,
     layout: "/admin"
   },
   {
