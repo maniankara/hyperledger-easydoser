@@ -28,6 +28,7 @@
 # server
 /easyDoser-server/easyDoser-server
 /easyDoser-server/cc.json
+/easyDoser-server/commit.json
 /easyDoser-server/config.json
 /easyDoser-server/config_block.pb
 /Easedoser.code-workspace
