@@ -26,7 +26,7 @@
 /easydoser-frontend/package-lock.json
 
 # server
-/easyDoser-server/easydoser-server
+/easyDoser-server/easyDoser-server
 /easyDoser-server/cc.json
 /easyDoser-server/config.json
 /easyDoser-server/config_block.pb
