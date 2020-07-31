@@ -14,3 +14,11 @@ type updateConfig struct {
 	Channel   string `json:"channel"`
 	Chaincode string `json:"chaincode"`
 }
+
+type CommitCheck struct {
+	Orgs []Org `json:"orgs"`
+}
+type Org struct {
+	Name   string `json:"name"`
+	Status string `json:"status"`
+}
