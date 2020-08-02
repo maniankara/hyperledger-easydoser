@@ -1,3 +1,10 @@
+02.08.2020
+ * Demo: check readiness
+ * Anoop: To test with 2 peers 2 orgs in private browser windows
+ * This week:
+   - Implement commit
+   - Updating channel definitions
+
 27.07.2020
  * Demo: update collection def.
  * Anoop: approval/commit per user (edit paths)
