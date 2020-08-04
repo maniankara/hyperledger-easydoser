@@ -11,4 +11,5 @@
 | 7   | july 12  | Backend ready for reading private data collections |  |
 | 8   | july 19  | Reading private collection working, Somewhat approving new private collection definition done  |  |
 | 9  | july 26 | Approving collection definition done, improved logging and starting with committing the definition  |  |
+| 9  | August 2 |Checking Commit Readiness Done, Almost done with committing collection definition  |  |
 
