@@ -1,8 +1,18 @@
+#!/bin/bash
 CFG=""
-MSPID=""
-TLS=""
-MSPCONFIG=""
 ADDRESS=""
+MSPID=""
+MSPCONFIG=""
+OCA=""
+CHANNEL=""
+FILE=""
+CHAINCODE=""
+VERSION=""
+POLICY=""
+ORGS=""
+TLS=""
+SEQUENCE=""
+PEER=""
 while test $# -gt 0; do
            case "$1" in
                 --cfg)
@@ -10,9 +20,14 @@ while test $# -gt 0; do
                     CFG=${1}
                     shift
                     ;;
-                --peer-address)
+                --orderer-address)
                     shift
                     ADDRESS=${1}
+                    shift
+                    ;;
+                --peer-address)
+                    shift
+                    PEER=${1}
                     shift
                     ;;
                 --msp-id)
@@ -25,7 +40,42 @@ while test $# -gt 0; do
                     MSPCONFIG=${1}
                     shift
                     ;;
-                --tls-cert)
+                --orderer-certificate)
+                    shift
+                    OCA=${1}
+                    shift
+                    ;;
+                --channel)
+                    shift
+                    CHANNEL=${1}
+                    shift
+                    ;;
+                --chaincode)
+                    shift
+                    CHAINCODE=${1}
+                    shift
+                    ;;
+                --version)
+                    shift
+                    VERSION=${1}
+                    shift
+                    ;;
+                --sequence)
+                    shift
+                    SEQUENCE=${1}
+                    shift
+                    ;;
+                --policy)
+                    shift
+                    POLICY=${1}
+                    shift
+                    ;;
+                --orgs)
+                    shift
+                    ORGS=${1}
+                    shift
+                    ;;
+                --tls)
                     shift
                     TLS=${1}
                     shift
@@ -36,12 +86,14 @@ while test $# -gt 0; do
                    ;;
           esac
   done  
-export CORE_PEER_TLS_ENABLED=true
 export FABRIC_CFG_PATH=$CFG
 export CORE_PEER_LOCALMSPID=$MSPID
-export CORE_PEER_TLS_ROOTCERT_FILE=$TLS
+export ORDERER_ADDRESS=$ADDRESS
 export CORE_PEER_MSPCONFIGPATH=$MSPCONFIG
-export CORE_PEER_ADDRESS=$ADDRESS
-peer channel list
-# ./peer_channel_list.sh --cfg /mnt/265C6B275C6AF14B/fabric/config --peer-address localhost:7051 --msp-id "Org1MSP" --msp-config /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/ --tls-cert /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt 
-
+export ORDERER_CA=$OCA
+export CHANNEL_NAME=$CHANNEL
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_TLS_ROOTCERT_FILE=$TLS
+ 
+peer lifecycle chaincode commit -o $ORDERER_ADDRESS --channelID $CHANNEL_NAME --name $CHAINCODE --version $VERSION --sequence $SEQUENCE  --collections-config config.json  --signature-policy $POLICY --tls --cafile $ORDERER_CA $ORGS
+#./peer_commit_chaincode.sh --channel mychannel --chaincode marblesp --version "1.3" --cfg /mnt/265C6B275C6AF14B/fabric/config --orderer-address localhost:7050 --msp-id Org1MSP --orderer-certificate /mnt/265C6B275C6AF14B/fabric/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --version "1.3" --policy "OR('Org1MSP.member','Org2MSP.member')" --orgs "--peerAddresses localhost:7051 --tlsRootCertFiles /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 --tlsRootCertFiles /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" --msp-config  /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/ --tls /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt

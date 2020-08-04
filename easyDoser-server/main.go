@@ -178,6 +178,7 @@ func approvePC(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Println("Result: " + out.String())
+	os.Remove("./config.json")
 	fmt.Fprintf(w, "{\"status\":\"done\"}")
 
 }
@@ -241,10 +242,72 @@ func checkCommitReady(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Println(orgs)
+	os.Remove("./config.json")
 	fmt.Fprintf(w, string(e))
 }
 func getSequenceCheck(args updateConfig) string {
 	cmd := exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", args.TLS, "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", "665", "--version", args.Version, "--orderer-certificate", args.Oc, "--peer-address", args.Pa)
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	cmderr := cmd.Run()
+	if cmderr != nil {
+		fmt.Println(fmt.Sprint(cmderr) + ": " + stderr.String())
+		seq := strings.Split(stderr.String(), "but new definition must be sequence")
+		//fmt.Fprintf(w, strings.Trim(seq[1], " "))
+		return strings.Trim(seq[1], " ")
+
+	}
+	fmt.Println("Result: " + out.String())
+	return ("665")
+}
+func commitChaincode(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	var data CommitData
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		fmt.Println(err.Error())
+		fmt.Printf("%s", err.Error())
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	file, err := os.Create("./config.json")
+	if err != nil {
+
+	}
+	defer file.Close()
+	fileWriter := bufio.NewWriter(file)
+	fmt.Fprintln(fileWriter, data.Policy)
+	fileWriter.Flush()
+	fmt.Println(string(data.Policy))
+
+	orgs := commitArgBuilder(data.Orgs.Address, data.Orgs.Cert)
+	sequence := getCommitSequence(data, orgs)
+	cmd := exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", data.TLS, "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", sequence, "--version", data.Version, "--orderer-certificate", data.Oc, "--peer-address", data.Pa, "--orgs", orgs)
+
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	cmderr := cmd.Run()
+	if cmderr != nil {
+
+		fmt.Println("Error:" + stderr.String())
+		fmt.Fprintf(w, "{\"status\":\"something went wrong\"}")
+		return
+	}
+	fmt.Println(out.String())
+	s := fmt.Sprintf("%s", out.String())
+	fmt.Println(s)
+	os.Remove("./config.json")
+	fmt.Fprintf(w, "{\"status\":\"done\"}")
+
+}
+func getCommitSequence(data CommitData, orgs string) string {
+	cmd := exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", data.TLS, "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", "665", "--version", data.Version, "--orderer-certificate", data.Oc, "--peer-address", data.Pa, "--orgs", orgs)
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
@@ -278,6 +341,7 @@ func main() {
 	router.HandleFunc("/cc_config", getChaincodeConfig).Methods("GET")
 	router.HandleFunc("/approve", approvePC).Methods("POST")
 	router.HandleFunc("/check", checkCommitReady).Methods("POST")
+	router.HandleFunc("/commit", commitChaincode).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(pt, router))
 }
@@ -315,6 +379,11 @@ func main() {
 // mspconfig := "/mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp"
 // tls := "/mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
 // policy := `OR('Org1MSP.member','Org2MSP.member')`
+	// policy := `OR('Org1MSP.member','Org2MSP.member')`
+	// peer_list := []string{"localhost:7051", "localhost:9051"}
+	// cert_list := []string{"/mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt", "/mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt"}
+	//orgs := `--peerAddresses localhost:7051 --tlsRootCertFiles /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 --tlsRootCertFiles /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt`
+
 ////////////
 //Channel Info
 // to be removed
