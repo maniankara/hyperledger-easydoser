@@ -9,7 +9,7 @@ import {  FormTextarea } from "shards-react";
 import Button from "components/CustomButtons/Button.js";
 import CardFooter from "components/Card/CardFooter.js";
 import * as escapeJSON from "escape-json-node";
-import {checkCommit} from "api/api"
+import {commitCC,checkCommit} from "api/api"
 
 import "./config.css"
 export default function CC_config (props) {
@@ -18,11 +18,14 @@ export default function CC_config (props) {
     const[apolicy, setApolicy] = useState("")
     const[policy, setpolicy] = useState("")    
     const[version, setVersion] = useState("")
+    const[finalStatus, setfinalStatus] = useState({})
     const[ready, setReady] = useState(false);
+    var peers = {}
+    var certs = {}
     const check = async ()=>{
         var validJSON =false;
         try { JSON.parse(policy); validJSON = true } catch (e) { validJSON= false}
-        if(true){
+        if(validJSON){
            var escaped = escapeJSON(policy)
             console.log(escaped)
             const resp = await checkCommit(escaped, apolicy, version, props.channel, props.chaincode)
@@ -36,13 +39,27 @@ export default function CC_config (props) {
 
     }
     const checkReadiness = (resp) => {
+      var flag = true;
       for(var i =0; i<resp.orgs.length; i++){
-        var flag = true;
+        
         if(resp.orgs[i].status=="false"){
           flag = false;
           break
         }
-        setReady(flag)
+        
+      }
+      setReady(flag)
+    }
+    const commit = async() => {
+      var validJSON =false;
+      try { JSON.parse(policy); validJSON = true } catch (e) { validJSON= false}
+      const peerlist = Object.values(peers);
+      const certList = Object.values(certs);
+      if(validJSON){
+        var escaped = escapeJSON(policy)
+        const resp = await commitCC(escaped, apolicy, version, props.channel, props.chaincode, peerlist, certList)
+        console.log(resp)
+        setfinalStatus(resp)
       }
     }
 
@@ -112,7 +129,7 @@ export default function CC_config (props) {
                   check()
                 }}
               >
-                Update Varaiables
+                Check Commit Readiness
               </Button>
               {
                 resp.orgs!==undefined?resp.orgs.map((item)=><div>
@@ -120,13 +137,13 @@ export default function CC_config (props) {
                 </div>):<div></div>
               }
               {
-                ready?(resp.orgs.map((item=><div>
+                ready?(resp.orgs.map((item,index)=><div>
                   <h3>{item.name}</h3>
                    <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
                       <label className="Lable" htmlFor="#parametername">
-                        Version
+                        Peer Address
                       </label>
                       <br/>
                       <FormTextarea
@@ -134,7 +151,7 @@ export default function CC_config (props) {
                         id="#description"
                         placeholder="Address"
                         onChange={(e) => {
-                          setVersion(e.target.value)
+                          peers[index.toString()]=e.target.value
                     }}
                   />
                       
@@ -144,7 +161,7 @@ export default function CC_config (props) {
                 <GridItem xs={12} sm={12} md={12}>
               
                       <label className="Lable" htmlFor="#parametername">
-                        Version
+                        TLS CA CERTIFICATE
                       </label>
                       <br/>
                       <FormTextarea
@@ -152,14 +169,30 @@ export default function CC_config (props) {
                         id="#description"
                         placeholder="TLS Cert"
                         onChange={(e) => {
-                          setVersion(e.target.value)
+                          certs[index.toString()]=e.target.value
                     }}
                   />
                       
                 </GridItem>
               </GridContainer>
-                </div>))):(<div></div>)
+                </div>)):(<div></div>)
+               
               }
+              { ready?(
+                  <div>
+                    <Button
+                    color="primary"
+                    onClick={() => {
+                      commit()
+                      }}
+                    >
+                      Commit chaincode Definition
+                  </Button>
+                  {finalStatus.status!=undefined?(<text><br/><br/>{finalStatus.status}</text>):<div></div>}
+                  </div>
+                ):(
+                  <div></div>
+                )}
               <CardFooter>
              
             </CardFooter>
