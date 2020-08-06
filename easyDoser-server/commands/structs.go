@@ -1,4 +1,4 @@
-package main
+package commands
 
 type updateConfig struct {
 	Policy    string `json:"policy"`
