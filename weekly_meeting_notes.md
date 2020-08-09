@@ -1,3 +1,12 @@
+09.08.2020
+ * General: Placement training ends early sept 2020.
+ * Last week: 
+   - demo, restructured server code, commiting chaincode.
+ * Anoop: To test the existing setup and give comments/bugs
+ * This week:
+   - Reading endorsement policy
+   - Updating endorsement policy
+
 02.08.2020
  * Demo: check readiness
  * Anoop: To test with 2 peers 2 orgs in private browser windows
