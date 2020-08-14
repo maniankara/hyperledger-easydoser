@@ -2,7 +2,6 @@ package commands
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"os/exec"
@@ -23,10 +22,7 @@ func GetEndorsementPolicy(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
 	}
 	s := fmt.Sprintf("%s", out.String())
-	var result map[string]interface{}
-	json.Unmarshal([]byte(s), &result)
-	js, _ := json.Marshal(result)
 
-	fmt.Fprintf(w, string(js))
+	fmt.Fprintf(w, s)
 
 }

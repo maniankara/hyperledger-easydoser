@@ -5,7 +5,7 @@ MSPID=""
 MSPCONFIG=""
 OCA=""
 CHANNEL=""
-FILE=""
+COLLECTION=""
 CHAINCODE=""
 VERSION=""
 POLICY=""
@@ -80,6 +80,11 @@ while test $# -gt 0; do
                     TLS=${1}
                     shift
                     ;;
+                --collection)
+                    shift
+                    COLLECTION=${1}
+                    shift
+                    ;;
                 *)
                    echo "${1} is not a recognized flag!"
                    return 1;
@@ -94,6 +99,10 @@ export ORDERER_CA=$OCA
 export CHANNEL_NAME=$CHANNEL
 export CORE_PEER_TLS_ENABLED=true
 export CORE_PEER_TLS_ROOTCERT_FILE=$TLS
- 
-peer lifecycle chaincode commit -o $ORDERER_ADDRESS --channelID $CHANNEL_NAME --name $CHAINCODE --version $VERSION --sequence $SEQUENCE  --collections-config config.json  --signature-policy $POLICY --tls --cafile $ORDERER_CA $ORGS
+if test "$COLLECTION" = "null"
+then
+    peer lifecycle chaincode commit -o $ORDERER_ADDRESS --channelID $CHANNEL_NAME --name $CHAINCODE --version $VERSION --sequence $SEQUENCE --signature-policy $POLICY --tls --cafile $ORDERER_CA $ORGS
+else 
+    peer lifecycle chaincode commit -o $ORDERER_ADDRESS --channelID $CHANNEL_NAME --name $CHAINCODE --version $VERSION --sequence $SEQUENCE  --collections-config config.json  --signature-policy $POLICY --tls --cafile $ORDERER_CA $ORGS
+fi
 #./peer_commit_chaincode.sh --channel mychannel --chaincode marblesp --version "1.3" --cfg /mnt/265C6B275C6AF14B/fabric/config --orderer-address localhost:7050 --msp-id Org1MSP --orderer-certificate /mnt/265C6B275C6AF14B/fabric/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --version "1.3" --policy "OR('Org1MSP.member','Org2MSP.member')" --orgs "--peerAddresses localhost:7051 --tlsRootCertFiles /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 --tlsRootCertFiles /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" --msp-config  /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/ --tls /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
