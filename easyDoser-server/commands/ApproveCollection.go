@@ -22,19 +22,27 @@ func ApprovePC(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	file, err := os.Create("./config.json")
-	if err != nil {
+	if config.Policy != "null" {
+		file, err := os.Create("./config.json")
+		if err != nil {
 
+		}
+		defer file.Close()
+		fileWriter := bufio.NewWriter(file)
+		fmt.Fprintln(fileWriter, config.Policy)
+		fileWriter.Flush()
+		fmt.Println(string(config.Policy))
 	}
-	defer file.Close()
-	fileWriter := bufio.NewWriter(file)
-	fmt.Fprintln(fileWriter, config.Policy)
-	fileWriter.Flush()
-	fmt.Println(string(config.Policy))
 
 	sequence := getSequence(config)
 	fmt.Println(string(sequence))
+
 	cmd := exec.Command("bash", "./bash/peer_approve_collection.sh", "--cfg", config.Cfg, "--orderer-address", config.Oa, "--msp-id", config.Mspid, "--msp-config", config.Mspconf, "--tls-cert", config.TLS, "--channel", config.Channel, "--chaincode", config.Chaincode, "--policy", config.APolicy, "--sequence", sequence, "--version", config.Version, "--orderer-certificate", config.Oc, "--filename", "config.json", "--peer-address", config.Pa)
+	if config.Policy == "null" {
+		cmd = exec.Command("bash", "./bash/peer_approve_collection.sh", "--cfg", config.Cfg, "--orderer-address", config.Oa, "--msp-id", config.Mspid, "--msp-config", config.Mspconf, "--tls-cert", config.TLS, "--channel", config.Channel, "--chaincode", config.Chaincode, "--policy", config.APolicy, "--sequence", sequence, "--version", config.Version, "--orderer-certificate", config.Oc, "--filename", "null", "--peer-address", config.Pa)
+
+	}
+
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
@@ -47,13 +55,20 @@ func ApprovePC(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Println("Result: " + out.String())
-	os.Remove("./config.json")
+	if config.Policy != "null" {
+		os.Remove("./config.json")
+	}
+
 	fmt.Fprintf(w, "{\"status\":\"done\"}")
 
 }
 func getSequence(conf updateConfig) string {
-
 	cmd := exec.Command("bash", "./bash/peer_get_sequence.sh", "--cfg", conf.Cfg, "--orderer-address", conf.Oa, "--msp-id", conf.Mspid, "--msp-config", conf.Mspconf, "--tls-cert", conf.TLS, "--channel", conf.Channel, "--chaincode", conf.Chaincode, "--policy", conf.APolicy, "--sequence", "1", "--version", conf.Version, "--orderer-certificate", conf.Oc, "--filename", "config.json", "--peer-address", conf.Pa)
+	if conf.Policy == "null" {
+		cmd = exec.Command("bash", "./bash/peer_get_sequence.sh", "--cfg", conf.Cfg, "--orderer-address", conf.Oa, "--msp-id", conf.Mspid, "--msp-config", conf.Mspconf, "--tls-cert", conf.TLS, "--channel", conf.Channel, "--chaincode", conf.Chaincode, "--policy", conf.APolicy, "--sequence", "1", "--version", conf.Version, "--orderer-certificate", conf.Oc, "--filename", "null", "--peer-address", conf.Pa)
+
+	}
+
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out

@@ -64,7 +64,7 @@ configtxlator proto_decode --input config_block.pb --type common.Block
 
 
 
-#./peercli.sh --cfg "/mnt/265C6B275C6AF14B/fabric/config" --orderer-address "localhost:7050" --msp-id "Org1MSP" --msp-config "/mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" --orderer-certificate "/mnt/265C6B275C6AF14B/fabric/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" --channel "mychannel" --filename "1.pb"
+#./peercli.sh --cfg "http://localhost:3000/admin/" --orderer-address "localhost:7050" --msp-id "Org1MSP" --msp-config "/mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" --orderer-certificate "/mnt/265C6B275C6AF14B/fabric/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" --channel "mychannel" --filename "1.pb"
 
 
 

@@ -7,3 +7,5 @@ export const tls = "tls";
 export const oc = "oc";
 export const cookie = "cookie";
 export const server = "server";
+export const certs = "certs";
+export const keystore = "keystore";

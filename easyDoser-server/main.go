@@ -33,6 +33,7 @@ func main() {
 	router.HandleFunc("/approve", commands.ApprovePC).Methods("POST")
 	router.HandleFunc("/check", commands.CheckCommitReady).Methods("POST")
 	router.HandleFunc("/commit", commands.CommitChaincode).Methods("POST")
+	router.HandleFunc("/endorsement_policy", commands.GetEndorsementPolicy).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(pt, router))
 }

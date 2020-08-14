@@ -10,6 +10,7 @@ import Button from "components/CustomButtons/Button.js";
 import CardFooter from "components/Card/CardFooter.js";
 import * as escapeJSON from "escape-json-node";
 import {approveConfig} from "api/api"
+import Checkbox from '@material-ui/core/Checkbox';
 
 import "./config.css"
 export default function CC_config (props) {
@@ -18,14 +19,17 @@ export default function CC_config (props) {
     const[apolicy, setApolicy] = useState("")
     const[policy, setpolicy] = useState("")    
     const[version, setVersion] = useState("")
-
+    const[enableCollection, setEnableCollection] = useState(true);
+    const handleCheck = (event) => {
+      setEnableCollection(event.target.checked);
+    }
     const approve = async ()=>{
         var validJSON =false;
         try { JSON.parse(policy); validJSON = true } catch (e) { validJSON= false}
-        if(true){
+        if(validJSON||!enableCollection){
            var escaped = escapeJSON(policy)
             console.log(escaped)
-            const resp = await approveConfig(escaped, apolicy, version, props.channel, props.chaincode)
+            const resp = await approveConfig(enableCollection?escaped:"null", apolicy, version, props.channel, props.chaincode)
             console.log(resp)
             setStatus(true);
             setResp(resp)
@@ -45,7 +49,7 @@ export default function CC_config (props) {
                 <GridItem xs={12} sm={12} md={12}>
               
                       <label className="Lable" htmlFor="#parametername">
-                        Approval Policy
+                        Endorsement Policy
                       </label>
                       <br/>
                       <FormTextarea
@@ -59,7 +63,14 @@ export default function CC_config (props) {
                       
                 </GridItem>
               </GridContainer>
-              <GridContainer>
+              <Checkbox
+                defaultChecked
+                onChange = {handleCheck}
+                color="primary"
+                inputProps={{ 'aria-label': 'secondary checkbox' }}
+              />
+              <text>Private Data Collection</text>
+              {enableCollection?(<GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
                       <label className="Lable" htmlFor="#parametername">
@@ -76,7 +87,7 @@ export default function CC_config (props) {
                   />
                       
                 </GridItem>
-              </GridContainer>
+              </GridContainer>):<div></div>}
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
