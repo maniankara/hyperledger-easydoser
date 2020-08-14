@@ -10,6 +10,8 @@ import Button from "components/CustomButtons/Button.js";
 import CardFooter from "components/Card/CardFooter.js";
 import * as escapeJSON from "escape-json-node";
 import {commitCC,checkCommit} from "api/api"
+import Checkbox from '@material-ui/core/Checkbox';
+
 
 import "./config.css"
 export default function CC_config (props) {
@@ -20,15 +22,20 @@ export default function CC_config (props) {
     const[version, setVersion] = useState("")
     const[finalStatus, setfinalStatus] = useState({})
     const[ready, setReady] = useState(false);
+    const[enableCollection, setEnableCollection] = useState(true);
     var peers = {}
     var certs = {}
+    const handleCheck = (event) => {
+      setEnableCollection(event.target.checked);
+    }
+   
     const check = async ()=>{
         var validJSON =false;
         try { JSON.parse(policy); validJSON = true } catch (e) { validJSON= false}
-        if(validJSON){
+        if(validJSON||!enableCollection){
            var escaped = escapeJSON(policy)
             console.log(escaped)
-            const resp = await checkCommit(escaped, apolicy, version, props.channel, props.chaincode)
+            const resp = await checkCommit(enableCollection?escaped:"null", apolicy, version, props.channel, props.chaincode)
             console.log(resp)
             setStatus(true);
             setResp(resp)
@@ -55,9 +62,9 @@ export default function CC_config (props) {
       try { JSON.parse(policy); validJSON = true } catch (e) { validJSON= false}
       const peerlist = Object.values(peers);
       const certList = Object.values(certs);
-      if(validJSON){
+      if(validJSON||!enableCollection){
         var escaped = escapeJSON(policy)
-        const resp = await commitCC(escaped, apolicy, version, props.channel, props.chaincode, peerlist, certList)
+        const resp = await commitCC(enableCollection?escaped:"null", apolicy, version, props.channel, props.chaincode, peerlist, certList)
         console.log(resp)
         setfinalStatus(resp)
       }
@@ -79,7 +86,7 @@ export default function CC_config (props) {
                       <FormTextarea
                         className="address"
                         id="#description"
-                        placeholder="Approval Policy"
+                        placeholder="Signature Policy"
                         onChange={(e) => {
                           setApolicy(e.target.value)
                     }}
@@ -87,7 +94,14 @@ export default function CC_config (props) {
                       
                 </GridItem>
               </GridContainer>
-              <GridContainer>
+              <Checkbox
+                defaultChecked
+                onChange = {handleCheck}
+                color="primary"
+                inputProps={{ 'aria-label': 'secondary checkbox' }}
+              />
+              <text>Private Data Collection</text>
+              {enableCollection?(<GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
                       <label className="Lable" htmlFor="#parametername">
@@ -104,7 +118,7 @@ export default function CC_config (props) {
                   />
                       
                 </GridItem>
-              </GridContainer>
+              </GridContainer>):<div></div>}
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               

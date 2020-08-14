@@ -22,18 +22,24 @@ func CheckCommitReady(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	file, err := os.Create("./commit.json")
-	if err != nil {
+	if args.Policy != "null" {
+		file, err := os.Create("./commit.json")
+		if err != nil {
+
+		}
+		defer file.Close()
+		fileWriter := bufio.NewWriter(file)
+		fmt.Fprintln(fileWriter, args.Policy)
+		fileWriter.Flush()
+		fmt.Println(string(args.Policy))
+	}
+
+	sequence := getSequenceCheck(args)
+	cmd := exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", args.TLS, "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", sequence, "--version", args.Version, "--orderer-certificate", args.Oc, "--peer-address", args.Pa, "--policy", "not_null")
+	if args.Policy == "null" {
+		cmd = exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", args.TLS, "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", sequence, "--version", args.Version, "--orderer-certificate", args.Oc, "--peer-address", args.Pa, "--policy", "null")
 
 	}
-	defer file.Close()
-	fileWriter := bufio.NewWriter(file)
-	fmt.Fprintln(fileWriter, args.Policy)
-	fileWriter.Flush()
-	fmt.Println(string(args.Policy))
-	sequence := getSequenceCheck(args)
-	cmd := exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", args.TLS, "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", sequence, "--version", args.Version, "--orderer-certificate", args.Oc, "--peer-address", args.Pa)
-
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
@@ -70,11 +76,19 @@ func CheckCommitReady(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Println(orgs)
-	os.Remove("./config.json")
+	if args.Policy != "null" {
+		os.Remove("./config.json")
+	}
+
 	fmt.Fprintf(w, string(e))
 }
 func getSequenceCheck(args updateConfig) string {
-	cmd := exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", args.TLS, "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", "665", "--version", args.Version, "--orderer-certificate", args.Oc, "--peer-address", args.Pa)
+
+	cmd := exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", args.TLS, "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", "665", "--version", args.Version, "--orderer-certificate", args.Oc, "--peer-address", args.Pa, "--policy", "not_null")
+	if args.Policy == "null" {
+		cmd = exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", args.TLS, "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", "665", "--version", args.Version, "--orderer-certificate", args.Oc, "--peer-address", args.Pa, "--policy", "null")
+
+	}
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out

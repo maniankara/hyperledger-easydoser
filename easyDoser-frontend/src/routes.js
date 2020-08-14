@@ -21,7 +21,7 @@ import Person from "@material-ui/icons/Person";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import Collection from "views/Collection/Collections.js";
-import UserProfile from "views/UserProfile/UserProfile.js";
+import EndorsementPolicies from "views/EndorsementPolicies/EndorsementPolicies.js"
 import EditCollection from "views/EditCollection/Collections.js"
 import CommitCollection from "views/CommitCollection/Commit"
 
@@ -43,8 +43,16 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
+    path: "/endorsement_policies",
+    name: "Endorsement Policies",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: Person,
+    component: EndorsementPolicies,
+    layout: "/admin"
+  },
+  {
     path: "/updateCollection",
-    name: "Update Collection",
+    name: "Approve Policy",
     rtlName: "قائمة الجدول",
     icon: "content_paste",
     component: EditCollection,
@@ -52,21 +60,12 @@ const dashboardRoutes = [
   },
   {
     path: "/commitchannel",
-    name: "Commit Collection",
+    name: "Commit Policy",
     rtlName: "قائمة الجدول",
     icon: "content_paste",
     component: CommitCollection,
     layout: "/admin"
   },
-  {
-    path: "/update_channel",
-    name: "Update Channel",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: Person,
-    component: UserProfile,
-    layout: "/admin"
-  },
-
 ];
 
 export default dashboardRoutes;
