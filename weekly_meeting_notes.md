@@ -1,3 +1,20 @@
+16.08.2020
+ * General: Placement trainings on-going, an Exam done
+ * Last Week:
+   - Demo, Endorsement policy approvals
+ * Anoop: Didnt test anything last week, will do so this week.
+ * This week:
+   - Push the latest code to master
+   - Some user documentation
+   - Fix all cosmetic/minor bugs
+   - Clean-up frontend code
+   - Update the Project plan - before Friday
+   - Milestone 3 - More to be discussed and planned
+     - Start with CI (GitHub actions) and tests (no unit tests but functional)
+     - Testing - Try to find some frameworks which can functional test reactJS.
+     - Docker containers - start with containerizing web, api-server+scripts later on
+   - Milestone 4 - Some 3rd party cloud server
+
 09.08.2020
  * General: Placement training ends early sept 2020.
  * Last week: 
