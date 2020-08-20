@@ -90,12 +90,15 @@ export default function Paths(props) {
                 <GridItem xs={12} sm={12} md={12}>
               
                       <label className="Lable" htmlFor="#parametername">
-                        EasyDoser Server
+                      <text style={{fontWeight:'bold'}}>
+                        EasyDoser Server URL
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
+                        style={{height: '40px', width:"500px"}}
                         placeholder={cookies.get(server)===undefined?"default: localhost:8080":cookies.get(server)}
                         onChange={(e) => {
                           setServer(e.target.value)
@@ -103,17 +106,31 @@ export default function Paths(props) {
                   />
                       
                 </GridItem>
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                    localhost:8080
+                  </text>
+                  <br/>
+                </GridItem>
               </GridContainer>
+              <br/>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
                       <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
                         Core CFG Path
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
+                        style={{height: '40px', width:"500px"}}
                         placeholder={cookies.get(cfg)===undefined?"Core CFG Path":cookies.get(cfg)}
                         onChange={(e) => {
                           setCFG(e.target.value)
@@ -121,17 +138,29 @@ export default function Paths(props) {
                   />
                       
                 </GridItem>
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                  /media/user1/265C6B275C6AF14B/fabric/config                  </text>
+                </GridItem>
               </GridContainer>
+              <br/>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
                       <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
                         Peer Address
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
+                        style={{height: '40px', width:"500px"}}
                         placeholder={cookies.get(pa)===undefined?"Peer Address":cookies.get(pa)}
                         onChange={(e) => {
                           setPA(e.target.value)
@@ -139,17 +168,30 @@ export default function Paths(props) {
                   />
                       
                 </GridItem>
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                    localhost:7051
+                  </text>
+                </GridItem>
               </GridContainer>
+              <br/>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
                       <label className="Lable" htmlFor="#parametername">
-                        Orederer Address
+                      <text style={{fontWeight:'bold'}}>
+                        Orderer Address
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
+                        style={{height: '40px', width:"500px"}}
                         placeholder={cookies.get(oa)===undefined?"Orderer Address":cookies.get(oa)}
                         onChange={(e) => {
                           setOA(e.target.value)
@@ -157,17 +199,30 @@ export default function Paths(props) {
                   />
                       
                 </GridItem>
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                    localhost:7050
+                  </text>
+                </GridItem>
               </GridContainer>
+              <br/>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
                       <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
                         MSP ID
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
+                        style={{height: '40px', width:"500px"}}
                         placeholder={cookies.get(mspid)===undefined?"MSP ID":cookies.get(mspid)}
                         onChange={(e) => {
                           setMI(e.target.value)
@@ -175,17 +230,30 @@ export default function Paths(props) {
                   />
                       
                 </GridItem>
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                    Org1MSP
+                  </text>
+                </GridItem>
               </GridContainer>
+              <br/>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
                       <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
                         MSP Config
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
+                        style={{height: '40px', width:"500px"}}
                         placeholder={cookies.get(mspconf)===undefined?"MSP Config":cookies.get(mspconf)}
                         onChange={(e) => {
                           setMC(e.target.value)
@@ -193,17 +261,30 @@ export default function Paths(props) {
                   />
                       
                 </GridItem>
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                  /media/user1/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+                  </text>
+                </GridItem>
               </GridContainer>
+              <br/>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
                       <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
                         TLS Certificate
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
+                        style={{height: '40px', width:"500px"}}
                         placeholder={cookies.get(tls)===undefined?"TLS certificate":cookies.get(tls)}
                         onChange={(e) => {
                           setTLS(e.target.value)
@@ -211,23 +292,44 @@ export default function Paths(props) {
                   />
                       
                 </GridItem>
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                  /media/user1/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt                  </text>
+                </GridItem>
               </GridContainer>
+              <br/>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
                       <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
                         Orderer Certificate
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
+                        style={{height: '40px', width:"500px"}}
                         placeholder={cookies.get(oc)===undefined?"Orderer Certificate":cookies.get(oc)}
                         onChange={(e) => {
                           setOC(e.target.value)
                     }}
                   />
                       
+                </GridItem>
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                  /media/user1/265C6B275C6AF14B/fabric/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+                  </text>
                 </GridItem>
               </GridContainer>
             </CardBody>

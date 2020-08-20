@@ -38,7 +38,7 @@ const dashboardRoutes = [
     path: "/collections",
     name: "Collections",
     rtlName: "قائمة الجدول",
-    icon: "content_paste",
+    icon: "P",
     component: Collection,
     layout: "/admin"
   },
@@ -52,9 +52,9 @@ const dashboardRoutes = [
   },
   {
     path: "/updateCollection",
-    name: "Approve Policy",
+    name: "A",
     rtlName: "قائمة الجدول",
-    icon: "content_paste",
+    icon: "LibraryAdd",
     component: EditCollection,
     layout: "/admin"
   },
@@ -62,7 +62,7 @@ const dashboardRoutes = [
     path: "/commitchannel",
     name: "Commit Policy",
     rtlName: "قائمة الجدول",
-    icon: "content_paste",
+    icon: "check",
     component: CommitCollection,
     layout: "/admin"
   },
