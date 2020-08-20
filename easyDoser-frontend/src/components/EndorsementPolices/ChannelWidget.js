@@ -59,20 +59,41 @@ export default function ChannelWidget(props) {
         <h3>Some more Paths</h3>
       </CardHeader>
       <CardBody>
-        <FormTextarea
+      <label className="Lable" htmlFor="#parametername">
+         <text style={{fontWeight:'bold'}}>
+            User TLS Certificate
+          </text>
+      </label>
+      <FormTextarea
           className="address"
           id="#description"
+          style={{height: '40px', width:"500px"}}
           placeholder={cookies.get(certs)===undefined?"User TLS Certificates":cookies.get(certs)}
           onChange={(e) => {
             userCerts=e.target.value
       }}
         >
-
+         
         </FormTextarea>
         <br/>
+        <text style={{fontWeight:'450'}}>
+          Example
+        </text>
+          <br/>
+        <text>
+          /media/user1/265C6B275C6AF14B/fabric/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+        </text>
+        <br/>
+        <br/>
+        <label className="Lable" htmlFor="#parametername">
+         <text style={{fontWeight:'bold'}}>
+            User Keystore file
+          </text>
+      </label>
         <FormTextarea
           className="address"
           id="#description"
+          style={{height: '40px', width:"500px"}}
           placeholder={cookies.get(keystore)===undefined?"User Keystore file":cookies.get(keystore)}
           onChange={(e) => {
             keystoreFile= e.target.value;
@@ -80,6 +101,14 @@ export default function ChannelWidget(props) {
         >
           
         </FormTextarea>
+        <br/>
+        <text style={{fontWeight:'450'}}>
+          Example
+        </text>
+          <br/>
+        <text>
+          /media/User1/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/priv_sk
+        </text>
       </CardBody>
       <CardFooter>
       <Button
