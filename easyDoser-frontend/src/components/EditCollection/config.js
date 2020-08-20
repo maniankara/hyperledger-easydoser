@@ -48,21 +48,34 @@ export default function CC_config (props) {
         <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
-                      <label className="Lable" htmlFor="#parametername">
+                <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
                         Endorsement Policy
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
                         placeholder="Approval Policy"
+                        style={{height: '40px', width:"500px"}}
                         onChange={(e) => {
                           setApolicy(e.target.value)
                     }}
                   />
                       
                 </GridItem>
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                  OR('Org1MSP.member','Org2MSP.member')
+                  </text>
+                </GridItem>
               </GridContainer>
+              <br/>
               <Checkbox
                 defaultChecked
                 onChange = {handleCheck}
@@ -73,14 +86,17 @@ export default function CC_config (props) {
               {enableCollection?(<GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
-                      <label className="Lable" htmlFor="#parametername">
-                        Updated Collection Policy JSON
+                <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
+                        Updated Private Collection JSON
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
                         placeholder="Collection Policy"
+                        style={{height: '40px', width:"500px"}}
                         onChange={(e) => {
                           setpolicy(e.target.value)
                     }}
@@ -88,22 +104,35 @@ export default function CC_config (props) {
                       
                 </GridItem>
               </GridContainer>):<div></div>}
+              <br/>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
-                      <label className="Lable" htmlFor="#parametername">
+                <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
                         Version
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
                         placeholder="Version"
+                        style={{height: '40px', width:"500px"}}
                         onChange={(e) => {
                           setVersion(e.target.value)
                     }}
                   />
                       
+                </GridItem>
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                    1.2
+                  </text>
                 </GridItem>
               </GridContainer>
               <Button

@@ -79,21 +79,34 @@ export default function CC_config (props) {
         <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
-                      <label className="Lable" htmlFor="#parametername">
-                        Approval Policy
+                <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
+                        Endorsement Policy
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
-                        placeholder="Signature Policy"
+                        placeholder="Endorsement Policy"
+                        style={{height: '40px', width:"500px"}}
                         onChange={(e) => {
                           setApolicy(e.target.value)
                     }}
                   />
                       
                 </GridItem>
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                  OR('Org1MSP.member','Org2MSP.member')
+                  </text>
+                </GridItem>
               </GridContainer>
+              <br/>
               <Checkbox
                 defaultChecked
                 onChange = {handleCheck}
@@ -103,15 +116,17 @@ export default function CC_config (props) {
               <text>Private Data Collection</text>
               {enableCollection?(<GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
-              
-                      <label className="Lable" htmlFor="#parametername">
-                        Updated Collection Policy JSON
+                <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
+                       Updated Private Collection Definition
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
                         placeholder="Collection Policy"
+                        style={{height: '40px', width:"500px"}}
                         onChange={(e) => {
                           setpolicy(e.target.value)
                     }}
@@ -122,21 +137,33 @@ export default function CC_config (props) {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
-                      <label className="Lable" htmlFor="#parametername">
+                <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
                         Version
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
                         placeholder="Version"
+                        style={{height: '40px', width:"500px"}}
                         onChange={(e) => {
                           setVersion(e.target.value)
                     }}
                   />
                       
+                </GridItem><GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                  1.2
+                  </text>
                 </GridItem>
               </GridContainer>
+              <br/>
               <Button
                 color="primary"
                 onClick={() => {
@@ -156,39 +183,63 @@ export default function CC_config (props) {
                    <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
-                      <label className="Lable" htmlFor="#parametername">
-                        Peer Address
+                     <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
+                       Peer Address
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
                         placeholder="Address"
+                        style={{height: '40px', width:"500px"}}
                         onChange={(e) => {
                           peers[index.toString()]=e.target.value
                     }}
                   />
                       
+                </GridItem> <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                  localhost:7051
+                  </text>
                 </GridItem>
               </GridContainer>
+              <br/>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
               
-                      <label className="Lable" htmlFor="#parametername">
-                        TLS CA CERTIFICATE
+                <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
+                        TLS CA Certifiacte
+                      </text>
                       </label>
                       <br/>
                       <FormTextarea
                         className="address"
                         id="#description"
                         placeholder="TLS Cert"
+                        style={{height: '40px', width:"500px"}}
                         onChange={(e) => {
                           certs[index.toString()]=e.target.value
                     }}
                   />
                       
+                </GridItem> 
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                  /media/User1/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt                  </text>
                 </GridItem>
               </GridContainer>
+              <br/>
                 </div>)):(<div></div>)
                
               }
