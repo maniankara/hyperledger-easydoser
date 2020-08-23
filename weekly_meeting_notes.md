@@ -1,3 +1,18 @@
+23.08.2020
+ * Last week:
+   - Improved UI
+   - Done: Update the Project plan - before Friday
+ * This week:
+   - Make 1 vid for UI + 1 vid for cli - hyperledger labs
+   - update diagrams: proposal + readme.md
+   - If any enhancements, please do it in proposal + readme.md
+   - Learn Functional testing for reactJS
+   - Anoop: Start finding ways to get a sponsor
+   - Anoop/Abhimanyu: Start thinking about dockerizing ui -> server (api) -> bash -> peer(HLF)
+   - Ease the way to get the certificate paths 
+
+
+
 16.08.2020
  * General: Placement trainings on-going, an Exam done
  * Last Week:
