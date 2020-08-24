@@ -17,5 +17,4 @@
 ## Video instructions to run the project
 [![asciicast](https://asciinema.org/a/355175.svg)](https://asciinema.org/a/355175)
 ## A little demo
-![Alt Text](https://imgur.com/8cDvWSN)
-
+[Imgur](https://imgur.com/8cDvWSN)
