@@ -11,8 +11,6 @@ import materialColor from "utils/ColorRandominator.js";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import IconButton from "@material-ui/core/IconButton";
-import { string } from "shards-react";
-import { Button } from "@material-ui/core";
 
 export default function ChaincodeList(props) {
   const [info, setInfo] = useState(false);

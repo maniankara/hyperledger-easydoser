@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import GridItem from "components/Grid/GridItem.js";
-import materialColor from 'utils/ColorRandominator.js';
 
-export default function CC_config (props) {
+export default function CConfig (props) {
     var items = props.config.collections.config;
     console.log(props.config)
     console.log(items)
@@ -62,6 +61,6 @@ export default function CC_config (props) {
         </div>
     );
 }
-CC_config.ChannelWidget = {
+CConfig.ChannelWidget = {
     config: PropTypes.object
   };

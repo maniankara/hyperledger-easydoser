@@ -1,9 +1,7 @@
-    import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
-import GridItem from "components/Grid/GridItem.js";
 
 export default function Policy (props) {
     var items = props.policy[0].EndorsersByGroups;

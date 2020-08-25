@@ -14,8 +14,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 
 import "./config.css"
-export default function CC_config (props) {
-    const[status, setStatus] = useState({})
+export default function CConfig (props) {
     const[resp , setResp] = useState({})
     const[apolicy, setApolicy] = useState("")
     const[policy, setpolicy] = useState("")    
@@ -37,7 +36,6 @@ export default function CC_config (props) {
             console.log(escaped)
             const resp = await checkCommit(enableCollection?escaped:"null", apolicy, version, props.channel, props.chaincode)
             console.log(resp)
-            setStatus(true);
             setResp(resp)
             checkReadiness(resp)
             console.log(resp)
@@ -49,7 +47,7 @@ export default function CC_config (props) {
       var flag = true;
       for(var i =0; i<resp.orgs.length; i++){
         
-        if(resp.orgs[i].status=="false"){
+        if(resp.orgs[i].status==="false"){
           flag = false;
           break
         }
@@ -174,7 +172,7 @@ export default function CC_config (props) {
               </Button>
               {
                 resp.orgs!==undefined?resp.orgs.map((item)=><div>
-                  <text>{item.name} = {item.status=="true"?"Approved":"Not Approved"}</text>
+                  <text>{item.name} = {item.status==="true"?"Approved":"Not Approved"}</text>
                 </div>):<div></div>
               }
               {
@@ -253,7 +251,7 @@ export default function CC_config (props) {
                     >
                       Commit chaincode Definition
                   </Button>
-                  {finalStatus.status!=undefined?(<text><br/><br/>{finalStatus.status}</text>):<div></div>}
+                  {finalStatus.status!==undefined?(<text><br/><br/>{finalStatus.status}</text>):<div></div>}
                   </div>
                 ):(
                   <div></div>
@@ -266,7 +264,7 @@ export default function CC_config (props) {
     </Card>
     );
 }
-CC_config.ChannelWidget = {
+CConfig.ChannelWidget = {
     config: PropTypes.object,
     channel: PropTypes.string,
     chaincode: PropTypes.string

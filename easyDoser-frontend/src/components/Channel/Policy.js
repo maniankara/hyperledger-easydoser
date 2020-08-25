@@ -102,7 +102,7 @@ export default function Policies(props){
                                 setExpand({...expand,[name]:true});
                              }
                         }}>
-                           { expand[name]!=true?( <ExpandMoreIcon fontSize="large"/>):(
+                           { expand[name]!==true?( <ExpandMoreIcon fontSize="large"/>):(
                                <ExpandLessIcon fontSize="large"/>
                            )}
                         </IconButton>
@@ -112,7 +112,7 @@ export default function Policies(props){
                     </div>
                     </CardHeader>
                     {  console.log(expand)}
-                       { expand[name]==true? (
+                       { expand[name]===true? (
                             <Policies data = {props.data.groups[name]}>
 
                             </Policies>

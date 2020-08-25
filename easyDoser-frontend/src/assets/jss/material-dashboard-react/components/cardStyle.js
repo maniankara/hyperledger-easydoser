@@ -10,7 +10,6 @@ const cardStyle = {
     borderRadius:"50",
     marginBottom: "30px",
     marginTop: "30px",
-    borderRadius: "6px",
     color: "rgba(" + hexToRgb(blackColor) + ", 0.87)",
     background: whiteColor,
     width: "100%",
