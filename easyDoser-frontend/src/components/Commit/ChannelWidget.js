@@ -4,13 +4,11 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import ChaincodeList from "components/Commit/ChaincodeList.js";
-import { Spinner } from "reactstrap";
 import { Row } from "reactstrap";
 import { cookie } from "constants.js";
 
 import { chaincode_list } from "../../api/api.js";
 import PropTypes from "prop-types";
-import materialColor from "utils/ColorRandominator.js";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import IconButton from "@material-ui/core/IconButton";
@@ -18,15 +16,13 @@ import Cookies from "universal-cookie";
 
 export default function ChannelWidget(props) {
   const [info, setInfo] = useState(false);
-  const [data, setData] = useState({ channel_group: null });
   const [expanded, setExpanded] = useState(false);
   const cookies = new Cookies();
   const [items, setChannels] = useState([]);
   const [fetch, setFetch] = useState(false);
-  const [status, setStatus] = useState(cookies.get(cookie)===undefined?false:true)
+  const status = cookies.get(cookie)===undefined?false:true;
 
   const hStyle = { color: "black" };
-  var col = materialColor();
   if (!fetch && (status)) {
     chaincode_list(props.item).then((arr) => {
       console.log(arr);
@@ -75,7 +71,7 @@ export default function ChannelWidget(props) {
               {info?(<h3>Chaincodes: </h3>):(<text></text>)}
           {info ? (
              <Row>
-             {items.length != 0 ? (
+             {items.length !== 0 ? (
                items.map((item) => <ChaincodeList channel={props.item} item = {item}></ChaincodeList>)
              ) : (
                <h3>No Channels</h3>

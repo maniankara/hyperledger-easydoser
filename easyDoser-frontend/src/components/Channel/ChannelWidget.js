@@ -7,7 +7,6 @@ import Policies from "components/Channel/Policy";
 import { Spinner } from "reactstrap";
 import { channel_info } from "../../api/api.js";
 import PropTypes from "prop-types";
-import materialColor from "utils/ColorRandominator.js";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import IconButton from "@material-ui/core/IconButton";
@@ -16,7 +15,6 @@ export default function ChannelWidget(props) {
   const [data, setData] = useState({ channel_group: null });
   const [expanded, setExpanded] = useState(false);
   const hStyle = { color: "black" };
-  var col = materialColor();
   const fetch = async () => {
     var rs = await channel_info(props.item);
     console.log(rs);

@@ -7,7 +7,6 @@ import {  FormTextarea } from "shards-react";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
@@ -50,19 +49,19 @@ export default function Paths(props) {
   const [tserver, setServer] = useState("");
   const[showAlert, setAlert]= useState(false)
   var empty= false
-  
+  console.log(showAlert)
   const cookies = new Cookies();
   const setCookies = () => {
     var yolo
-    tcfg==""?cookies.get(cfg)===undefined?empty=true:yolo=1:cookies.set(cfg, tcfg, { path: "/" });
-    tpa==""?cookies.get(pa)===undefined?empty=true:yolo=1:cookies.set(pa, tpa, { path: "/" });
-    tmspID==""?cookies.get(mspid)===undefined?empty=true:yolo=1:cookies.set(mspid, tmspID, { path: "/" });
-    tmspConf==""?cookies.get(mspconf)===undefined?empty=true:yolo=1:cookies.set(mspconf, tmspConf, { path: "/" });
-    toa==""?cookies.get(oa)===undefined?empty=true:yolo=1:cookies.set(oa, toa, { path: "/" });
-    toc==""?cookies.get(oc)===undefined?empty=true:yolo=1:cookies.set(oc, toc, { path: "/" });
-    ttls==""?cookies.get(tls)===undefined?empty=true:yolo=1:cookies.set(tls, ttls, { path: "/" });
-    tserver==""?cookies.get(server)===undefined?cookies.set(server, "localhost:8080", { path: "/" } ):yolo=1:cookies.set(server, tserver, { path: "/" });
-
+    tcfg===""?cookies.get(cfg)===undefined?empty=true:yolo=1:cookies.set(cfg, tcfg, { path: "/" });
+    tpa===""?cookies.get(pa)===undefined?empty=true:yolo=1:cookies.set(pa, tpa, { path: "/" });
+    tmspID===""?cookies.get(mspid)===undefined?empty=true:yolo=1:cookies.set(mspid, tmspID, { path: "/" });
+    tmspConf===""?cookies.get(mspconf)===undefined?empty=true:yolo=1:cookies.set(mspconf, tmspConf, { path: "/" });
+    toa===""?cookies.get(oa)===undefined?empty=true:yolo=1:cookies.set(oa, toa, { path: "/" });
+    toc===""?cookies.get(oc)===undefined?empty=true:yolo=1:cookies.set(oc, toc, { path: "/" });
+    ttls===""?cookies.get(tls)===undefined?empty=true:yolo=1:cookies.set(tls, ttls, { path: "/" });
+    tserver===""?cookies.get(server)===undefined?cookies.set(server, "localhost:8080", { path: "/" } ):yolo=1:cookies.set(server, tserver, { path: "/" });
+    console.log(yolo)
     if(empty){
       setAlert(true)
     }else{

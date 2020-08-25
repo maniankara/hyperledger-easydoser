@@ -7,10 +7,6 @@ import { Row } from "reactstrap";
 import { channel_list } from "../../api/api.js";
 import Cookies from "universal-cookie";
 import { cookie } from "constants.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
 import Button from "components/CustomButtons/Button.js";
 
 
@@ -47,7 +43,7 @@ export default function Dashboard() {
    
         </Button>
         <Row>
-          {items.length != 0 ? (
+          {items.length !== 0 ? (
             items.map((item) => <ChannelWidget item={item}></ChannelWidget>)
           ) : (
             <h3>No Channels</h3>

@@ -13,7 +13,7 @@ import {approveConfig} from "api/api"
 import Checkbox from '@material-ui/core/Checkbox';
 
 import "./config.css"
-export default function CC_config (props) {
+export default function CConfig (props) {
     const[status, setStatus] = useState(false)
     const[resp , setResp] = useState({})
     const[apolicy, setApolicy] = useState("")
@@ -155,7 +155,7 @@ export default function CC_config (props) {
     </Card>
     );
 }
-CC_config.ChannelWidget = {
+CConfig.ChannelWidget = {
     config: PropTypes.object,
     channel: PropTypes.string,
     chaincode: PropTypes.string

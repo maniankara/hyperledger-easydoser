@@ -6,7 +6,7 @@ import CardBody from "components/Card/CardBody.js";
 import { Spinner } from "reactstrap";
 import { chaincode_config } from "../../api/api.js";
 import PropTypes from "prop-types";
-import CC_config from "components/Commit/config.js"
+import CConfig from "components/Commit/config.js"
 import materialColor from "utils/ColorRandominator.js";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
@@ -14,13 +14,10 @@ import IconButton from "@material-ui/core/IconButton";
 
 export default function ChaincodeList(props) {
   const [info, setInfo] = useState(false);
-  const [data, setData] = useState({});
   const [expanded, setExpanded] = useState(false);
   const hStyle = { color: "black" };
-  var col = materialColor();
   const fetch = async () => {
     var data = await chaincode_config(props.channel, props.item);
-    setData(data);
     setInfo(false)
     console.log(JSON.stringify(data))
   };
@@ -69,7 +66,7 @@ export default function ChaincodeList(props) {
               <h3>Loading..</h3>
             </div>
           ) : expanded ? (
-            <CC_config channel={props.channel} chaincode={props.item}></CC_config>
+            <CConfig channel={props.channel} chaincode={props.item}></CConfig>
           ) : (
             <p></p>
           )}

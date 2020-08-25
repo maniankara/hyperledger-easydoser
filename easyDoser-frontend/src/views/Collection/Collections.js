@@ -42,7 +42,7 @@ export default function Collection() {
    
         </Button>
         <Row>
-          {items.length != 0 ? (
+          {items.length !== 0 ? (
             items.map((item) => <ChannelWidget item={item}></ChannelWidget>)
           ) : (
             <h3>No Channels</h3>
