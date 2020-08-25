@@ -32,3 +32,5 @@ jobs:
         fi
     - name: Build
       run: cd easyDoser-server/ && go build -v .
+      run: cd easyDoser-server/ && go vet -v .
+      
