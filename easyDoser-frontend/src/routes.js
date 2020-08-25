@@ -52,7 +52,7 @@ const dashboardRoutes = [
   },
   {
     path: "/updateCollection",
-    name: "A",
+    name: "Approve",
     rtlName: "قائمة الجدول",
     icon: "LibraryAdd",
     component: EditCollection,
