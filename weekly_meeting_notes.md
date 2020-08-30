@@ -1,15 +1,28 @@
+30.08.2020
+ * Last week:
+   - Marked the completed ones below
+ * This week:
+   - updated docs about the testing instructions
+   - certificates paths: 
+      - peer needs cli
+      - sdk: missing: channel/collections policy, docker cli, store in cookies, bash script prompting from user (-> file/path to copy), etc.
+   - Anoop: To test the latest code
+   - Docker: npm production mode: compress node_modules to html/js (prod build?)
+   - Cookie: approach in a different branch and compare the Usability
+
+
 23.08.2020
  * Last week:
    - Improved UI
    - Done: Update the Project plan - before Friday
  * This week:
-   - Make 1 vid for UI + 1 vid for cli - hyperledger labs
-   - update diagrams: proposal + readme.md
-   - If any enhancements, please do it in proposal + readme.md
-   - Learn Functional testing for reactJS
+   - Make 1 vid for UI + 1 vid for cli - hyperledger labs - done
+   - update diagrams: proposal + readme.md - done
+   - If any enhancements, please do it in proposal + readme.md - done
+   - Learn Functional testing for reactJS - done
    - Anoop: Start finding ways to get a sponsor
    - Anoop/Abhimanyu: Start thinking about dockerizing ui -> server (api) -> bash -> peer(HLF)
-   - Ease the way to get the certificate paths 
+   - Ease the way to get the certificate paths - open
 
 
 
