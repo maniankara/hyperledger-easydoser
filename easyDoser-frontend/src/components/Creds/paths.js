@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { server, cfg, mspid, mspconf, oa, pa, tls, oc, cookie} from "constants.js";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import {  FormTextarea } from "shards-react";
+import {  FormTextarea , FormInput} from "shards-react";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -71,6 +71,29 @@ export default function Paths(props) {
 
   };
   const classes = useStyles();
+  const handleFileRead = (contractFile, func) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsText(contractFile);
+      fileReader.onloadend = (e) => {
+        const content = fileReader.result;
+        console.log(content)
+        func(content);
+      };
+    });
+  };
+
+  const handleFileChosen = async (e, func) => {
+    console.log("file", e.target.files[0]);
+    const file = e.target.files[0];
+
+    const isCorrect = await handleFileRead(file,func);
+    if (!isCorrect) {
+      return;
+    }
+
+  };
+
   return (
     <div>
      {empty?(<text color="black">Please enter all the values</text>):""}
@@ -280,16 +303,17 @@ export default function Paths(props) {
                       </text>
                       </label>
                       <br/>
-                      <FormTextarea
-                        className="address"
-                        id="#description"
-                        style={{height: '40px', width:"500px"}}
-                        placeholder={cookies.get(tls)===undefined?"TLS certificate":cookies.get(tls)}
-                        onChange={(e) => {
-                          setTLS(e.target.value)
-                    }}
-                  />
-                      
+                      <FormInput
+                        className="Choose"
+                        type="file"
+                        id="file"
+                        className="input-file"
+                        accept=".crt"
+                        onChange={obj => {
+                          handleFileChosen(obj,setTLS)
+                        }}
+                      />
+
                 </GridItem>
                 <GridItem>
                   <text style={{fontWeight:'450'}}>
@@ -310,15 +334,16 @@ export default function Paths(props) {
                       </text>
                       </label>
                       <br/>
-                      <FormTextarea
-                        className="address"
-                        id="#description"
-                        style={{height: '40px', width:"500px"}}
-                        placeholder={cookies.get(oc)===undefined?"Orderer Certificate":cookies.get(oc)}
-                        onChange={(e) => {
-                          setOC(e.target.value)
-                    }}
-                  />
+                      <FormInput
+                        className="Choose"
+                        type="file"
+                        id="file"
+                        className="input-file"
+                        accept=".pem"
+                        onChange={obj => {
+                          handleFileChosen(obj,setOC)
+                        }}
+                      />
                       
                 </GridItem>
                 <GridItem>

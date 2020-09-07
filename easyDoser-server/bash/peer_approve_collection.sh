@@ -85,14 +85,14 @@ while test $# -gt 0; do
                    ;;
           esac
   done  
-export FABRIC_CFG_PATH=$CFG
+#export FABRIC_CFG_PATH=$CFG
 export CORE_PEER_LOCALMSPID=$MSPID
 export ORDERER_ADDRESS=$ADDRESS
-export CORE_PEER_MSPCONFIGPATH=$MSPCONFIG
-export ORDERER_CA=$OCA
+#export CORE_PEER_MSPCONFIGPATH=$MSPCONFIG
+export ORDERER_CA=$PWD/$OCA
 export CHANNEL_NAME=$CHANNEL
 export CORE_PEER_TLS_ENABLED=true
-export CORE_PEER_TLS_ROOTCERT_FILE=$tls
+export CORE_PEER_TLS_ROOTCERT_FILE=$PWD/$tls
 export CORE_PEER_ADDRESS=$PEER
 if test "$FILE" = "null"
 then

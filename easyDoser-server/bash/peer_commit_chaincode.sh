@@ -91,14 +91,14 @@ while test $# -gt 0; do
                    ;;
           esac
   done  
-export FABRIC_CFG_PATH=$CFG
+#export FABRIC_CFG_PATH=$CFG
 export CORE_PEER_LOCALMSPID=$MSPID
 export ORDERER_ADDRESS=$ADDRESS
-export CORE_PEER_MSPCONFIGPATH=$MSPCONFIG
-export ORDERER_CA=$OCA
+#export CORE_PEER_MSPCONFIGPATH=$MSPCONFIG
+export ORDERER_CA=$PWD/$OCA
 export CHANNEL_NAME=$CHANNEL
 export CORE_PEER_TLS_ENABLED=true
-export CORE_PEER_TLS_ROOTCERT_FILE=$TLS
+export CORE_PEER_TLS_ROOTCERT_FILE=$PWD/$TLS
 if test "$COLLECTION" = "null"
 then
     peer lifecycle chaincode commit -o $ORDERER_ADDRESS --channelID $CHANNEL_NAME --name $CHAINCODE --version $VERSION --sequence $SEQUENCE --signature-policy $POLICY --tls --cafile $ORDERER_CA $ORGS

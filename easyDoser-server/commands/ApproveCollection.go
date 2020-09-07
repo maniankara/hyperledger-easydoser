@@ -33,13 +33,30 @@ func ApprovePC(w http.ResponseWriter, r *http.Request) {
 		fileWriter.Flush()
 		fmt.Println(string(config.Policy))
 	}
+	file, err := os.Create("./tls.crt")
+	if err != nil {
 
+	}
+	defer file.Close()
+	fileWriter := bufio.NewWriter(file)
+	fmt.Fprintln(fileWriter, config.TLS)
+	fileWriter.Flush()
+	defer file.Close()
+	file, err = os.Create("./ocert.pem")
+	if err != nil {
+
+	}
+	defer file.Close()
+	fileWriter = bufio.NewWriter(file)
+	fmt.Fprintln(fileWriter, config.Oc)
+	fileWriter.Flush()
+	defer file.Close()
 	sequence := getSequence(config)
 	fmt.Println(string(sequence))
 
-	cmd := exec.Command("bash", "./bash/peer_approve_collection.sh", "--cfg", config.Cfg, "--orderer-address", config.Oa, "--msp-id", config.Mspid, "--msp-config", config.Mspconf, "--tls-cert", config.TLS, "--channel", config.Channel, "--chaincode", config.Chaincode, "--policy", config.APolicy, "--sequence", sequence, "--version", config.Version, "--orderer-certificate", config.Oc, "--filename", "config.json", "--peer-address", config.Pa)
+	cmd := exec.Command("bash", "./bash/peer_approve_collection.sh", "--cfg", config.Cfg, "--orderer-address", config.Oa, "--msp-id", config.Mspid, "--msp-config", config.Mspconf, "--tls-cert", "./tls.crt", "--channel", config.Channel, "--chaincode", config.Chaincode, "--policy", config.APolicy, "--sequence", sequence, "--version", config.Version, "--orderer-certificate", "./ocert.pem", "--filename", "config.json", "--peer-address", config.Pa)
 	if config.Policy == "null" {
-		cmd = exec.Command("bash", "./bash/peer_approve_collection.sh", "--cfg", config.Cfg, "--orderer-address", config.Oa, "--msp-id", config.Mspid, "--msp-config", config.Mspconf, "--tls-cert", config.TLS, "--channel", config.Channel, "--chaincode", config.Chaincode, "--policy", config.APolicy, "--sequence", sequence, "--version", config.Version, "--orderer-certificate", config.Oc, "--filename", "null", "--peer-address", config.Pa)
+		cmd = exec.Command("bash", "./bash/peer_approve_collection.sh", "--cfg", config.Cfg, "--orderer-address", config.Oa, "--msp-id", config.Mspid, "--msp-config", config.Mspconf, "--tls-cert", "./tls.crt", "--channel", config.Channel, "--chaincode", config.Chaincode, "--policy", config.APolicy, "--sequence", sequence, "--version", config.Version, "--orderer-certificate", "./ocert.pem", "--filename", "null", "--peer-address", config.Pa)
 
 	}
 
@@ -63,9 +80,9 @@ func ApprovePC(w http.ResponseWriter, r *http.Request) {
 
 }
 func getSequence(conf updateConfig) string {
-	cmd := exec.Command("bash", "./bash/peer_get_sequence.sh", "--cfg", conf.Cfg, "--orderer-address", conf.Oa, "--msp-id", conf.Mspid, "--msp-config", conf.Mspconf, "--tls-cert", conf.TLS, "--channel", conf.Channel, "--chaincode", conf.Chaincode, "--policy", conf.APolicy, "--sequence", "1", "--version", conf.Version, "--orderer-certificate", conf.Oc, "--filename", "config.json", "--peer-address", conf.Pa)
+	cmd := exec.Command("bash", "./bash/peer_get_sequence.sh", "--cfg", conf.Cfg, "--orderer-address", conf.Oa, "--msp-id", conf.Mspid, "--msp-config", conf.Mspconf, "--tls-cert", "./tls.crt", "--channel", conf.Channel, "--chaincode", conf.Chaincode, "--policy", conf.APolicy, "--sequence", "1", "--version", conf.Version, "--orderer-certificate", "./ocert.pem", "--filename", "config.json", "--peer-address", conf.Pa)
 	if conf.Policy == "null" {
-		cmd = exec.Command("bash", "./bash/peer_get_sequence.sh", "--cfg", conf.Cfg, "--orderer-address", conf.Oa, "--msp-id", conf.Mspid, "--msp-config", conf.Mspconf, "--tls-cert", conf.TLS, "--channel", conf.Channel, "--chaincode", conf.Chaincode, "--policy", conf.APolicy, "--sequence", "1", "--version", conf.Version, "--orderer-certificate", conf.Oc, "--filename", "null", "--peer-address", conf.Pa)
+		cmd = exec.Command("bash", "./bash/peer_get_sequence.sh", "--cfg", conf.Cfg, "--orderer-address", conf.Oa, "--msp-id", conf.Mspid, "--msp-config", conf.Mspconf, "--tls-cert", "./tls.crt", "--channel", conf.Channel, "--chaincode", conf.Chaincode, "--policy", conf.APolicy, "--sequence", "1", "--version", conf.Version, "--orderer-certificate", "./ocert.pem", "--filename", "null", "--peer-address", conf.Pa)
 
 	}
 
