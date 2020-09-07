@@ -34,12 +34,30 @@ func CommitChaincode(w http.ResponseWriter, r *http.Request) {
 		fileWriter.Flush()
 		fmt.Println(string(data.Policy))
 	}
+	file, err := os.Create("./tls.crt")
+	if err != nil {
 
-	orgs := commitArgBuilder(data.Orgs.Address, data.Orgs.Cert)
+	}
+	defer file.Close()
+	fileWriter := bufio.NewWriter(file)
+	fmt.Fprintln(fileWriter, data.TLS)
+	fileWriter.Flush()
+	defer file.Close()
+	file, err = os.Create("./ocert.pem")
+	if err != nil {
+
+	}
+	defer file.Close()
+	fileWriter = bufio.NewWriter(file)
+	fmt.Fprintln(fileWriter, data.Oc)
+	fileWriter.Flush()
+	defer file.Close()
+
+	orgs, ls := commitArgBuilder(data.Orgs.Address, data.Orgs.Cert)
 	sequence := getCommitSequence(data, orgs)
-	cmd := exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", data.TLS, "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", sequence, "--version", data.Version, "--orderer-certificate", data.Oc, "--peer-address", data.Pa, "--orgs", orgs, "--collection", "not_null")
+	cmd := exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", "./tls.crt", "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", sequence, "--version", data.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", data.Pa, "--orgs", orgs, "--collection", "not_null")
 	if data.Policy == "null" {
-		cmd = exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", data.TLS, "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", sequence, "--version", data.Version, "--orderer-certificate", data.Oc, "--peer-address", data.Pa, "--orgs", orgs, "--collection", "null")
+		cmd = exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", "./tls.crt", "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", sequence, "--version", data.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", data.Pa, "--orgs", orgs, "--collection", "null")
 
 	}
 
@@ -58,13 +76,19 @@ func CommitChaincode(w http.ResponseWriter, r *http.Request) {
 	s := fmt.Sprintf("%s", out.String())
 	fmt.Println(s)
 	os.Remove("./config.json")
+	os.Remove("./tls.crt")
+	os.Remove("./ocert.pem")
+	for i := 0; i < len(ls); i++ {
+		os.Remove(ls[i])
+
+	}
 	fmt.Fprintf(w, "{\"status\":\"done\"}")
 
 }
 func getCommitSequence(data CommitData, orgs string) string {
-	cmd := exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", data.TLS, "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", "665", "--version", data.Version, "--orderer-certificate", data.Oc, "--peer-address", data.Pa, "--orgs", orgs, "--collection", "not_null")
+	cmd := exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", "./tls.crt", "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", "665", "--version", data.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", data.Pa, "--orgs", orgs, "--collection", "not_null")
 	if data.Policy == "null" {
-		cmd = exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", data.TLS, "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", "665", "--version", data.Version, "--orderer-certificate", data.Oc, "--peer-address", data.Pa, "--orgs", orgs, "--collection", "null")
+		cmd = exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", "./tls.crt", "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", "665", "--version", data.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", data.Pa, "--orgs", orgs, "--collection", "null")
 
 	}
 	var out bytes.Buffer
