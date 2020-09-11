@@ -6,6 +6,7 @@ MSPCONFIG=""
 OCA=""
 CHANNEL=""
 FILE=""
+export PATH=$PATH:/server/bin
 while test $# -gt 0; do
            case "$1" in
                 --cfg)
@@ -49,10 +50,10 @@ while test $# -gt 0; do
                    ;;
           esac
   done  
-export FABRIC_CFG_PATH=$CFG
+#export FABRIC_CFG_PATH=$CFG
 export CORE_PEER_LOCALMSPID=$MSPID
 export ORDERER_ADDRESS=$ADDRESS
-export CORE_PEER_MSPCONFIGPATH=$MSPCONFIG
+#export CORE_PEER_MSPCONFIGPATH=$MSPCONFIG
 export ORDERER_CA=$OCA
 export CHANNEL_NAME=$CHANNEL
 #peer channel fetch config conf.pb -o $ORDERER_ADDRESS -c $CHANNEL_NAME --tls --cafile $ORDERER_CA

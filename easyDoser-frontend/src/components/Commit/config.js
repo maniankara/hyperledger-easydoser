@@ -5,7 +5,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import {  FormTextarea } from "shards-react";
+import {  FormTextarea, FormInput } from "shards-react";
 import Button from "components/CustomButtons/Button.js";
 import CardFooter from "components/Card/CardFooter.js";
 import * as escapeJSON from "escape-json-node";
@@ -43,6 +43,28 @@ export default function CConfig (props) {
         }
 
     }
+    const handleFileRead = (contractFile, index) => {
+      return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsText(contractFile);
+        fileReader.onloadend = (e) => {
+          const content = fileReader.result;
+          console.log(content)
+          certs[index.toString()]= content;
+        };
+      });
+    };
+  
+    const handleFileChosen = async (e, index) => {
+      console.log("file", e.target.files[0]);
+      const file = e.target.files[0];
+  
+      const isCorrect = await handleFileRead(file,index);
+      if (!isCorrect) {
+        return;
+      }
+  
+    };
     const checkReadiness = (resp) => {
       var flag = true;
       for(var i =0; i<resp.orgs.length; i++){
@@ -217,15 +239,15 @@ export default function CConfig (props) {
                       </text>
                       </label>
                       <br/>
-                      <FormTextarea
-                        className="address"
-                        id="#description"
-                        placeholder="TLS Cert"
-                        style={{height: '40px', width:"500px"}}
-                        onChange={(e) => {
-                          certs[index.toString()]=e.target.value
-                    }}
-                  />
+                      <FormInput
+                        type="file"
+                        id="file"
+                        className="input-file"
+                        accept=".crt"
+                        onChange={obj => {
+                          handleFileChosen(obj, index)
+                        }}
+                      />
                       
                 </GridItem> 
                 <GridItem>

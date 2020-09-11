@@ -10,12 +10,19 @@ export const channel_list = async () => {
   const ttls = cookies.get(tls)
   const tserver = cookies.get(server)
   console.log(ttls)
-  var res = await fetch(
-    "http://"+tserver+"/channel_list?cfg="+tcfg+"&peer-address="+tpa+"&msp-id="+tmspid+"&msp-config="+tmspconf+"&tls-cert="+ttls
-
-  );
-  console.log(res);
-  return res.json();
+  var opts = {
+    cfg : tcfg,
+    msp_id : tmspid,
+    peer_address : tpa,
+    msp_config : tmspconf,
+    tls_cert : ttls
+  }
+  console.log(JSON.stringify(opts))
+  var resp = await fetch ("http://"+tserver+"/channel_list",{
+    method: 'POST',
+    body: JSON.stringify(opts)
+  });
+  return await resp.json()
 };
 export const channel_info = async (name) => {
   const cookies = new Cookies();
@@ -26,14 +33,19 @@ export const channel_info = async (name) => {
   const tmspconf = cookies.get(mspconf)
   const toc = cookies.get(oc)
   const tserver = cookies.get(server)
-
-  var res = await fetch(
-    "http://"+tserver+"/channel_info/" +
-      name +
-      "?cfg="+tcfg+"&orderer-address="+toa+"&msp-id="+tmspid+"&msp-config="+tmspconf+"&orderer-certificate="+toc
-  );
-  console.log(res);
-  return res.json();
+  var opts = {
+    cfg : tcfg,
+    msp_id : tmspid,
+    orderer_Address : toa,
+    msp_config : tmspconf,
+    o_cert : toc
+  }
+  console.log(JSON.stringify(opts))
+  var resp = await fetch ("http://"+tserver+"/channel_info/"+name,{
+    method: 'POST',
+    body: JSON.stringify(opts)
+  });
+  return await resp.json()
 };
 export const chaincode_list = async (channel) => {
   const cookies = new Cookies();
@@ -44,13 +56,21 @@ export const chaincode_list = async (channel) => {
   const tmspconf = cookies.get(mspconf)
   const ttls = cookies.get(tls)
   const tserver = cookies.get(server)
-  console.log(ttls)
-  var res = await fetch(
-    "http://"+tserver+"/cc_list?cfg="+tcfg+"&peer-address="+tpa+"&msp-id="+tmspid+"&msp-config="+tmspconf+"&tls-cert="+ttls+"&channel="+channel
-
-  );
-  console.log(res);
-  return res.json();
+  var opts = {
+    cfg : tcfg,
+    msp_id : tmspid,
+    peer_address : tpa,
+    msp_config : tmspconf,
+    tls_cert : ttls,
+    channel : channel
+  }
+  console.log(JSON.stringify(opts))
+  var resp = await fetch ("http://"+tserver+"/cc_list",{
+    method: 'POST',
+    body: JSON.stringify(opts)
+  });
+  return await resp.json()
+  
 };
 export const chaincode_config = async (channel, cc) => {
   const cookies = new Cookies();
@@ -61,13 +81,21 @@ export const chaincode_config = async (channel, cc) => {
   const tmspconf = cookies.get(mspconf)
   const ttls = cookies.get(tls)
   const tserver = cookies.get(server)
-  console.log(ttls)
-  var res = await fetch(
-    "http://"+tserver+"/cc_config?cfg="+tcfg+"&peer-address="+tpa+"&msp-id="+tmspid+"&msp-config="+tmspconf+"&tls-cert="+ttls+"&channel="+channel+"&chaincode="+cc
-
-  );
-  console.log(res);
-  return res.json();
+  var opts = {
+    cfg : tcfg,
+    msp_id : tmspid,
+    peer_address : tpa,
+    msp_config : tmspconf,
+    tls_cert : ttls,
+    channel : channel,
+    chaincode: cc
+  }
+  console.log(JSON.stringify(opts))
+  var resp = await fetch ("http://"+tserver+"/cc_config",{
+    method: 'POST',
+    body: JSON.stringify(opts)
+  });
+  return await resp.json()
 };
 export const approveConfig = async (policy, aPolicy, version, channel, chaincode) => {
   const cookies = new Cookies();
@@ -182,15 +210,22 @@ export const endorsementPolicy = async (channel, cc) => {
   const tserver = cookies.get(server)
   const tcerts = cookies.get(certs)
   const tkeystore = cookies.get(keystore)
-  
-  console.log(    "http://"+tserver+"/endorsement_policy?peer-address="+tpa+"&msp-id="+tmspid+"&tls-cert="+ttls+"&channel="+channel+"&chaincode="+cc+"&user-certs="+tcerts+"&keypath="+tkeystore
-  );
-  var res = await fetch(
-    "http://"+tserver+"/endorsement_policy?peer-address="+tpa+"&msp-id="+tmspid+"&tls-cert="+ttls+"&channel="+channel+"&chaincode="+cc+"&user-certs="+tcerts+"&keypath="+tkeystore
+  var opts = {
+    msp_id : tmspid,
+    peer_address : tpa,
+    tls_cert : ttls,
+    channel: channel,
+    chaincode : cc,
+    usercert: tcerts,
+    keypath : tkeystore
 
-  );
-
-  return await res.json();
+  }
+  console.log(opts)
+  var resp = await fetch ("http://"+tserver+"/endorsement_policy",{
+    method: 'POST',
+    body: JSON.stringify(opts)
+  });
+  return await resp.json()
 };
 
 //      "?cfg=/mnt/265C6B275C6AF14B/fabric/config&orderer-address=localhost:7050&msp-id=Org1MSP&msp-config=/mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp&orderer-certificate=/mnt/265C6B275C6AF14B/fabric/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem"

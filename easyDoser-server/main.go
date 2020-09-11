@@ -1,11 +1,12 @@
 package main
 
 import (
-	"easyDoser-server/commands"
 	"flag"
 	"fmt"
 	"log"
 	"net/http"
+
+	"easydoser.com/commands"
 
 	"github.com/gorilla/mux"
 )
@@ -26,14 +27,14 @@ func main() {
 	var pt = ":" + string(*port)
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", homeLink)
-	router.HandleFunc("/channel_info/{id}", commands.GetChannelInfo).Methods("GET")
-	router.HandleFunc("/channel_list", commands.GetChannelList).Methods("GET")
-	router.HandleFunc("/cc_list", commands.GetChaincodeList).Methods("GET")
-	router.HandleFunc("/cc_config", commands.GetChaincodeConfig).Methods("GET")
+	router.HandleFunc("/channel_info/{id}", commands.GetChannelInfo).Methods("POST")
+	router.HandleFunc("/channel_list", commands.GetChannelList).Methods("POST")
+	router.HandleFunc("/cc_list", commands.GetChaincodeList).Methods("POST")
+	router.HandleFunc("/cc_config", commands.GetChaincodeConfig).Methods("POST")
 	router.HandleFunc("/approve", commands.ApprovePC).Methods("POST")
 	router.HandleFunc("/check", commands.CheckCommitReady).Methods("POST")
 	router.HandleFunc("/commit", commands.CommitChaincode).Methods("POST")
-	router.HandleFunc("/endorsement_policy", commands.GetEndorsementPolicy).Methods("GET")
+	router.HandleFunc("/endorsement_policy", commands.GetEndorsementPolicy).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(pt, router))
 }
