@@ -1,11 +1,12 @@
 package main
 
 import (
-	"easyDoser-server/commands"
 	"flag"
 	"fmt"
 	"log"
 	"net/http"
+
+	"easydoser.com/commands"
 
 	"github.com/gorilla/mux"
 )

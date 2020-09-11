@@ -13,6 +13,7 @@ ORGS=""
 TLS=""
 SEQUENCE=""
 PEER=""
+export PATH=$PATH:/server/bin
 while test $# -gt 0; do
            case "$1" in
                 --cfg)
