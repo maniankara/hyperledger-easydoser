@@ -1,3 +1,26 @@
+13.09.2020
+ * Last week:
+ 
+ * This week:
+   - Try with HF managed services (Azure/IBM)
+
+
+06.09.2020
+ * Last week:
+   - branch: File picker (for the certs)
+   - docker: try with fully working docker solution
+ * This week:
+   - CI: GitHub actions: Get easydoser testing running
+   - Push the error to frontend
+   - WebUI in production mode
+   - Try to push docker functionality
+   - Arch diagram: refine
+   - Notes:
+      - Docker func for webui and server should be optional
+      - HF can exist in cloud and peer, other binaries and certs exist in local computer
+      - Cloud testing needs dns resolution working
+   - 
+
 30.08.2020
  * Last week:
    - Marked the completed ones below
