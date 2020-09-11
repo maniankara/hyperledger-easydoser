@@ -75,7 +75,8 @@ func ApprovePC(w http.ResponseWriter, r *http.Request) {
 	if config.Policy != "null" {
 		os.Remove("./config.json")
 	}
-
+	os.Remove("./tls.crt")
+	os.Remove("././ocert.pem")
 	fmt.Fprintf(w, "{\"status\":\"done\"}")
 
 }

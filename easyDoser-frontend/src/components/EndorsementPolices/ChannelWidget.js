@@ -88,7 +88,6 @@ export default function ChannelWidget(props) {
           </text>
       </label>
       <FormInput
-                        className="Choose"
                         type="file"
                         id="file"
                         className="input-file"
@@ -113,7 +112,6 @@ export default function ChannelWidget(props) {
           </text>
       </label>
       <FormInput
-                        className="Choose"
                         type="file"
                         id="file"
                         className="input-file"

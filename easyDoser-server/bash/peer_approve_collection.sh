@@ -12,6 +12,7 @@ CHAINCODE=""
 tls=""
 SEQUENCE=0
 VERSION=1.0
+export PATH=$PATH:/server/bin
 while test $# -gt 0; do
            case "$1" in
                 --cfg)

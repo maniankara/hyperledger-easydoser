@@ -240,7 +240,6 @@ export default function CConfig (props) {
                       </label>
                       <br/>
                       <FormInput
-                        className="Choose"
                         type="file"
                         id="file"
                         className="input-file"

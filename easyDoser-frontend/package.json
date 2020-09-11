@@ -11,6 +11,7 @@
     "classnames": "2.2.6",
     "escape-json-node": "^2.0.0",
     "history": "4.10.1",
+    "http-server": "^0.12.3",
     "perfect-scrollbar": "1.5.0",
     "prop-types": "15.7.2",
     "random-material-color": "^1.0.5",

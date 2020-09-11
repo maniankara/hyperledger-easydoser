@@ -45,7 +45,7 @@ func GetChannelInfo(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal([]byte(s), &result)
 	jsP, _ := json.Marshal(result["data"].(map[string]interface{})["data"].([]interface{})[0].(map[string]interface{})["payload"].(map[string]interface{})["data"].(map[string]interface{})["config"].(map[string]interface{}))
 	os.Remove("./ocert.pem")
-
+	os.Remove("./conf.pb")
 	fmt.Fprintf(w, string(jsP))
 
 }
