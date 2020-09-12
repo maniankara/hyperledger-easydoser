@@ -36,7 +36,7 @@ func GetChannelInfo(w http.ResponseWriter, r *http.Request) {
 	err = cmd.Run()
 	if err != nil {
 		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
-		fmt.Fprintf(w, "error")
+		fmt.Fprintf(w, "{\"error\":\"{\""+stderr.String()+"\"}}")
 		return
 	}
 	var result map[string]interface{}
