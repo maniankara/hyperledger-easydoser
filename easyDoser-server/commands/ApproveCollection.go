@@ -68,7 +68,7 @@ func ApprovePC(w http.ResponseWriter, r *http.Request) {
 	if cmderr != nil {
 
 		fmt.Println(stderr.String())
-		fmt.Fprintf(w, "{\"status\":\"{\""+stderr.String()+"\"}}")
+		fmt.Fprintf(w, "{\"error\":\"{\""+stderr.String()+"\"}}")
 		return
 	}
 	fmt.Println("Result: " + out.String())

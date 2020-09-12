@@ -69,7 +69,7 @@ func CommitChaincode(w http.ResponseWriter, r *http.Request) {
 	if cmderr != nil {
 
 		fmt.Println("Error:" + stderr.String())
-		fmt.Fprintf(w, "{\"status\":\"something went wrong\"}")
+		fmt.Fprintf(w, "{\"error\":\"{\""+stderr.String()+"\"}}")
 		return
 	}
 	fmt.Println(out.String())

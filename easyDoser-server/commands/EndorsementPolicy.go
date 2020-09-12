@@ -51,6 +51,8 @@ func GetEndorsementPolicy(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
+		fmt.Fprintf(w, "{\"error\":\"{\""+stderr.String()+"\"}}")
+
 	}
 	s := fmt.Sprintf("%s", out.String())
 	os.Remove("./tls.crt")
