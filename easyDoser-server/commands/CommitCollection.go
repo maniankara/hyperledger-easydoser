@@ -68,8 +68,10 @@ func CommitChaincode(w http.ResponseWriter, r *http.Request) {
 	cmderr := cmd.Run()
 	if cmderr != nil {
 
-		fmt.Println("Error:" + stderr.String())
-		fmt.Fprintf(w, "{\"error\":\"{\""+stderr.String()+"\"}}")
+		error := strings.Split(strings.Trim(stderr.String(), "\n"), "->")
+		split := strings.Split(error[1], ":")
+		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
+		fmt.Fprintf(w, "{\"error\":\""+split[1]+"\"\n}")
 		return
 	}
 	fmt.Println(out.String())
