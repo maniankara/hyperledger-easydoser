@@ -9,7 +9,6 @@ export const channel_list = async () => {
   const tmspconf = cookies.get(mspconf)
   const ttls = cookies.get(tls)
   const tserver = cookies.get(server)
-  console.log(ttls)
   var opts = {
     cfg : tcfg,
     msp_id : tmspid,
