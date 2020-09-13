@@ -32,8 +32,10 @@ func GetChannelList(w http.ResponseWriter, r *http.Request) {
 	cmd.Stderr = &stderr
 	err = cmd.Run()
 	if err != nil {
+		error := strings.Split(strings.Trim(stderr.String(), "\n"), "->")
+		split := strings.Split(error[1], ":")
 		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
-		fmt.Fprintf(w, "error")
+		fmt.Fprintf(w, "{\"error\":\""+split[1]+"\"\n}")
 		return
 	}
 	s := fmt.Sprintf("%s", out.String())

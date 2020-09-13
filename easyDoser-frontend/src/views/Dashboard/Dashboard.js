@@ -43,11 +43,13 @@ export default function Dashboard() {
    
         </Button>
         <Row>
-          {items.length !== 0 ? (
+          {items.error ===undefined?items.length !== 0  ? (
             items.map((item) => <ChannelWidget item={item}></ChannelWidget>)
           ) : (
             <h3>No Channels</h3>
-          )}
+          ):<div>
+           { items.error}
+            </div>}
         </Row>
         </div>
       ) : (
