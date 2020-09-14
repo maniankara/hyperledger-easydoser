@@ -1,5 +1,5 @@
 module easydoser.com/commands
 
-go 1.14
+go 1.12
 
-require github.com/gorilla/mux v1.8.0
+equire github.com/gorilla/mux v1.7.4
