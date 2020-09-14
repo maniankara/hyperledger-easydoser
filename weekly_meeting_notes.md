@@ -1,8 +1,21 @@
-13.09.2020
+20.09.2020
  * Last week:
- 
  * This week:
    - Try with HF managed services (Azure/IBM)
+ 
+
+13.09.2020
+ * Last week:
+  - Dockerized backend and frontend
+  - WebUI in production mode - ongoing
+  - GitHub actions - not started
+  - try to push docker functionality - done
+  - Arch diagram - not started
+ * This week:
+  - readme.md: Docker as default, optional set of instructions for running without docker
+  - Push the error to frontend
+  - Fix current errors
+  - Anoop: To test and raise bugs
 
 
 06.09.2020
