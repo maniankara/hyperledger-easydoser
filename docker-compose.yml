@@ -7,7 +7,7 @@ services:
     volumes:
       - /run/media/abhimanyu/265C6B275C6AF14B/fabric/config:/config
       - /run/media/abhimanyu/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/msp:/mspconfig
-     # - /run/media/abhimanyu/265C6B275C6AF14B/fabric/bin:/server/bin
+      - /run/media/abhimanyu/265C6B275C6AF14B/fabric/bin:/server/bin
       - ./easyDoser-server/:/server/
     environment :
       - CORE_PEER_MSPCONFIGPATH=/mspconfig
