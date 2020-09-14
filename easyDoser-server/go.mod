@@ -1,6 +1,6 @@
 module easydoser.com/easyDoser-server
 
-go 1.14
+go 1.12
 
 require (
 	easydoser.com/commands v0.0.0
