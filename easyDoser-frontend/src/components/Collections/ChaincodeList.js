@@ -62,7 +62,7 @@ export default function ChaincodeList(props) {
             )}
           </IconButton>
 
-          {info ? (
+          {data.error === undefined? info ? (
             <div style={{ justifyContent: "center", alignContent: "center" }}>
               <Spinner animation="grow" variant="dark" size="sm" />
               <h3>Loading..</h3>
@@ -71,6 +71,10 @@ export default function ChaincodeList(props) {
             <CConfig config={data}></CConfig>
           ) : (
             <p></p>
+          ):(
+            <div>
+              {data.error}
+            </div>
           )}
         </CardBody>
       </Card>
