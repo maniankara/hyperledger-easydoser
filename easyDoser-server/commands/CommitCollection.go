@@ -75,7 +75,7 @@ func CommitChaincode(w http.ResponseWriter, r *http.Request) {
 		}
 		str := reg.ReplaceAllString(stderr.String(), " ")
 		fmt.Println(fmt.Sprint(err) + ": " + "{\"error\":\"" + str + "\"}")
-		fmt.Fprintf(w, "{\"error\":\""+str+"\"}")
+		fmt.Fprintf(w, "{\"status\":\""+str+"\"}")
 		return
 	}
 	fmt.Println(out.String())
