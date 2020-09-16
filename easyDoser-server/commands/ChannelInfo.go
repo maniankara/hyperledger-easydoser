@@ -5,10 +5,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
-	"strings"
+	"regexp"
 
 	"github.com/gorilla/mux"
 )
@@ -36,10 +37,15 @@ func GetChannelInfo(w http.ResponseWriter, r *http.Request) {
 	cmd.Stderr = &stderr
 	err = cmd.Run()
 	if err != nil {
-		error := strings.Split(strings.Trim(stderr.String(), "\n"), "->")
-		split := strings.Split(error[1], ":")
-		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
-		fmt.Fprintf(w, "{\"error\":\""+split[1]+"\"\n}")
+		reg, err := regexp.Compile("[^a-zA-Z0-9]+")
+		if err != nil {
+			log.Fatal(err)
+		}
+		str := reg.ReplaceAllString(stderr.String(), " ")
+		fmt.Println(fmt.Sprint(err) + ": " + "{\"error\":\"" + str + "\"}")
+		fmt.Fprintf(w, "{\"error\":\""+str+"\"}")
+		os.Remove("./ocert.pem")
+		os.Remove("./conf.pb")
 		return
 	}
 	var result map[string]interface{}

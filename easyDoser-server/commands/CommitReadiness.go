@@ -5,9 +5,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
+	"regexp"
 	"strings"
 )
 
@@ -65,10 +67,18 @@ func CheckCommitReady(w http.ResponseWriter, r *http.Request) {
 	cmd.Stderr = &stderr
 	cmderr := cmd.Run()
 	if cmderr != nil {
-		error := strings.Split(strings.Trim(stderr.String(), "\n"), "->")
-		split := strings.Split(error[1], ":")
-		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
-		fmt.Fprintf(w, "{\"error\":\""+split[1]+"\"\n}")
+		reg, err := regexp.Compile("[^a-zA-Z0-9]+")
+		if err != nil {
+			log.Fatal(err)
+		}
+		str := reg.ReplaceAllString(stderr.String(), " ")
+		fmt.Println(fmt.Sprint(err) + ": " + "{\"error\":\"" + str + "\"}")
+		fmt.Fprintf(w, "{\"error\":\""+str+"\"}")
+		if args.Policy != "null" {
+			os.Remove("./config.json")
+		}
+		os.Remove("./tls.crt")
+		os.Remove("./ocert.pem")
 		return
 	}
 	fmt.Println(out.String())
