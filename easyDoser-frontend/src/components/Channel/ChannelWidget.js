@@ -67,7 +67,10 @@ export default function ChannelWidget(props) {
               <h3>Loading..</h3>
             </div>
           ) : expanded ? (
-            <Policies data={data.channel_group}></Policies>
+            data.error === undefined? (<Policies data={data.channel_group}></Policies>) :
+            (<div>
+              {data.error}
+            </div>)
           ) : (
             <p></p>
           )}

@@ -89,7 +89,6 @@ export const chaincode_config = async (channel, cc) => {
     channel : channel,
     chaincode: cc
   }
-  console.log(JSON.stringify(opts))
   var resp = await fetch ("http://"+tserver+"/cc_config",{
     method: 'POST',
     body: JSON.stringify(opts)

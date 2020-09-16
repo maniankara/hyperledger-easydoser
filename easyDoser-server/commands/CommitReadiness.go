@@ -74,6 +74,11 @@ func CheckCommitReady(w http.ResponseWriter, r *http.Request) {
 		str := reg.ReplaceAllString(stderr.String(), " ")
 		fmt.Println(fmt.Sprint(err) + ": " + "{\"error\":\"" + str + "\"}")
 		fmt.Fprintf(w, "{\"error\":\""+str+"\"}")
+		if args.Policy != "null" {
+			os.Remove("./config.json")
+		}
+		os.Remove("./tls.crt")
+		os.Remove("./ocert.pem")
 		return
 	}
 	fmt.Println(out.String())

@@ -44,6 +44,8 @@ func GetChannelInfo(w http.ResponseWriter, r *http.Request) {
 		str := reg.ReplaceAllString(stderr.String(), " ")
 		fmt.Println(fmt.Sprint(err) + ": " + "{\"error\":\"" + str + "\"}")
 		fmt.Fprintf(w, "{\"error\":\""+str+"\"}")
+		os.Remove("./ocert.pem")
+		os.Remove("./conf.pb")
 		return
 	}
 	var result map[string]interface{}

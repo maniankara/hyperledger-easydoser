@@ -183,7 +183,7 @@ export default function ChannelWidget(props) {
             )}
           </IconButton>
               {info?(<h3>Chaincodes: </h3>):(<text></text>)}
-          {info ? (
+          {items.error === undefined ?info ? (
              <Row>
              {items.length !== 0 ? (
                items.map((item) => <ChaincodeList keystore = {keystoreFile} certs= {userCerts} channel={props.item} item = {item}></ChaincodeList>)
@@ -195,7 +195,12 @@ export default function ChannelWidget(props) {
             <text></text>
           ) : (
             <p></p>
-          )}
+          ):(
+          <div>
+            {expanded? <text>
+                {items.error}
+              </text>:<p></p>}
+          </div>)}
         </CardBody>
       </Card>
     </div>
