@@ -6,7 +6,7 @@ MSPCONFIG=""
 OCA=""
 CHANNEL=""
 FILE=""
-export PATH=$PATH:/server/bin
+DOCKER="false"
 while test $# -gt 0; do
            case "$1" in
                 --cfg)
@@ -44,6 +44,11 @@ while test $# -gt 0; do
                     FILE=${1}
                     shift
                     ;;
+                --docker)
+                    shift
+                    DOCKER=${1}
+                    shift
+                    ;;
                 *)
                    echo "${1} is not a recognized flag!"
                    return 1;
@@ -56,6 +61,16 @@ export ORDERER_ADDRESS=$ADDRESS
 #export CORE_PEER_MSPCONFIGPATH=$MSPCONFIG
 export ORDERER_CA=$OCA
 export CHANNEL_NAME=$CHANNEL
+if $DOCKER = "true"
+then
+    export PATH=$PATH:/server/bin
+    
+
+else
+    export CORE_PEER_MSPCONFIGPATH=$MSPCONFIG
+    export FABRIC_CFG_PATH=$CFG
+
+fi
 #peer channel fetch config conf.pb -o $ORDERER_ADDRESS -c $CHANNEL_NAME --tls --cafile $ORDERER_CA
 peer channel fetch config config_block.pb -o localhost:7050 -c $CHANNEL_NAME --tls --cafile $ORDERER_CA
 configtxlator proto_decode --input config_block.pb --type common.Block

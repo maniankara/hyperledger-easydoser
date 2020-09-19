@@ -1,5 +1,5 @@
 import Cookies from "universal-cookie";
-import { cfg, mspid, mspconf, oa, pa, tls, oc, server, keystore, certs} from "constants.js";
+import { cfg, mspid, mspconf, oa, pa, tls, oc, server, keystore, certs, docker} from "constants.js";
 export const channel_list = async () => {
   const cookies = new Cookies();
 
@@ -9,12 +9,14 @@ export const channel_list = async () => {
   const tmspconf = cookies.get(mspconf)
   const ttls = cookies.get(tls)
   const tserver = cookies.get(server)
+  const tdocker = cookies.get(docker)
   var opts = {
     cfg : tcfg,
     msp_id : tmspid,
     peer_address : tpa,
     msp_config : tmspconf,
-    tls_cert : ttls
+    tls_cert : ttls,
+    docker :tdocker
   }
   console.log(JSON.stringify(opts))
   var resp = await fetch ("http://"+tserver+"/channel_list",{
@@ -32,12 +34,15 @@ export const channel_info = async (name) => {
   const tmspconf = cookies.get(mspconf)
   const toc = cookies.get(oc)
   const tserver = cookies.get(server)
+  const tdocker = cookies.get(docker)
+
   var opts = {
     cfg : tcfg,
     msp_id : tmspid,
     orderer_Address : toa,
     msp_config : tmspconf,
-    o_cert : toc
+    o_cert : toc,
+    docker :tdocker
   }
   console.log(JSON.stringify(opts))
   var resp = await fetch ("http://"+tserver+"/channel_info/"+name,{
@@ -54,14 +59,17 @@ export const chaincode_list = async (channel) => {
   const tpa = cookies.get(pa)
   const tmspconf = cookies.get(mspconf)
   const ttls = cookies.get(tls)
-  const tserver = cookies.get(server)
+  const tserver = cookies.get(server)  
+  const tdocker = cookies.get(docker)
+
   var opts = {
     cfg : tcfg,
     msp_id : tmspid,
     peer_address : tpa,
     msp_config : tmspconf,
     tls_cert : ttls,
-    channel : channel
+    channel : channel,
+    docker :tdocker
   }
   console.log(JSON.stringify(opts))
   var resp = await fetch ("http://"+tserver+"/cc_list",{
@@ -80,6 +88,8 @@ export const chaincode_config = async (channel, cc) => {
   const tmspconf = cookies.get(mspconf)
   const ttls = cookies.get(tls)
   const tserver = cookies.get(server)
+  const tdocker = cookies.get(docker)
+
   var opts = {
     cfg : tcfg,
     msp_id : tmspid,
@@ -87,7 +97,8 @@ export const chaincode_config = async (channel, cc) => {
     msp_config : tmspconf,
     tls_cert : ttls,
     channel : channel,
-    chaincode: cc
+    chaincode: cc,
+    docker :tdocker
   }
   var resp = await fetch ("http://"+tserver+"/cc_config",{
     method: 'POST',
@@ -104,6 +115,8 @@ export const approveConfig = async (policy, aPolicy, version, channel, chaincode
   const ttls = cookies.get(tls)
   const toc = cookies.get(oc)
   const toa = cookies.get(oa)
+  const tdocker = cookies.get(docker)
+
 
   var opts = {
     policy : policy, 
@@ -117,7 +130,8 @@ export const approveConfig = async (policy, aPolicy, version, channel, chaincode
     oa : toa,
     oc : toc,
     channel: channel,
-    chaincode : chaincode
+    chaincode : chaincode,
+    docker :tdocker
 
   }
   const tserver = cookies.get(server)
@@ -137,6 +151,7 @@ export const checkCommit = async (policy, aPolicy, version, channel, chaincode) 
   const ttls = cookies.get(tls)
   const toc = cookies.get(oc)
   const toa = cookies.get(oa)
+  const tdocker = cookies.get(docker)
 
   var opts = {
     policy : policy, 
@@ -150,7 +165,8 @@ export const checkCommit = async (policy, aPolicy, version, channel, chaincode) 
     oa : toa,
     oc : toc,
     channel: channel,
-    chaincode : chaincode
+    chaincode : chaincode,
+    docker :tdocker
 
   }
   const tserver = cookies.get(server)
@@ -170,6 +186,7 @@ export const commitCC = async (policy, aPolicy, version, channel, chaincode, add
   const ttls = cookies.get(tls)
   const toc = cookies.get(oc)
   const toa = cookies.get(oa)
+  const tdocker = cookies.get(docker)
 
   var opts = {
     policy : policy, 
@@ -187,7 +204,8 @@ export const commitCC = async (policy, aPolicy, version, channel, chaincode, add
     orgs:{
       address : address,
       cert : certs,
-    }
+    },
+    docker :tdocker
 
   }
   console.log(JSON.stringify(opts))
@@ -208,6 +226,7 @@ export const endorsementPolicy = async (channel, cc) => {
   const tserver = cookies.get(server)
   const tcerts = cookies.get(certs)
   const tkeystore = cookies.get(keystore)
+  const tdocker = cookies.get(docker)
   var opts = {
     msp_id : tmspid,
     peer_address : tpa,
@@ -215,7 +234,8 @@ export const endorsementPolicy = async (channel, cc) => {
     channel: channel,
     chaincode : cc,
     usercert: tcerts,
-    keypath : tkeystore
+    keypath : tkeystore,
+    docker :tdocker
 
   }
   console.log(opts)

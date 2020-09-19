@@ -13,6 +13,7 @@ type updateConfig struct {
 	Mspid     string `json:"mspid"`
 	Channel   string `json:"channel"`
 	Chaincode string `json:"chaincode"`
+	Docker    string `json:"docker"`
 }
 
 type CommitCheck struct {
@@ -36,6 +37,7 @@ type CommitData struct {
 	Channel   string   `json:"channel"`
 	Chaincode string   `json:"chaincode"`
 	Orgs      OrgCerts `json:"orgs"`
+	Docker    string   `json:"docker"`
 }
 type OrgCerts struct {
 	Address []string `json:"address"`
@@ -54,4 +56,5 @@ type ChannelListStruct struct {
 	Chaincode      string `json:"Chaincode"`
 	Keypath        string `json:"keypath"`
 	Usercert       string `json:"usercert"`
+	Docker         string `json:"docker"`
 }

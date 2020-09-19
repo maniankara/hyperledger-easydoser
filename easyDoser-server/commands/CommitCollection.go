@@ -13,6 +13,7 @@ import (
 	"strings"
 )
 
+// CommitChaincode Commits chaincode definition
 func CommitChaincode(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -57,9 +58,13 @@ func CommitChaincode(w http.ResponseWriter, r *http.Request) {
 
 	orgs, ls := commitArgBuilder(data.Orgs.Address, data.Orgs.Cert)
 	sequence := getCommitSequence(data, orgs)
-	cmd := exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", "./tls.crt", "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", sequence, "--version", data.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", data.Pa, "--orgs", orgs, "--collection", "not_null")
+	str := "false"
+	if data.Docker == "true" {
+		str = "true"
+	}
+	cmd := exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", "./tls.crt", "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", sequence, "--version", data.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", data.Pa, "--orgs", orgs, "--collection", "not_null", "--docker", str)
 	if data.Policy == "null" {
-		cmd = exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", "./tls.crt", "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", sequence, "--version", data.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", data.Pa, "--orgs", orgs, "--collection", "null")
+		cmd = exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", "./tls.crt", "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", sequence, "--version", data.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", data.Pa, "--orgs", orgs, "--collection", "null", "--docker", str)
 
 	}
 
@@ -95,9 +100,13 @@ func CommitChaincode(w http.ResponseWriter, r *http.Request) {
 
 }
 func getCommitSequence(data CommitData, orgs string) string {
-	cmd := exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", "./tls.crt", "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", "665", "--version", data.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", data.Pa, "--orgs", orgs, "--collection", "not_null")
+	str := "false"
+	if data.Docker == "true" {
+		str = "true"
+	}
+	cmd := exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", "./tls.crt", "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", "665", "--version", data.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", data.Pa, "--orgs", orgs, "--collection", "not_null", "--docker", str)
 	if data.Policy == "null" {
-		cmd = exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", "./tls.crt", "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", "665", "--version", data.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", data.Pa, "--orgs", orgs, "--collection", "null")
+		cmd = exec.Command("bash", "./bash/peer_commit_chaincode.sh", "--cfg", data.Cfg, "--orderer-address", data.Oa, "--msp-id", data.Mspid, "--msp-config", data.Mspconf, "--tls", "./tls.crt", "--channel", data.Channel, "--chaincode", data.Chaincode, "--policy", data.APolicy, "--sequence", "665", "--version", data.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", data.Pa, "--orgs", orgs, "--collection", "null", "--docker", str)
 
 	}
 	var out bytes.Buffer
