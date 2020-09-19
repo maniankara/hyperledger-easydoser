@@ -27,7 +27,12 @@ func GetChannelList(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(fileWriter, args.TLSCert)
 	fileWriter.Flush()
 	defer file.Close()
-	cmd := exec.Command("bash", "./bash/peer_channel_list.sh", "--cfg", args.Cfg, "--peer-address", args.PeerAddress, "--msp-id", args.MspID, "--msp-config", args.MspConfig, "--tls-cert", "tls.crt")
+	str := "false"
+	if args.Docker == "true" {
+		str = "true"
+	}
+	fmt.Printf(str)
+	cmd := exec.Command("bash", "./bash/peer_channel_list.sh", "--cfg", args.Cfg, "--peer-address", args.PeerAddress, "--msp-id", args.MspID, "--msp-config", args.MspConfig, "--tls-cert", "tls.crt", "--docker", str)
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out

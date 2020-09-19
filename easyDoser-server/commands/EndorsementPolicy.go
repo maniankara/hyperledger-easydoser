@@ -44,7 +44,11 @@ func GetEndorsementPolicy(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(fileWriter, args.Keypath)
 	fileWriter.Flush()
 	defer file.Close()
-	cmd := exec.Command("bash", "./bash/discover_endorsement_policy.sh", "--peer-address", args.PeerAddress, "--msp-id", args.MspID, "--tls", "./tls.crt", "--channel", args.Channel, "--chaincode", args.Chaincode, "--keypath", "./priv_sk", "--user-cert", "./cert.crt")
+	str := "false"
+	if args.Docker == "true" {
+		str = "true"
+	}
+	cmd := exec.Command("bash", "./bash/discover_endorsement_policy.sh", "--peer-address", args.PeerAddress, "--msp-id", args.MspID, "--tls", "./tls.crt", "--channel", args.Channel, "--chaincode", args.Chaincode, "--keypath", "./priv_sk", "--user-cert", "./cert.crt", "--docker", str)
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
