@@ -26,7 +26,11 @@ func GetChaincodeConfig(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(fileWriter, args.TLSCert)
 	fileWriter.Flush()
 	defer file.Close()
-	cmd := exec.Command("bash", "./bash/peer_collection_config.sh", "--cfg", args.Cfg, "--peer-address", args.PeerAddress, "--msp-id", args.MspID, "--msp-config", args.MspConfig, "--tls-cert", "./tls.crt", "--channel", args.Channel, "--chaincode", args.Chaincode)
+	str := "false"
+	if args.Docker == "true" {
+		str = "true"
+	}
+	cmd := exec.Command("bash", "./bash/peer_collection_config.sh", "--cfg", args.Cfg, "--peer-address", args.PeerAddress, "--msp-id", args.MspID, "--msp-config", args.MspConfig, "--tls-cert", "./tls.crt", "--channel", args.Channel, "--chaincode", args.Chaincode, "--docker", str)
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out

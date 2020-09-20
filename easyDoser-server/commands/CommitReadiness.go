@@ -54,11 +54,14 @@ func CheckCommitReady(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(fileWriter, args.Oc)
 	fileWriter.Flush()
 	defer file.Close()
-
+	str := "false"
+	if args.Docker == "true" {
+		str = "true"
+	}
 	sequence := getSequenceCheck(args)
-	cmd := exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", "./tls.crt", "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", sequence, "--version", args.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", args.Pa, "--policy", "not_null")
+	cmd := exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", "./tls.crt", "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", sequence, "--version", args.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", args.Pa, "--policy", "not_null", "--docker", str)
 	if args.Policy == "null" {
-		cmd = exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", "./tls.crt", "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", sequence, "--version", args.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", args.Pa, "--policy", "null")
+		cmd = exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", "./tls.crt", "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", sequence, "--version", args.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", args.Pa, "--policy", "null", "--docker", str)
 
 	}
 	var out bytes.Buffer
@@ -114,10 +117,13 @@ func CheckCommitReady(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, string(e))
 }
 func getSequenceCheck(args updateConfig) string {
-
-	cmd := exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", "./tls.crt", "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", "665", "--version", args.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", args.Pa, "--policy", "not_null")
+	str := "false"
+	if args.Docker == "true" {
+		str = "true"
+	}
+	cmd := exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", "./tls.crt", "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", "665", "--version", args.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", args.Pa, "--policy", "not_null", "--docker", str)
 	if args.Policy == "null" {
-		cmd = exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", "./tls.crt", "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", "665", "--version", args.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", args.Pa, "--policy", "null")
+		cmd = exec.Command("bash", "./bash/peer_commit_ready.sh", "--cfg", args.Cfg, "--orderer-address", args.Oa, "--msp-id", args.Mspid, "--msp-config", args.Mspconf, "--tls-certificate", "./tls.crt", "--channel", args.Channel, "--cc", args.Chaincode, "--approval-policy", args.APolicy, "--sequence", "665", "--version", args.Version, "--orderer-certificate", "./ocert.pem", "--peer-address", args.Pa, "--policy", "null", "--docker", str)
 
 	}
 	var out bytes.Buffer

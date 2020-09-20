@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { server, mspid, oa, pa, tls, oc, cookie} from "constants.js";
+import { server, mspid, oa, pa, tls, oc, cookie,cfg,mspconf,docker} from "constants.js";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import {  FormTextarea , FormInput} from "shards-react";
@@ -14,6 +14,7 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import Cookies from "universal-cookie";
 import PropTypes from "prop-types";
+import Checkbox from '@material-ui/core/Checkbox';
 
 
 import './Path.css';
@@ -45,7 +46,13 @@ export default function Paths(props) {
   const [toa, setOA] = useState("");
   const [toc, setOC] = useState("");
   const [tserver, setServer] = useState("");
+  const [tcfg, setCfg] = useState("");
+  const [tmspconf, setMspconf] = useState("");
   const[showAlert, setAlert]= useState(false)
+  const[tdocker, setDocker] = useState(true);
+  const handleCheck = (event) => {
+    setDocker(event.target.checked);
+  }
   var empty= false
   console.log(showAlert)
   const cookies = new Cookies();
@@ -56,6 +63,9 @@ export default function Paths(props) {
     toa===""?cookies.get(oa)===undefined?empty=true:yolo=1:cookies.set(oa, toa, { path: "/" });
     toc===""?cookies.get(oc)===undefined?empty=true:yolo=1:cookies.set(oc, toc, { path: "/" });
     ttls===""?cookies.get(tls)===undefined?empty=true:yolo=1:cookies.set(tls, ttls, { path: "/" });
+    tcfg===""?cookies.get(cfg)===undefined?empty=true:yolo=1:cookies.set(cfg, tcfg, { path: "/" });
+    tmspconf===""?cookies.get(mspconf)===undefined?empty=true:yolo=1:cookies.set(mspconf, tmspconf, { path: "/" });
+    cookies.set(docker, tdocker, { path: "/" })
     tserver===""?cookies.get(server)===undefined?cookies.set(server, "localhost:8080", { path: "/" } ):yolo=1:cookies.set(server, tserver, { path: "/" });
     console.log(yolo)
     if(empty){
@@ -290,6 +300,75 @@ export default function Paths(props) {
                   </text>
                 </GridItem>
               </GridContainer>
+              <br/>
+              <Checkbox
+                defaultChecked
+                onChange = {handleCheck}
+                color="primary"
+                inputProps={{ 'aria-label': 'secondary checkbox' }}
+              />
+              <text>Running on Docker</text>
+              {!tdocker?(<div>
+                <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+              
+                <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
+                        Core Config Path
+                      </text>
+                      </label>
+                      <br/>
+                      <FormTextarea
+                        className="address"
+                        id="#description"
+                        placeholder="Collection Policy"
+                        style={{height: '40px', width:"500px"}}
+                        onChange={(e) => {
+                          setCfg(e.target.value)
+                    }}
+                  />
+                      
+                </GridItem>
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                  /mnt/265C6B275C6AF14B/fabric/config
+                  </text>
+                </GridItem>
+              </GridContainer>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+              
+                <label className="Lable" htmlFor="#parametername">
+                      <text style={{fontWeight:'bold'}}>
+                        MSP Config
+                      </text>
+                      </label>
+                      <br/>
+                      <FormTextarea
+                        className="address"
+                        id="#description"
+                        placeholder="Collection Policy"
+                        style={{height: '40px', width:"500px"}}
+                        onChange={(e) => {
+                          setMspconf(e.target.value)
+                    }}
+                  />
+                      
+                </GridItem>
+                <GridItem>
+                  <text style={{fontWeight:'450'}}>
+                    Example
+                  </text>
+                  <br/>
+                  <text>
+                  /mnt/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp                  </text>
+                </GridItem>
+              </GridContainer>
+              </div>):<div></div>}
             </CardBody>
             <CardFooter>
               <Button

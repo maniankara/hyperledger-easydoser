@@ -13,7 +13,7 @@ ORGS=""
 TLS=""
 SEQUENCE=""
 PEER=""
-export PATH=$PATH:/server/bin
+DOCKER=false
 while test $# -gt 0; do
            case "$1" in
                 --cfg)
@@ -86,6 +86,11 @@ while test $# -gt 0; do
                     COLLECTION=${1}
                     shift
                     ;;
+                --docker)
+                    shift
+                    DOCKER=${1}
+                    shift
+                    ;;
                 *)
                    echo "${1} is not a recognized flag!"
                    return 1;
@@ -100,6 +105,16 @@ export ORDERER_CA=$PWD/$OCA
 export CHANNEL_NAME=$CHANNEL
 export CORE_PEER_TLS_ENABLED=true
 export CORE_PEER_TLS_ROOTCERT_FILE=$PWD/$TLS
+if $DOCKER = "true"
+then
+    export PATH=$PATH:/server/bin
+    
+
+else
+    export CORE_PEER_MSPCONFIGPATH=$MSPCONFIG
+    export FABRIC_CFG_PATH=$CFG
+
+fi
 if test "$COLLECTION" = "null"
 then
     peer lifecycle chaincode commit -o $ORDERER_ADDRESS --channelID $CHANNEL_NAME --name $CHAINCODE --version $VERSION --sequence $SEQUENCE --signature-policy $POLICY --tls --cafile $ORDERER_CA $ORGS
