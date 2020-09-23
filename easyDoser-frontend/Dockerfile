@@ -1,4 +1,4 @@
-FROM node-14.11.0-stretch
+FROM node:14.11.0-stretch
 
 RUN mkdir /frontend
 RUN mkdir /frontend/src
