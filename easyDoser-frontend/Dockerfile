@@ -1,5 +1,5 @@
 FROM node:14.11.0-stretch
-
+WORKDIR /frontend
 RUN mkdir /frontend
 RUN mkdir /frontend/src
 RUN mkdir /frontend/public
