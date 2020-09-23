@@ -5,6 +5,8 @@ RUN mkdir /frontend/src
 RUN mkdir /frontend/public
 RUN npm install -g serve
 RUN npm install
+RUN ls
+RUN pwd
 COPY easyDoser-frontend/ /frontend
 WORKDIR /frontend
 #RUN npm run-script build
