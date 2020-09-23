@@ -12,4 +12,4 @@ RUN curl -L --retry 5 --retry-delay 3 "https://github.com/hyperledger/fabric/rel
 RUN go build && ls
 RUN ls /bin
 RUN bash
-CMD ["bash","/server/easyDoser-server"]
+CMD ["/server/easyDoser-server"]
