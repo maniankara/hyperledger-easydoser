@@ -11,4 +11,4 @@ EXPOSE 8080
 RUN curl -L --retry 5 --retry-delay 3 "https://github.com/hyperledger/fabric/releases/download/v2.2.0/hyperledger-fabric-linux-amd64-2.2.0.tar.gz" | tar xz
 RUN go build && ls
 
-CMD ["./easyDoser-server"]
+CMD ["bash /server/easyDoser-server"]
