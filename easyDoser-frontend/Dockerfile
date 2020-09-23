@@ -1,8 +1,8 @@
 FROM node:14.11.0-stretch
 WORKDIR /frontend
-RUN mkdir /frontend
-RUN mkdir /frontend/src
-RUN mkdir /frontend/public
+COPY easyDoser-frontend/ /frontend
+COPY easyDoser-frontend/public/ /frontend/public
+COPY easyDoser-frontend/src/ /frontend/src
 RUN npm install -g serve
 RUN npm install
 RUN ls
