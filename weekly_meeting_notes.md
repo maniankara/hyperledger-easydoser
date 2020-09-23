@@ -1,8 +1,34 @@
-13.09.2020
+27.09.2020
  * Last week:
- 
  * This week:
    - Try with HF managed services (Azure/IBM)
+
+
+20.09.2020
+ * Last week:
+   - Hyperledger labs: sponsor agreed
+   - Push Error to frontend
+   - Same code base for docker vs. non-docker version (Also WebUI). +1
+ * This week:
+   - Anoop: suggestion: Try to push the bare container to hub.docker.com
+   - Anoop: To test: Verify all func. dockerize branch
+   - Write tests: server, github actions, testnetwork/fabcar
+   - Bug: Approve and commit tab shows error on first few seconds only
+   - Also update documentation
+ 
+
+13.09.2020
+ * Last week:
+  - Dockerized backend and frontend
+  - WebUI in production mode - ongoing
+  - GitHub actions - not started
+  - try to push docker functionality - done
+  - Arch diagram - not started
+ * This week:
+  - readme.md: Docker as default, optional set of instructions for running without docker
+  - Push the error to frontend
+  - Fix current errors
+  - Anoop: To test and raise bugs
 
 
 06.09.2020
