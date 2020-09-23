@@ -12,4 +12,4 @@ WORKDIR /frontend
 #RUN npm run-script build
 EXPOSE 3000
 EXPOSE 5000
-RUN npm start
+CMD ["npm" , "start"]
