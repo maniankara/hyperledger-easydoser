@@ -9,7 +9,5 @@ RUN mkdir config
 RUN mkdir mspconfig
 EXPOSE 8080
 RUN curl -L --retry 5 --retry-delay 3 "https://github.com/hyperledger/fabric/releases/download/v2.2.0/hyperledger-fabric-linux-amd64-2.2.0.tar.gz" | tar xz
-RUN go build && ls
-RUN ls /bin
-RUN bash
-CMD ["/server/easyDoser-server"]
+
+CMD ["go", "run" , "main.go"]
