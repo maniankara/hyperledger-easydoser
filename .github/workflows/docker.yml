@@ -26,7 +26,7 @@ jobs:
       # - name: Build the docker-compose stack
       #   run: docker-compose up --build
       - name: Setup Fabric
-        run : curl -sSL https://bit.ly/2ysbOFE | bash -s && ./fabric-samples/fabcar/startFabric.sh
+        run : curl -sSL https://bit.ly/2ysbOFE | bash -s
       - name: start fabric
         run : cd fabric-samples/fabcar && ./startFabric.sh
       - name: Check running containers
