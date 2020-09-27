@@ -65,7 +65,7 @@ export default function ChaincodeList(props) {
             )}
           </IconButton>
 
-          {info ? (
+          {data.error === undefined ? info ? (
             <div style={{ justifyContent: "center", alignContent: "center" }}>
               <Spinner animation="grow" variant="dark" size="sm" />
               <h3>Loading..</h3>
@@ -74,6 +74,12 @@ export default function ChaincodeList(props) {
             <Policy policy ={data} ></Policy>
           ): (
             <p></p>
+          ): (
+            <div>
+              {expanded? <text>
+                {data.error}
+              </text>:<p></p>}
+            </div>
           )}
         </CardBody>
       </Card>

@@ -1,5 +1,22 @@
 version: "3"
 services:
+  api:
+    build:
+      context: .
+      dockerfile: ./easyDoser-server/Dockerfile
+    volumes:
+      - /run/media/abhimanyu/265C6B275C6AF14B/fabric/config:/config
+      - /run/media/abhimanyu/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/msp:/mspconfig
+      #- /run/media/abhimanyu/265C6B275C6AF14B/fabric/bin:/server/bin
+      - ./easyDoser-server/:/server/
+    environment :
+      - CORE_PEER_MSPCONFIGPATH=/mspconfig
+      - FABRIC_CFG_PATH=/config
+      - FABRIC=/server/bin
+    ports:
+      - "8080:8080"
+    network_mode: "host"  
+    stdin_open: true
   web:
     build:
       context: .
@@ -7,7 +24,11 @@ services:
     command: npm start
     volumes:
     - ./easyDoser-frontend/src:/frontend/src
-    - ./easyDoser-frontend/public:/frontend/public
+    - ./easyDoser-frontend/public:/frontend/public  
     ports:
       - "3000:3000"
+      - "5000:5000"
+    depends_on:
+      - api
+    network_mode: "host"  
     stdin_open: true

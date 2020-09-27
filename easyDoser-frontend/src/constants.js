@@ -9,3 +9,4 @@ export const cookie = "cookie";
 export const server = "server";
 export const certs = "certs";
 export const keystore = "keystore";
+export const docker = "docker";

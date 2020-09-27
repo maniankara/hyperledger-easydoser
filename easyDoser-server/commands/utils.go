@@ -1,8 +1,12 @@
 package commands
 
 import (
+	"bufio"
+	"fmt"
 	"net/http"
+	"os"
 	"regexp"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -72,12 +76,24 @@ func getArgsForApproval(r *http.Request) [11]string {
 	theArray := [11]string{cfg, p_address, o_address, mspId, mspConfig, tls, channel, cc, policy, version, oca}
 	return theArray
 }
-func commitArgBuilder(address []string, cert []string) string {
+func commitArgBuilder(address []string, cert []string) (string, []string) {
 	str := ""
+	var ls []string
 	for i := 0; i < len(address); i++ {
-		str = str + "--peerAddresses " + address[i] + " --tlsRootCertFiles " + cert[i] + " "
+		nm := "./" + strconv.Itoa(i) + ".crt"
+		file, err := os.Create(nm)
+		ls = append(ls, nm)
+		if err != nil {
+
+		}
+		defer file.Close()
+		fileWriter := bufio.NewWriter(file)
+		fmt.Fprintln(fileWriter, cert[i])
+		fileWriter.Flush()
+		defer file.Close()
+		str = str + "--peerAddresses " + address[i] + " --tlsRootCertFiles " + nm + " "
 	}
-	return str
+	return str, ls
 }
 func endorsementArgs(r *http.Request) [7]string {
 	p_address := r.FormValue("peer-address")

@@ -13,6 +13,7 @@ type updateConfig struct {
 	Mspid     string `json:"mspid"`
 	Channel   string `json:"channel"`
 	Chaincode string `json:"chaincode"`
+	Docker    string `json:"docker"`
 }
 
 type CommitCheck struct {
@@ -36,8 +37,24 @@ type CommitData struct {
 	Channel   string   `json:"channel"`
 	Chaincode string   `json:"chaincode"`
 	Orgs      OrgCerts `json:"orgs"`
+	Docker    string   `json:"docker"`
 }
 type OrgCerts struct {
 	Address []string `json:"address"`
 	Cert    []string `json:"cert"`
+}
+
+type ChannelListStruct struct {
+	Cfg            string `json:"cfg"`
+	PeerAddress    string `json:"peer_address"`
+	MspID          string `json:"msp_id"`
+	MspConfig      string `json:"msp_config"`
+	TLSCert        string `json:"tls_cert"`
+	OCerts         string `json:"o_cert"`
+	OrdererAddress string `json:"orderer_Address"`
+	Channel        string `json:"channel"`
+	Chaincode      string `json:"Chaincode"`
+	Keypath        string `json:"keypath"`
+	Usercert       string `json:"usercert"`
+	Docker         string `json:"docker"`
 }

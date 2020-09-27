@@ -6,7 +6,7 @@ import CardBody from "components/Card/CardBody.js";
 import ChaincodeList from "components/EndorsementPolices/ChaincodeList.js";
 import { Row } from "reactstrap";
 import { cookie, keystore, certs } from "constants.js";
-import {  FormTextarea } from "shards-react";
+import {  FormInput } from "shards-react";
 import { chaincode_list } from "../../api/api.js";
 import PropTypes from "prop-types";
 import Button from "components/CustomButtons/Button.js";
@@ -27,6 +27,33 @@ export default function ChannelWidget(props) {
   const [_keystore, setkeystore] = useState(cookies.get(keystore));
   var userCerts="";
   var keystoreFile="";
+  const handleFileRead = (contractFile, func) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsText(contractFile);
+      fileReader.onloadend = (e) => {
+        const content = fileReader.result;
+        console.log(content)
+        if(func ==="cert"){
+          userCerts = content;
+        }
+        else{
+          keystoreFile = content;
+        }
+      };
+    });
+  };
+
+  const handleFileChosen = async (e, func) => {
+    console.log("file", e.target.files[0]);
+    const file = e.target.files[0];
+
+    const isCorrect = await handleFileRead(file,func);
+    if (!isCorrect) {
+      return;
+    }
+
+  };
   const setPaths = ()=>{
     var yolo
     var empty;
@@ -57,28 +84,26 @@ export default function ChannelWidget(props) {
       <CardBody>
       <label className="Lable" htmlFor="#parametername">
          <text style={{fontWeight:'bold'}}>
-            User TLS Certificate
+            User Signing certificates
           </text>
       </label>
-      <FormTextarea
-          className="address"
-          id="#description"
-          style={{height: '40px', width:"500px"}}
-          placeholder={cookies.get(certs)===undefined?"User TLS Certificates":cookies.get(certs)}
-          onChange={(e) => {
-            userCerts=e.target.value
-      }}
-        >
-         
-        </FormTextarea>
+      <FormInput
+                        type="file"
+                        id="file"
+                        className="input-file"
+                        accept=".pem"
+                        onChange={obj => {
+                          handleFileChosen(obj,"cert")
+                        }}
+                      />
+
         <br/>
         <text style={{fontWeight:'450'}}>
           Example
         </text>
           <br/>
         <text>
-          /media/user1/265C6B275C6AF14B/fabric/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
-        </text>
+        /media/User1/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem        </text>
         <br/>
         <br/>
         <label className="Lable" htmlFor="#parametername">
@@ -86,17 +111,14 @@ export default function ChannelWidget(props) {
             User Keystore file
           </text>
       </label>
-        <FormTextarea
-          className="address"
-          id="#description"
-          style={{height: '40px', width:"500px"}}
-          placeholder={cookies.get(keystore)===undefined?"User Keystore file":cookies.get(keystore)}
-          onChange={(e) => {
-            keystoreFile= e.target.value;
-      }}
-        >
-          
-        </FormTextarea>
+      <FormInput
+                        type="file"
+                        id="file"
+                        className="input-file"
+                        onChange={obj => {
+                          handleFileChosen(obj,"keystore")
+                        }}
+                      />
         <br/>
         <text style={{fontWeight:'450'}}>
           Example
@@ -161,7 +183,7 @@ export default function ChannelWidget(props) {
             )}
           </IconButton>
               {info?(<h3>Chaincodes: </h3>):(<text></text>)}
-          {info ? (
+          {items.error === undefined ?info ? (
              <Row>
              {items.length !== 0 ? (
                items.map((item) => <ChaincodeList keystore = {keystoreFile} certs= {userCerts} channel={props.item} item = {item}></ChaincodeList>)
@@ -173,7 +195,12 @@ export default function ChannelWidget(props) {
             <text></text>
           ) : (
             <p></p>
-          )}
+          ):(
+          <div>
+            {expanded? <text>
+                {items.error}
+              </text>:<p></p>}
+          </div>)}
         </CardBody>
       </Card>
     </div>

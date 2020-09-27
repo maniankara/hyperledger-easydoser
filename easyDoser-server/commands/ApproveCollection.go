@@ -5,9 +5,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
+	"regexp"
 	"strings"
 )
 
@@ -33,13 +35,33 @@ func ApprovePC(w http.ResponseWriter, r *http.Request) {
 		fileWriter.Flush()
 		fmt.Println(string(config.Policy))
 	}
+	file, err := os.Create("./tls.crt")
+	if err != nil {
 
+	}
+	defer file.Close()
+	fileWriter := bufio.NewWriter(file)
+	fmt.Fprintln(fileWriter, config.TLS)
+	fileWriter.Flush()
+	defer file.Close()
+	file, err = os.Create("./ocert.pem")
+	if err != nil {
+
+	}
+	defer file.Close()
+	fileWriter = bufio.NewWriter(file)
+	fmt.Fprintln(fileWriter, config.Oc)
+	fileWriter.Flush()
+	defer file.Close()
 	sequence := getSequence(config)
 	fmt.Println(string(sequence))
-
-	cmd := exec.Command("bash", "./bash/peer_approve_collection.sh", "--cfg", config.Cfg, "--orderer-address", config.Oa, "--msp-id", config.Mspid, "--msp-config", config.Mspconf, "--tls-cert", config.TLS, "--channel", config.Channel, "--chaincode", config.Chaincode, "--policy", config.APolicy, "--sequence", sequence, "--version", config.Version, "--orderer-certificate", config.Oc, "--filename", "config.json", "--peer-address", config.Pa)
+	str := "false"
+	if config.Docker == "true" {
+		str = "true"
+	}
+	cmd := exec.Command("bash", "./bash/peer_approve_collection.sh", "--cfg", config.Cfg, "--orderer-address", config.Oa, "--msp-id", config.Mspid, "--msp-config", config.Mspconf, "--tls-cert", "./tls.crt", "--channel", config.Channel, "--chaincode", config.Chaincode, "--policy", config.APolicy, "--sequence", sequence, "--version", config.Version, "--orderer-certificate", "./ocert.pem", "--filename", "config.json", "--peer-address", config.Pa, "--docker", str)
 	if config.Policy == "null" {
-		cmd = exec.Command("bash", "./bash/peer_approve_collection.sh", "--cfg", config.Cfg, "--orderer-address", config.Oa, "--msp-id", config.Mspid, "--msp-config", config.Mspconf, "--tls-cert", config.TLS, "--channel", config.Channel, "--chaincode", config.Chaincode, "--policy", config.APolicy, "--sequence", sequence, "--version", config.Version, "--orderer-certificate", config.Oc, "--filename", "null", "--peer-address", config.Pa)
+		cmd = exec.Command("bash", "./bash/peer_approve_collection.sh", "--cfg", config.Cfg, "--orderer-address", config.Oa, "--msp-id", config.Mspid, "--msp-config", config.Mspconf, "--tls-cert", "./tls.crt", "--channel", config.Channel, "--chaincode", config.Chaincode, "--policy", config.APolicy, "--sequence", sequence, "--version", config.Version, "--orderer-certificate", "./ocert.pem", "--filename", "null", "--peer-address", config.Pa, "--docker", str)
 
 	}
 
@@ -49,23 +71,38 @@ func ApprovePC(w http.ResponseWriter, r *http.Request) {
 	cmd.Stderr = &stderr
 	cmderr := cmd.Run()
 	if cmderr != nil {
-
-		fmt.Println(stderr.String())
-		fmt.Fprintf(w, "{\"status\":\"{\""+stderr.String()+"\"}}")
+		reg, err := regexp.Compile("[^a-zA-Z0-9]+")
+		if err != nil {
+			log.Fatal(err)
+		}
+		str := reg.ReplaceAllString(stderr.String(), " ")
+		fmt.Println(fmt.Sprint(err) + ": " + "{\"error\":\"" + str + "\"}")
+		fmt.Fprintf(w, "{\"status\":\""+str+"\"}")
+		if config.Policy != "null" {
+			os.Remove("./config.json")
+		}
+		os.Remove("./tls.crt")
+		os.Remove("././ocert.pem")
 		return
 	}
+
 	fmt.Println("Result: " + out.String())
 	if config.Policy != "null" {
 		os.Remove("./config.json")
 	}
-
+	os.Remove("./tls.crt")
+	os.Remove("././ocert.pem")
 	fmt.Fprintf(w, "{\"status\":\"done\"}")
 
 }
 func getSequence(conf updateConfig) string {
-	cmd := exec.Command("bash", "./bash/peer_get_sequence.sh", "--cfg", conf.Cfg, "--orderer-address", conf.Oa, "--msp-id", conf.Mspid, "--msp-config", conf.Mspconf, "--tls-cert", conf.TLS, "--channel", conf.Channel, "--chaincode", conf.Chaincode, "--policy", conf.APolicy, "--sequence", "1", "--version", conf.Version, "--orderer-certificate", conf.Oc, "--filename", "config.json", "--peer-address", conf.Pa)
+	str := "false"
+	if conf.Docker == "true" {
+		str = "true"
+	}
+	cmd := exec.Command("bash", "./bash/peer_get_sequence.sh", "--cfg", conf.Cfg, "--orderer-address", conf.Oa, "--msp-id", conf.Mspid, "--msp-config", conf.Mspconf, "--tls-cert", "./tls.crt", "--channel", conf.Channel, "--chaincode", conf.Chaincode, "--policy", conf.APolicy, "--sequence", "1", "--version", conf.Version, "--orderer-certificate", "./ocert.pem", "--filename", "config.json", "--peer-address", conf.Pa, "--docker", str)
 	if conf.Policy == "null" {
-		cmd = exec.Command("bash", "./bash/peer_get_sequence.sh", "--cfg", conf.Cfg, "--orderer-address", conf.Oa, "--msp-id", conf.Mspid, "--msp-config", conf.Mspconf, "--tls-cert", conf.TLS, "--channel", conf.Channel, "--chaincode", conf.Chaincode, "--policy", conf.APolicy, "--sequence", "1", "--version", conf.Version, "--orderer-certificate", conf.Oc, "--filename", "null", "--peer-address", conf.Pa)
+		cmd = exec.Command("bash", "./bash/peer_get_sequence.sh", "--cfg", conf.Cfg, "--orderer-address", conf.Oa, "--msp-id", conf.Mspid, "--msp-config", conf.Mspconf, "--tls-cert", "./tls.crt", "--channel", conf.Channel, "--chaincode", conf.Chaincode, "--policy", conf.APolicy, "--sequence", "1", "--version", conf.Version, "--orderer-certificate", "./ocert.pem", "--filename", "null", "--peer-address", conf.Pa, "--docker", str)
 
 	}
 
