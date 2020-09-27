@@ -13,6 +13,7 @@
    - Update documentation
    - Check project plan
    - Close open issues
+   - prepare for open source: cleanup, security
 
 20.09.2020
  * Last week:
