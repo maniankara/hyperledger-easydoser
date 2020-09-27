@@ -1,8 +1,18 @@
-27.09.2020
+04.10.2020:
  * Last week:
  * This week:
-   - Try with HF managed services (Azure/IBM)
+   - Deploy easydoser on k8s
 
+27.09.2020
+ * Last week:
+   - Github actions improvements (3 tests, JS mocha+chai)
+   - Merge branches
+ * This week:
+   - Anoop: To test: Verify all func. dockerize branch
+   - Try with HF managed services (Azure/IBM/AWS)
+   - Update documentation
+   - Check project plan
+   - Close open issues
 
 20.09.2020
  * Last week:
@@ -15,7 +25,6 @@
    - Write tests: server, github actions, testnetwork/fabcar
    - Bug: Approve and commit tab shows error on first few seconds only
    - Also update documentation
- 
 
 13.09.2020
  * Last week:
