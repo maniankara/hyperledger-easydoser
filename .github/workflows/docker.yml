@@ -31,7 +31,7 @@ jobs:
       - name: start fabric
         run : cd fabric-samples/fabcar && ./startFabric.sh 
       - name: Build the docker-compose stack
-        run: docker-compose up --build -d
+        run: sudo docker-compose up --build -d
       - name: Check running containers
         run: docker ps
       - name: Use Node.js ${{ matrix.node-version }}
@@ -39,7 +39,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Installing mocha
-        run: npm i mocha -g
+        run: sudo npm i mocha -g
       - name: npm install
-        run: cd tests && rm -rf node_modules && rm -rf package-lock.json && npm install && mocha
+        run: sudo cd tests && rm -rf node_modules && rm -rf package-lock.json && npm install && sudo mocha
 
