@@ -15,7 +15,7 @@ services:
       - FABRIC=/server/bin
     ports:
       - "8080:8080"
-    network_mode: "host"  
+    network_mode: "host"
     stdin_open: true
   web:
     build:

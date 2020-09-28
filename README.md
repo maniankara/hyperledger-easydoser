@@ -2,7 +2,7 @@
 
 ## Project architecture
 ![alt text](https://cacoo.com/diagrams/3M6r1235YWmvGCyb-1ABD5.png)
-## Instructions to run the project
+## Instructions to run the project without docker
 1. Clone the repo and go to easydoser dir.
 2. Run the following
     - `cd easyDoser-server`
@@ -14,6 +14,10 @@
     - `npm start`
 3. In frontend enter absolute path and addresses of the mentioned file and node.
 4. Save the details and check channel policies
+## Instructions to run the project with docker
+1. Clone the repo and go to easydoser dir.
+2. Run the following (make sure you are root user to interact with docker deamon)
+    - `docker-compose up`
 ## Video instructions to run the project
 [![asciicast](https://asciinema.org/a/355175.svg)](https://asciinema.org/a/355175)
 ## A little demo
