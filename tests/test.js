@@ -125,7 +125,7 @@ describe("Get Channel List", ()=> {
             if(err) done (err);
             expect(res).to.have.status(200);
             var obj = JSON.parse(res.text); 
-            assert( obj.length === 1, 'No channels fetched')
+            assert( obj.length === 1, obj.error)
             channel = obj[0]
             done()
             
@@ -145,7 +145,7 @@ describe("Get Channel Information", ()=> {
             if(err) done (err);
             expect(res).to.have.status(200)
             var obj = JSON.parse(res.text);  
-            assert(obj.channel_group!==undefined, "Invalid channel info")          
+            assert(obj.channel_group!==undefined, obj.error)          
             done()
             
         })
@@ -165,7 +165,7 @@ describe("Get Chaincode list", ()=> {
             if(err) done (err);
             expect(res).to.have.status(200)
             var obj = JSON.parse(res.text); 
-            assert(obj.length===1, "Invalid chaincode list")  
+            assert(obj.length===1, obj.error)  
             chaincode = obj[0]        
             done()
             
