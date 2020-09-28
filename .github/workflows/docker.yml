@@ -41,5 +41,5 @@ jobs:
       - name: Installing mocha
         run: sudo npm i mocha -g
       - name: npm install
-        run: sudo cd tests && rm -rf node_modules && rm -rf package-lock.json && npm install && sudo mocha
+        run: cd tests && rm -rf node_modules && rm -rf package-lock.json && npm install && sudo mocha
 
