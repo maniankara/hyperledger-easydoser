@@ -17,15 +17,43 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - name: Build the docker-compose stack
-        run: docker-compose up --build -d
       - name: Setup Fabric
         run : curl -sSL https://bit.ly/2ysbOFE | bash -s
       - name: start fabric
         run : cd fabric-samples/fabcar && ./startFabric.sh
+      - name: Get dependencies
+        run: |
+          cd easyDoser-server/
+          go get -v -t -d ./...
+          if [ -f Gopkg.toml ]; then
+              curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+              dep ensure
+          fi
       - name: Check running containers
         run: docker ps
+      - name: Update path
+        run: export PATH=$PATH:/home/runner/work/hyperledger-easydoser/hyperledger-easydoser/fabric-samples/bin/
+      - name: pwd
+        run: pwd && ls
+      - name: Start server
+        run : export PATH=$PATH:/home/runner/work/hyperledger-easydoser/hyperledger-easydoser/fabric-samples/bin/ && cd easyDoser-server/ && go run main.go &
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Installing mocha
+        run: sudo npm i mocha -g
+      - name: pwd
+        run: pwd && ls
+      - name: npm install
+        run: cd tests && rm -rf node_modules && rm -rf package-lock.json && npm install && sudo mocha
+

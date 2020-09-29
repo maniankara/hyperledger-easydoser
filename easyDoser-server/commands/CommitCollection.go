@@ -80,7 +80,7 @@ func CommitChaincode(w http.ResponseWriter, r *http.Request) {
 		}
 		str := reg.ReplaceAllString(stderr.String(), " ")
 		fmt.Println(fmt.Sprint(err) + ": " + "{\"error\":\"" + str + "\"}")
-		fmt.Fprintf(w, "{\"status\":\""+str+"\"}")
+		fmt.Fprintf(w, "{\"error\":\""+str+"\"}")
 		os.Remove("./config.json")
 		os.Remove("./tls.crt")
 		os.Remove("./ocert.pem")
