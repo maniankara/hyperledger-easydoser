@@ -52,7 +52,7 @@ glob("/home/runner/work/hyperledger-easydoser/hyperledger-easydoser/fabric-sampl
     });
 
   })
-var cfg = "/home/runner/work/hyperledger-easydoser/hyperledger-easydoser/fabric-samples/config"
+var cfg = "/run/media/abhimanyu/265C6B275C6AF14B/fabric/config"
 var mspid = "Org1MSP"
 var peerAddress = "localhost:7051"
 var ordererAddress = "localhost:7050"
@@ -60,7 +60,7 @@ var mspConfig = "/home/runner/work/hyperledger-easydoser/hyperledger-easydoser/f
 var ordererCert = oca
 var tlsCert = tls
 var channel = "mychannel"
-var docker = "true"
+var docker = "false"
 var chaincode =""
 var policy ="OR('Org1MSP.member','Org2MSP.member')"
 var collection = `[
@@ -125,8 +125,9 @@ describe("Get Channel List", ()=> {
             if(err) done (err);
             expect(res).to.have.status(200);
             var obj = JSON.parse(res.text); 
-            assert( obj.length === 1, obj.error)
+            assert( obj.length === 1, 'No channels fetched')
             channel = obj[0]
+            console.log(channel)
             done()
             
         })
@@ -145,7 +146,7 @@ describe("Get Channel Information", ()=> {
             if(err) done (err);
             expect(res).to.have.status(200)
             var obj = JSON.parse(res.text);  
-            assert(obj.channel_group!==undefined, obj.error)          
+            assert(obj.channel_group!==undefined, "Invalid channel info")          
             done()
             
         })
@@ -165,7 +166,7 @@ describe("Get Chaincode list", ()=> {
             if(err) done (err);
             expect(res).to.have.status(200)
             var obj = JSON.parse(res.text); 
-            assert(obj.length===1, obj.error)  
+            assert(obj.length===1, "Invalid chaincode list")  
             chaincode = obj[0]        
             done()
             

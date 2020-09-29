@@ -59,7 +59,7 @@ while test $# -gt 0; do
 export CORE_PEER_LOCALMSPID=$MSPID
 export ORDERER_ADDRESS=$ADDRESS
 #export CORE_PEER_MSPCONFIGPATH=$MSPCONFIG
-export ORDERER_CA=$OCA
+export ORDERER_CA=$PWD/$OCA
 export CHANNEL_NAME=$CHANNEL
 if $DOCKER = "true"
 then
@@ -71,7 +71,9 @@ else
     export FABRIC_CFG_PATH=$CFG
 
 fi
+echo $FABRIC_CFG_PATH>abc.txt
+
 #peer channel fetch config conf.pb -o $ORDERER_ADDRESS -c $CHANNEL_NAME --tls --cafile $ORDERER_CA
-peer channel fetch config config_block.pb -o localhost:7050 -c $CHANNEL_NAME --tls --cafile $ORDERER_CA
-configtxlator proto_decode --input config_block.pb --type common.Block
+peer channel fetch config conf.pb -o localhost:7050 -c $CHANNEL_NAME --tls --cafile $ORDERER_CA >err.txt
+configtxlator proto_decode --input conf.pb --type common.Block
 
