@@ -52,6 +52,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Installing mocha
         run: sudo npm i mocha -g
+      - name: pwd
+        run: pwd && ls
       - name: npm install
-        run: cd ../tests && rm -rf node_modules && rm -rf package-lock.json && npm install && sudo mocha
+        run: cd tests && rm -rf node_modules && rm -rf package-lock.json && npm install && sudo mocha
 
