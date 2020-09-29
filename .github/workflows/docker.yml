@@ -42,6 +42,8 @@ jobs:
         run: docker ps
       - name: Update path
         run: export PATH=$PATH:/home/runner/work/hyperledger-easydoser/hyperledger-easydoser/fabric-samples/bin/
+      - name: pwd
+        run: pwd
       - name: Start server
         run : export PATH=$PATH:/home/runner/work/hyperledger-easydoser/hyperledger-easydoser/fabric-samples/bin/ && cd /home/runner/work/hyperledger-easydoser/easyDoser-server/ && go run main.go &
       - name: Use Node.js ${{ matrix.node-version }}
