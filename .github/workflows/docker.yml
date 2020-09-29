@@ -29,11 +29,21 @@ jobs:
       - name: Setup Fabric
         run : curl -sSL https://bit.ly/2ysbOFE | bash -s
       - name: start fabric
-        run : cd fabric-samples/fabcar && ./startFabric.sh 
-      - name: Build the docker-compose stack
-        run: sudo docker-compose up --build -d
+        run : cd fabric-samples/fabcar && ./startFabric.sh
+      - name: Get dependencies
+        run: |
+          cd easyDoser-server/
+          go get -v -t -d ./...
+          if [ -f Gopkg.toml ]; then
+              curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+              dep ensure
+          fi
       - name: Check running containers
         run: docker ps
+      - name: Update path
+        run: export PATH=$PATH:/home/runner/work/hyperledger-easydoser/hyperledger-easydoser/fabric-samples/bin/
+      - name: Start server
+        run : cd /home/runner/work/hyperledger-easydoser/easyDoser-server/ && go run main.go &
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -41,5 +51,5 @@ jobs:
       - name: Installing mocha
         run: sudo npm i mocha -g
       - name: npm install
-        run: cd tests && rm -rf node_modules && rm -rf package-lock.json && npm install && sudo mocha
+        run: cd /home/runner/work/hyperledger-easydoser/tests && rm -rf node_modules && rm -rf package-lock.json && npm install && sudo mocha
 
