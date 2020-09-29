@@ -112,6 +112,7 @@ describe("Welcome message", ()=> {
         })
     })
 })
+
 describe("Get Channel List", ()=> {
     it('Returns list of channels',(done)=>{
         chai.request(app).post('/channel_list').send({
@@ -134,23 +135,19 @@ describe("Get Channel List", ()=> {
     })
 })
 describe("Get Channel Information", ()=> {
-    it('Returns mychannel\'s informations',(done)=>{
-        chai.request(app).post('/channel_info/'+channel).send({
+    it('Returns mychannel\'s informations',async ()=>{
+        var res = await chai.request(app).post('/channel_info/'+channel).send({
             cfg : cfg,
             msp_id : mspid,
             orderer_Address : ordererAddress,
             msp_config : mspConfig,
             o_cert : ordererCert,
             docker :docker
-        }).end( (err,res)=>{
-            if(err) done (err);
-            expect(res).to.have.status(200)
-            var obj = JSON.parse(res.text);  
-            assert(obj.channel_group!==undefined, "Invalid channel info")          
-            done()
-            
         })
-    })
+        expect(res).to.have.status(200)
+        var obj = JSON.parse(res.text);  
+        assert(obj.channel_group!==undefined, obj.error)  
+})
 })
 describe("Get Chaincode list", ()=> {
     it('Returns chaincode list',(done)=>{
