@@ -71,9 +71,7 @@ else
     export FABRIC_CFG_PATH=$CFG
 
 fi
-echo $FABRIC_CFG_PATH>abc.txt
-
 #peer channel fetch config conf.pb -o $ORDERER_ADDRESS -c $CHANNEL_NAME --tls --cafile $ORDERER_CA
-peer channel fetch config conf.pb -o localhost:7050 -c $CHANNEL_NAME --tls --cafile $ORDERER_CA >err.txt
+peer channel fetch config conf.pb -o localhost:7050 -c $CHANNEL_NAME --tls --cafile $ORDERER_CA
 configtxlator proto_decode --input conf.pb --type common.Block
 

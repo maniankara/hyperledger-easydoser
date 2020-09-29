@@ -141,13 +141,13 @@ describe("Get Channel Information", ()=> {
             msp_id : mspid,
             orderer_Address : ordererAddress,
             msp_config : mspConfig,
-            o_cert : ordererCert,
+            o_cert : oca,
             docker :docker
         })
         expect(res).to.have.status(200)
         var obj = JSON.parse(res.text);  
         assert(obj.channel_group!==undefined, obj.error)  
-}).timeout(1000000)
+}).timeout(100000)
 })
 describe("Get Chaincode list", ()=> {
     it('Returns chaincode list',(done)=>{
