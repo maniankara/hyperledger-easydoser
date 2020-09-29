@@ -147,7 +147,7 @@ describe("Get Channel Information", ()=> {
         expect(res).to.have.status(200)
         var obj = JSON.parse(res.text);  
         assert(obj.channel_group!==undefined, obj.error)  
-})
+}).timeout(1000000)
 })
 describe("Get Chaincode list", ()=> {
     it('Returns chaincode list',(done)=>{
