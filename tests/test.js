@@ -52,7 +52,7 @@ glob("/home/runner/work/hyperledger-easydoser/hyperledger-easydoser/fabric-sampl
     });
 
   })
-var cfg = "/run/media/abhimanyu/265C6B275C6AF14B/fabric/config"
+var cfg = "/home/runner/work/hyperledger-easydoser/hyperledger-easydoser/fabric-samples/config"
 var mspid = "Org1MSP"
 var peerAddress = "localhost:7051"
 var ordererAddress = "localhost:7050"
