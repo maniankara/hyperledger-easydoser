@@ -34,7 +34,7 @@ func GetChannelInfo(w http.ResponseWriter, r *http.Request) {
 	if args.Docker == "true" {
 		str = "true"
 	}
-	cmd := exec.Command("sh", "./bash/peercli.sh", "--cfg", args.Cfg, "--orderer-address", args.OrdererAddress, "--msp-id", args.MspID, "--msp-config", args.MspConfig, "--orderer-certificate", "./ocert.pem", "--channel", id, "--filename", filename, "--docker", str)
+	cmd := exec.Command("sh", "./bash/peercli.sh", "--cfg", args.Cfg, "--orderer-address", args.OrdererAddress, "--msp-id", args.MspID, "--msp-config", args.MspConfig, "--orderer-certificate", "ocert.pem", "--channel", id, "--filename", filename, "--docker", str)
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
