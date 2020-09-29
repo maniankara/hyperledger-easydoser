@@ -45,7 +45,7 @@ jobs:
       - name: pwd
         run: pwd && ls
       - name: Start server
-        run : export PATH=$PATH:/home/runner/work/hyperledger-easydoser/hyperledger-easydoser/fabric-samples/bin/ && cd /home/runner/work/hyperledger-easydoser/easyDoser-server/ && go run main.go &
+        run : export PATH=$PATH:/home/runner/work/hyperledger-easydoser/hyperledger-easydoser/fabric-samples/bin/ && cd easyDoser-server/ && go run main.go &
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -53,5 +53,5 @@ jobs:
       - name: Installing mocha
         run: sudo npm i mocha -g
       - name: npm install
-        run: cd tests && rm -rf node_modules && rm -rf package-lock.json && npm install && sudo mocha
+        run: cd ../tests && rm -rf node_modules && rm -rf package-lock.json && npm install && sudo mocha
 
