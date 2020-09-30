@@ -11,6 +11,8 @@ import Button from "components/CustomButtons/Button.js";
 
 
 export default function Dashboard() {
+  document.title = "EasyDoser"
+
   const cookies = new Cookies();
   const [items, setChannels] = useState([]);
   const [fetch, setFetch] = useState(false);

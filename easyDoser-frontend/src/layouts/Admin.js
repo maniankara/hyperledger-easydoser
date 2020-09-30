@@ -4,9 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-// core components
-import Footer from "components/Footer/Footer.js";
+import { makeStyles } from "@material-ui/core/styles"
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
@@ -48,7 +46,7 @@ export default function Admin({ ...rest }) {
   const color =React.useState("blue");
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
- 
+  document.title = "EasyDoser";
  
   const getRoute = () => {
     return window.location.pathname !== "/admin/maps";
@@ -66,6 +64,8 @@ export default function Admin({ ...rest }) {
         suppressScrollY: false
       });
       document.body.style.overflow = "hidden";
+     
+
     }
     window.addEventListener("resize", resizeFunction);
     // Specify how to clean up after this effect:
@@ -97,7 +97,6 @@ export default function Admin({ ...rest }) {
         ) : (
           <div className={classes.map}>{switchRoutes}</div>
         )}
-        {getRoute() ? <Footer /> : null}
        
       </div>
     </div>
