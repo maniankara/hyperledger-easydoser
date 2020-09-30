@@ -29,7 +29,6 @@ const dashboardRoutes = [
   {
     path: "/channels",
     name: "Channels",
-    rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
     layout: "/admin"
@@ -37,7 +36,6 @@ const dashboardRoutes = [
   {
     path: "/collections",
     name: "Collections",
-    rtlName: "قائمة الجدول",
     icon: "P",
     component: Collection,
     layout: "/admin"
@@ -45,7 +43,6 @@ const dashboardRoutes = [
   {
     path: "/endorsement_policies",
     name: "Endorsement Policies",
-    rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
     component: EndorsementPolicies,
     layout: "/admin"
@@ -53,7 +50,6 @@ const dashboardRoutes = [
   {
     path: "/updateCollection",
     name: "Approve",
-    rtlName: "قائمة الجدول",
     icon: "LibraryAdd",
     component: EditCollection,
     layout: "/admin"
@@ -61,7 +57,6 @@ const dashboardRoutes = [
   {
     path: "/commitchannel",
     name: "Commit Policy",
-    rtlName: "قائمة الجدول",
     icon: "check",
     component: CommitCollection,
     layout: "/admin"
