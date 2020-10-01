@@ -5,9 +5,8 @@ services:
       context: .
       dockerfile: ./easyDoser-server/Dockerfile
     volumes:
-      - /run/media/abhimanyu/265C6B275C6AF14B/fabric/config:/config
-      - /run/media/abhimanyu/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp:/mspconfig
-      #- /run/media/abhimanyu/265C6B275C6AF14B/fabric/bin:/server/bin
+      - /path/to/core/config/dir:/config
+      - /path/to/msp/config/admin/dir:/mspconfig
       - ./easyDoser-server/:/server/
     environment :
       - CORE_PEER_MSPCONFIGPATH=/mspconfig
@@ -32,3 +31,10 @@ services:
       - api
     network_mode: "host"  
     stdin_open: true
+
+# Your paths will look somewhat like this
+  # - /run/media/abhimanyu/265C6B275C6AF14B/fabric/config:/config
+  # - /run/media/abhimanyu/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp:/mspconfig
+ 
+ 
+  # - /run/media/abhimanyu/265C6B275C6AF14B/fabric/bin:/server/bin

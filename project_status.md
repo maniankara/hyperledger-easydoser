@@ -18,4 +18,7 @@
 | 13   | August 30 |Implimented basic build tests and dockerized frontend |  |
 | 14   | September 6 |Prepared backend and frontend for dockerized backend  |  |
 | 15   | September 13 |Dockerized backend  |  |
+| 16   | September 20 |Made whole project to work on docker |  |
+| 17   | September 27 |Merged Dockerized and master branch, now both run on same code base |  |
+| 18   | September 27 |Wrote tests for backend |  |
 
