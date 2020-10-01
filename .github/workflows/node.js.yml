@@ -26,4 +26,3 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: cd easyDoser-frontend && rm -rf node_modules && rm -rf package-lock.json && npm install
     - run: cd easyDoser-frontend && npm run build --if-present
- #   - run: npm test
