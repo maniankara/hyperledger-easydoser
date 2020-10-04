@@ -1,7 +1,17 @@
-04.10.2020:
+11.10.2020:
  * Last week:
  * This week:
+   - Deploy easydoser on k8s   
+
+04.10.2020:
+ * Last week:
+   - CI tests, readme, cleanup code, proj plan update
+ * This week:
    - Deploy easydoser on k8s
+   - Anoop: To test: Verify all func. dockerize branch
+   - Try with HF managed services (Azure/IBM/AWS)
+   - Anoop: Check the bash script, any ideas?
+   - Check: https://jira.hyperledger.org/browse/FAB-5094 (private data history), https://jira.hyperledger.org/browse/FAB-11732 (page through private data)
 
 27.09.2020
  * Last week:
