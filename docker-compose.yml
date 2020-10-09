@@ -1,12 +1,13 @@
 version: "3"
 services:
   api:
+    image: abhimanyu121/easydoser:server-latest
     build:
       context: .
       dockerfile: ./easyDoser-server/Dockerfile
     volumes:
-      - /path/to/core/config/dir:/config
-      - /path/to/msp/config/admin/dir:/mspconfig
+      - /run/media/abhimanyu/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp:/mspconfig
+      - /run/media/abhimanyu/265C6B275C6AF14B/fabric/config:/config
       - ./easyDoser-server/:/server/
     environment :
       - CORE_PEER_MSPCONFIGPATH=/mspconfig
@@ -17,15 +18,14 @@ services:
     network_mode: "host"
     stdin_open: true
   web:
+    image: abhimanyu121/easydoser:web-latest
     build:
       context: .
       dockerfile: ./easyDoser-frontend/Dockerfile
-    command: npm start
     volumes:
     - ./easyDoser-frontend/src:/frontend/src
     - ./easyDoser-frontend/public:/frontend/public  
     ports:
-      - "3000:3000"
       - "5000:5000"
     depends_on:
       - api
