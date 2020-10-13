@@ -5,11 +5,9 @@ COPY easyDoser-frontend/public/ /frontend/public
 COPY easyDoser-frontend/src/ /frontend/src
 RUN npm install -g serve
 RUN npm install
-RUN ls
-RUN pwd
 COPY easyDoser-frontend/ /frontend
+
 WORKDIR /frontend
-#RUN npm run-script build
-EXPOSE 3000
+RUN npm run build
 EXPOSE 5000
-CMD ["npm" , "start"]
+CMD ["serve" , "-s", "build"]
