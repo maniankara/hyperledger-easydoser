@@ -7,6 +7,7 @@
    - Check how easydoser can integrate to Hyperledger Explorer: start script in explorer. 
       - Option 1: Launch as a new window
       - Option 2: Re-implement easyDoser to TypeScript: Not recommended: 3-4 weeks
+   - Check Managed services of Hyperledger fabric in AWS, Azure, Google Cloud, IBM cloud
    - Anoop: To test the above problem
    - Anoop: Chat with Vipin about Hyperledger Explorer
 
