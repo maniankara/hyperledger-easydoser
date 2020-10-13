@@ -1,7 +1,14 @@
-11.10.2020:
+13.10.2020:
  * Last week:
+   - Deploy easydoser on k8s
+   - Issue: peer binary does not connect: error getting endorser client for channel: endorser client failed to connect to 52.246.248.192:7051: failed to create new connection: context deadline exceeded
  * This week:
-   - Deploy easydoser on k8s   
+   - Deploy easydoser on k8s
+   - Check how easydoser can integrate to Hyperledger Explorer: start script in explorer. 
+      - Option 1: Launch as a new window
+      - Option 2: Re-implement easyDoser to TypeScript: Not recommended: 3-4 weeks
+   - Anoop: To test the above problem
+   - Anoop: Chat with Vipin about Hyperledger Explorer
 
 04.10.2020:
  * Last week:
