@@ -1,3 +1,14 @@
+18.10.2020:
+   * Last week:
+      - Hyperledger Explorer: needs to re-implement with TypeScripts
+      - IBM cloud: Has a good UI which works. Google, AWS not so good, usual procedure.
+         - Does not give the certificates for the users
+      - Anoop: Issue is reproducible
+   * This week
+      - Anoop: Chat with Vipin about Hyperledger Explorer
+      - Blog post: how to run easyDoser on localhost
+      - Bash script - start the project, tierdown project
+
 13.10.2020:
  * Last week:
    - Deploy easydoser on k8s
