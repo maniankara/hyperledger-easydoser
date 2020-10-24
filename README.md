@@ -18,6 +18,12 @@ hyperledger/fabric-samples/test-network|master ⇒
 
 ```
 3. Make sure you have path to fabric binaries in your env PATH variable.
+## Run Project with release files.
+1. Install npm, you can find instructions [here.](https://www.npmjs.com/get-npm)
+2. Install serve with `npm install -g serve`
+3. Download latest release zip from release section of the repo.
+4. Extract the zip and inside the extract directory run `./start.sh`
+5. To stop, simply press ctrl+c twice.
 ## Instructions to run the project without docker
 1. Clone the repo and go to easydoser dir.
 2. Run the following
