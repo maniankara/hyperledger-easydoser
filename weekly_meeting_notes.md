@@ -1,7 +1,36 @@
-04.10.2020:
+18.10.2020:
+   * Last week:
+      - Hyperledger Explorer: needs to re-implement with TypeScripts
+      - IBM cloud: Has a good UI which works. Google, AWS not so good, usual procedure.
+         - Does not give the certificates for the users
+      - Anoop: Issue is reproducible
+   * This week
+      - Anoop: Chat with Vipin about Hyperledger Explorer
+      - Blog post: how to run easyDoser on localhost
+      - Bash script - start the project, tierdown project
+
+13.10.2020:
  * Last week:
+   - Deploy easydoser on k8s
+   - Issue: peer binary does not connect: error getting endorser client for channel: endorser client failed to connect to 52.246.248.192:7051: failed to create new connection: context deadline exceeded
  * This week:
    - Deploy easydoser on k8s
+   - Check how easydoser can integrate to Hyperledger Explorer: start script in explorer. 
+      - Option 1: Launch as a new window
+      - Option 2: Re-implement easyDoser to TypeScript: Not recommended: 3-4 weeks
+   - Check Managed services of Hyperledger fabric in AWS, Azure, Google Cloud, IBM cloud
+   - Anoop: To test the above problem
+   - Anoop: Chat with Vipin about Hyperledger Explorer
+
+04.10.2020:
+ * Last week:
+   - CI tests, readme, cleanup code, proj plan update
+ * This week:
+   - Deploy easydoser on k8s
+   - Anoop: To test: Verify all func. dockerize branch
+   - Try with HF managed services (Azure/IBM/AWS)
+   - Anoop: Check the bash script, any ideas?
+   - Check: https://jira.hyperledger.org/browse/FAB-5094 (private data history), https://jira.hyperledger.org/browse/FAB-11732 (page through private data)
 
 27.09.2020
  * Last week:
