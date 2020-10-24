@@ -21,8 +21,6 @@ jobs:
 
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
-    - name: make  output dir 
-      run: mkdir output
     - name: Get dependencies
       run: |
         cd easyDoser-server/
@@ -50,4 +48,4 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: release.zip
         asset_name: easyDoser.zip
-        tag: 1.1
+        tag: 1.2
