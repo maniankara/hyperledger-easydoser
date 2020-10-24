@@ -1,0 +1,1 @@
+./server & serve frontend && fg
