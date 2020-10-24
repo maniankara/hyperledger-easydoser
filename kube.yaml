@@ -8,21 +8,32 @@ spec:
   hostNetwork: true
   containers:
     - name: server
+      imagePullPolicy: Always
       image: abhimanyu121/easydoser:server-latest
-    - name: web
-      image: abhimanyu121/easydoser:web-latest
-      ports:
-        - containerPort: 8080
-        - containerPort: 5000
       volumeMounts:
         - mountPath: /config
           name: config
         - mountPath: /mspconfig
           name: mspconfig
+      env:
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /mspconfig
+        - name: FABRIC_CFG_PATH
+          value: /config
+        - name: FABRIC
+          value: /server/bin
+    - name: web
+      imagePullPolicy: Always
+      image: abhimanyu121/easydoser:web-latest
+      ports:
+        - containerPort: 8080
+        - containerPort: 5000
   volumes:
     - name: mspconfig
       hostPath:
-        path: /run/media/abhimanyu/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+        path: /data/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+        type: Directory
     - name: config
       hostPath:
-        path: /run/media/abhimanyu/265C6B275C6AF14B/fabric/config
+        path: /data/config
+        type: Directory
