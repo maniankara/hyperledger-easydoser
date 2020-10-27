@@ -1,3 +1,17 @@
+27.10.2020:
+  * Last week:
+    - Release when version is bumped automatically, release download for zip
+    - Anoop: To followup with Vipin to get code to hyperledgerlabs
+  * Next week:
+    - Anoop: To test release
+    - Improve documentation:
+      - new gif - video, arch diagram
+      - additions to text instructions
+      - release to have platform specific name (linux/amd64)
+      - release also for MacOS (darwin/amd64)
+    - Start drafting blog
+    - Question: Availability for small corrections after mentorship prog. had ended
+
 18.10.2020:
    * Last week:
       - Hyperledger Explorer: needs to re-implement with TypeScripts
