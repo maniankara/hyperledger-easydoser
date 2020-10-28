@@ -20,5 +20,8 @@
 | 15   | September 13 |Dockerized backend  |  |
 | 16   | September 20 |Made whole project to work on docker |  |
 | 17   | September 27 |Merged Dockerized and master branch, now both run on same code base |  |
-| 18   | September 27 |Wrote tests for backend |  |
+| 18   | October 04 |Wrote tests for backend |  |
+| 19   | October 11 |Worked on adding support of k8s(Not working, because of bug with peer binary|  |
+| 20   | October 18 |Minor project improvements and checked feasiblity for merge with HLF explorer|  |
+| 21   | October 25 |Added Workflow file for pushing builds at every commit |  |
 
