@@ -1,7 +1,7 @@
 # hyperledger-easydoser
 
 ## Project architecture
-![alt text](https://cacoo.com/diagrams/3M6r1235YWmvGCyb-1ABD5.png)
+![alt text](https://i.imgur.com/YBCIXio.jpg)
 ## Some prerequisite
 1. Make sure you have hyperledger Fabric up and running. You can find instructions to get started with habric [here.](https://hyperledger-fabric.readthedocs.io/en/release-2.2/getting_started.html)
 2. If you are simply using sample networks a `docker ps` would look something like this 
