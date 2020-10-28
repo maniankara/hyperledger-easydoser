@@ -3,7 +3,7 @@
 ## Project architecture
 ![alt text](https://cacoo.com/diagrams/3M6r1235YWmvGCyb-1ABD5.png)
 ## Some prerequisite
-1. Make sure you have hyperledger Fabric up and running.
+1. Make sure you have hyperledger Fabric up and running. You can find instructions to get started with habric [here.](https://hyperledger-fabric.readthedocs.io/en/release-2.2/getting_started.html)
 2. If you are simply using sample networks a `docker ps` would look something like this 
 ```
 Ensure the hyperledger fabric is running:
@@ -21,7 +21,7 @@ hyperledger/fabric-samples/test-network|master ⇒
 ## Run Project with release files.
 1. Install npm, you can find instructions [here.](https://www.npmjs.com/get-npm)
 2. Install serve with `npm install -g serve`
-3. Download latest release zip from release section of the repo.
+3. Download latest release zip from [release section of the repo](https://github.com/Abhimanyu121/hyperledger-easydoser/releases/).
 4. Extract the zip and inside the extract directory run `./start.sh`
 5. To stop, simply press ctrl+c twice.
 ## Instructions to run the project without docker
@@ -40,9 +40,9 @@ hyperledger/fabric-samples/test-network|master ⇒
 ## Instructions to run the project with docker
 1. Clone the repo and go to easydoser dir.
 2. Run the following (make sure you are root user to interact with docker deamon)
-    - Open docker-compose.yml and set Core config path to be mounted(line 8), it should somewhat like
+    - Open docker-compose.yml and set Core config path to be mounted(line 9), it should somewhat like
     `- /run/media/abhimanyu/265C6B275C6AF14B/fabric/config:/config`
-    - Set MSPConfig Path in docker-compose.yml to be mounted (line 9), it should look somewhat like
+    - Set MSPConfig Path in docker-compose.yml to be mounted (line 10), it should look somewhat like
     `- /run/media/abhimanyu/265C6B275C6AF14B/fabric/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp:/mspconfig`
     - `docker-compose up`
 
