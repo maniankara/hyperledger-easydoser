@@ -19,7 +19,7 @@ jobs:
         go-version: ^1.13
       id: go
 
-    - name: Check out code into the Go module directory
+    - name: Build for linux
       uses: actions/checkout@v2
     - name: Get dependencies
       run: |
@@ -30,7 +30,7 @@ jobs:
             dep ensure
         fi
     - name: Build
-      run: cd easyDoser-server/ && go build -o server && cp server ../output/
+      run: cd easyDoser-server/ && GOOS=linux go build -o server && cp server ../output/
     - name: Use Node.js 14.x
       uses: actions/setup-node@v1
       with:
@@ -47,5 +47,35 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: release.zip
-        asset_name: easyDoser.zip
-        tag: 1.2
+        asset_name: easyDoser_linux_x86_64.zip
+        tag: 1.4
+    - name: Build for darwin
+      uses: actions/checkout@v2
+    - name: Get dependencies
+      run: |
+        cd easyDoser-server/
+        go get -v -t -d ./...
+        if [ -f Gopkg.toml ]; then
+            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+            dep ensure
+        fi
+    - name: Build
+      run: cd easyDoser-server/ && GOOS=darwin go build -o server && cp server ../output/
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - run: cd easyDoser-frontend && rm -rf node_modules && rm -rf package-lock.json && npm install
+    - run: cd easyDoser-frontend && npm run build --if-present
+    - name: copy output
+      run: cp -r easyDoser-frontend/build output/frontend
+    - uses: montudor/action-zip@v0.1.0
+      with:
+        args: zip -qq -r release.zip output
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: release.zip
+        asset_name: easyDoser_darwin_x86_64.zip
+        tag: 1.4
