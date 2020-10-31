@@ -49,5 +49,5 @@ hyperledger/fabric-samples/test-network|master ⇒
 ## Video instructions to run the project
 [![asciicast](https://asciinema.org/a/355175.svg)](https://asciinema.org/a/355175)
 ## A little demo
-<img src="https://imgur.com/8cDvWSN.gif"/>
+<img src="https://imgur.com/8cDvWSN.gif"/></br>
 You can find much detailed video [here.](https://youtu.be/pGrJxVJ84WQ)
