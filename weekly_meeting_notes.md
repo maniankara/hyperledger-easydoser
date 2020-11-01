@@ -1,3 +1,14 @@
+01.11.2020:
+ * Last week:
+  - Bugs, macOsx, Youtube vid, arch diagram
+ * Next Week:
+  - Start drafting the blog
+  - Availability: For small corrections: yes for minor changes
+  - Anoop: kickstart with HyperledgerExplorer meeting
+  - Minor improvements in UI
+  - Anoop: Commits signing
+
+
 27.10.2020:
   * Last week:
     - Release when version is bumped automatically, release download for zip
