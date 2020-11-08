@@ -1,3 +1,9 @@
+08.11.2020:
+  * Last week:
+    - Blog notion
+  * For the future:
+    - Study - Merge to Hyperledger Explorer
+
 01.11.2020:
  * Last week:
   - Bugs, macOsx, Youtube vid, arch diagram
